@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.kuwon.stugether.user.repository.UserRepository">
+  	<select id="selectExistByLoginId" parameterType="string"
+  	resultType="int">
+  		SELECT EXISTS(
+  			SELECT
+  				`loginId`
+  			FROM
+  				`user`
+  			WHERE
+  				`loginId` = #{loginId}
+  		);
+  	</select>
+	<select id="selectExistByNickname" parameterType="string"
+	resultType="int">
+		SELECT EXISTS(
+			SELECT
+				`nickname`
+			FROM
+				`user`
+			WHERE
+				`nickname` = #{nickname}
+		);
+	</select>
+	<insert id="insertUser" parameterType="map">
+		INSERT INTO
+			`user`
+		(
+			`loginId`
+			, `password`
+			, `nickname`
+			, `email`
+		)
+		VALUE
+		(
+			#{loginId}
+			, #{password}
+			, #{nickname}
+			, #{email}
+		);
+	</insert>
+</mapper>

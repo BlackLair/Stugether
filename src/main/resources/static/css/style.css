@@ -9,6 +9,10 @@
 .box-half{
 	width: 600px;
 	height: 800px;
+	border: 1px;
+	border-style: solid;
+	border-color: #808080;
+	border-radius: 10px;
 }
 
 .single-input-row{
