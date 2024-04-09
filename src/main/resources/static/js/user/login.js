@@ -21,7 +21,7 @@ $(document).ready(function(){
 			}
 			, success: function(data){
 				if(data.result == "success"){
-					alert("로그인 성공");
+					location.href = "/blog/my-page";
 				}else{
 					alert("일치하는 계정 정보가 없습니다.");
 				}
