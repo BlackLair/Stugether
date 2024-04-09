@@ -61,7 +61,7 @@
 				<div class="col-8">
 					<button id="joinBtn" type="button" class="form-control my-4" disabled="true">회원 가입</button>
 					<div style="font-size:13px;">이미 회원이신가요?</div>
-					<button type="button" class="form-control my-1">로그인</button>
+					<button onClick="location.href = '/user/login-page';" id="loginPageBtn" type="button" class="form-control my-1">로그인</button>
 				</div>
 			</div>
 		</div>

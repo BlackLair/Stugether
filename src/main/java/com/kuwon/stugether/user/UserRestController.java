@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kuwon.stugether.user.domain.User;
 import com.kuwon.stugether.user.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/user")
 @RestController
@@ -18,7 +21,7 @@ public class UserRestController {
 	@Autowired
 	UserService userService;
 	
-	@GetMapping("/duplicated-id")
+	@GetMapping("/duplicated-id") // 중복 아이디 존재 여부 확인
 	public Map<String, Object> checkDuplicatedId(@RequestParam("loginId") String loginId){
 		boolean result = userService.checkDuplicatedId(loginId);
 		Map<String, Object> resultMap = new HashMap<>();
@@ -26,7 +29,7 @@ public class UserRestController {
 		return resultMap;
 	}
 	
-	@GetMapping("/duplicated-nickname")
+	@GetMapping("/duplicated-nickname") // 중복 닉네임 존재 여부 확인
 	public Map<String, Object> checkDuplicatedNickname(@RequestParam("nickname") String nickname){
 		boolean result = userService.checkDuplicatedNickname(nickname);
 		Map<String, Object> resultMap = new HashMap<>();
@@ -34,7 +37,7 @@ public class UserRestController {
 		return resultMap;
 	}
 	
-	@PostMapping("/join")
+	@PostMapping("/join") // 회원가입 요청
 	public Map<String, String> join( @RequestParam("loginId") String loginId
 									, @RequestParam("password") String password
 									, @RequestParam("nickname") String nickname
@@ -44,6 +47,22 @@ public class UserRestController {
 		Map<String, String> resultMap = new HashMap<>();
 		if(count == 1) {
 			resultMap.put("result", "success");
+		}else {
+			resultMap.put("result", "failure");
+		}
+		return resultMap;
+	}
+	
+	@PostMapping("/login") // 로그인 요청
+	public Map<String, String> login(@RequestParam("loginId") String loginId
+									, @RequestParam("password") String password
+									, HttpSession session){
+		User user = userService.getUser(loginId, password);
+		Map<String, String> resultMap = new HashMap<>();
+		if(user != null) {
+			resultMap.put("result", "success");
+			session.setAttribute("userId", user.getId());
+			session.setAttribute("nickname", user.getNickname());
 		}else {
 			resultMap.put("result", "failure");
 		}

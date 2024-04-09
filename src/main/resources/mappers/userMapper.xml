@@ -43,4 +43,20 @@
 			, #{email}
 		);
 	</insert>
+	<select id="selectByLoginIdAndPassword" parameterType="map"
+	resultType="com.kuwon.stugether.user.domain.User">
+		SELECT
+			`id`
+			, `loginId`
+			, `password`
+			, `nickname`
+			, `email`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`user`
+		WHERE
+			`loginId` = #{loginId}
+		AND `password` = #{password};
+	</select>
 </mapper>
