@@ -9,38 +9,41 @@
 <link href="/static/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<div id="wrap" class="d-flex">
-		<div id="introDiv" class="box-half">
-		</div>
-		<div id="joinDiv" class="box-half d-flex align-items-center justify-content-center">
-			<div class="col-2"></div>
-			<div class="col-8">
-				<form id="loginForm">
-					<div class="h1 my-5">로그인</div>
-					<div class="single-input-row">
-						<div class="form-floating col-8">
-							<input id="idInput" type="text" class="form-control" placeholder="">
-							<label for="idInput">아이디</label>
+	<div id="wrap">
+		<div class="d-flex">
+			<div id="introDiv" class="box-half">
+			</div>
+			<div id="joinDiv" class="box-half d-flex align-items-center justify-content-center">
+				<div class="col-2"></div>
+				<div class="col-8">
+					<form id="loginForm">
+						<div class="h1 my-5">로그인</div>
+						<div class="single-input-row">
+							<div class="form-floating col-8">
+								<input id="idInput" type="text" class="form-control" placeholder="">
+								<label for="idInput">아이디</label>
+							</div>
+							<div class="mx-3">
+							</div>
 						</div>
-						<div class="mx-3">
+						<div class="single-input-row">
+							<div class="form-floating col-8">
+								<input id="passwordInput" type="password" class="form-control" placeholder="">
+								<label for="passwordInput">패스워드</label>
+							</div>
+							<div class="mx-3">
+							</div>	
 						</div>
-					</div>
-					<div class="single-input-row">
-						<div class="form-floating col-8">
-							<input id="passwordInput" type="password" class="form-control" placeholder="">
-							<label for="passwordInput">패스워드</label>
+						<div class="col-8">
+							<button id="loginBtn" type="submit" class="form-control my-4">로그인</button>
+							<div style="font-size:13px;">계정이 없으신가요?</div>
+							<button onClick="location.href = '/user/join-page';" id="joinPageBtn" type="button" class="form-control my-1">회원 가입</button>
 						</div>
-						<div class="mx-3">
-						</div>	
-					</div>
-					<div class="col-8">
-						<button id="loginBtn" type="submit" class="form-control my-4">로그인</button>
-						<div style="font-size:13px;">계정이 없으신가요?</div>
-						<button onClick="location.href = '/user/join-page';" id="joinPageBtn" type="button" class="form-control my-1">회원 가입</button>
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</div>
+		<jsp:include page="/WEB-INF/jsp/common/footer.jsp" />
 	</div>
 	
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

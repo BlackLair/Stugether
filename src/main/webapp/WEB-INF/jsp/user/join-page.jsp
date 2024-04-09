@@ -9,62 +9,65 @@
 <link href="/static/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<div id="wrap" class="d-flex">
-		<div id="introDiv" class="box-half">
-		</div>
-		<div id="joinDiv" class="box-half d-flex align-items-center justify-content-center">
-			<div class="col-2"></div>
-			<div class="col-8">
-				<div class="h1 my-5">회원 가입</div>
-				<div class="single-input-row">
-					<div class="form-floating col-8">
-						<input id="idInput" type="text" class="form-control" placeholder="">
-						<label for="idInput">아이디를 입력하세요.</label>
-					</div>
-					<div class="mx-3">
-						<button id="duplicatedIdBtn" type="button" class="form-control" disabled="true">중복 확인</button>
-					</div>
-				</div>
-				<div class="single-input-row">
-					<div class="form-floating col-8">
-						<input id="passwordInput" type="password" class="form-control" placeholder="">
-						<label for="passwordInput">패스워드를 입력하세요.</label>
-					</div>
-					<div class="mx-3">
-					</div>	
-				</div>
-				<div class="single-input-row">
-					<div class="form-floating col-8">
-						<input id="confirmPasswordInput" type="password" class="form-control" placeholder="">
-						<label for="confirmPasswordInput">패스워드를 확인하세요.</label>
-					</div>
-					<div class="mx-3">
-					</div>	
-				</div>
-				<div class="single-input-row">
-					<div class="form-floating col-8">
-						<input id="nicknameInput" type="text" class="form-control" placeholder="">
-						<label for="nicknameInput">닉네임을 입력하세요.</label>
-					</div>
-					<div class="mx-3">
-						<button id="duplicatedNicknameBtn" type="button" class="form-control" disabled="true">중복 확인</button>
-					</div>	
-				</div>
-				<div class="single-input-row">
-					<div class="form-floating col-8">
-						<input id="emailInput" type="email" class="form-control" placeholder="">
-						<label for="emailInput">이메일을 입력하세요.</label>
-					</div>
-					<div class="mx-3">
-					</div>	
-				</div>
+	<div id="wrap">
+		<div class="d-flex">
+			<div id="introDiv" class="box-half">
+			</div>
+			<div id="joinDiv" class="box-half d-flex align-items-center justify-content-center">
+				<div class="col-2"></div>
 				<div class="col-8">
-					<button id="joinBtn" type="button" class="form-control my-4" disabled="true">회원 가입</button>
-					<div style="font-size:13px;">이미 회원이신가요?</div>
-					<button onClick="location.href = '/user/login-page';" id="loginPageBtn" type="button" class="form-control my-1">로그인</button>
+					<div class="h1 my-5">회원 가입</div>
+					<div class="single-input-row">
+						<div class="form-floating col-8">
+							<input id="idInput" type="text" class="form-control" placeholder="">
+							<label for="idInput">아이디를 입력하세요.</label>
+						</div>
+						<div class="mx-3">
+							<button id="duplicatedIdBtn" type="button" class="form-control" disabled="true">중복 확인</button>
+						</div>
+					</div>
+					<div class="single-input-row">
+						<div class="form-floating col-8">
+							<input id="passwordInput" type="password" class="form-control" placeholder="">
+							<label for="passwordInput">패스워드를 입력하세요.</label>
+						</div>
+						<div class="mx-3">
+						</div>	
+					</div>
+					<div class="single-input-row">
+						<div class="form-floating col-8">
+							<input id="confirmPasswordInput" type="password" class="form-control" placeholder="">
+							<label for="confirmPasswordInput">패스워드를 확인하세요.</label>
+						</div>
+						<div class="mx-3">
+						</div>	
+					</div>
+					<div class="single-input-row">
+						<div class="form-floating col-8">
+							<input id="nicknameInput" type="text" class="form-control" placeholder="">
+							<label for="nicknameInput">닉네임을 입력하세요.</label>
+						</div>
+						<div class="mx-3">
+							<button id="duplicatedNicknameBtn" type="button" class="form-control" disabled="true">중복 확인</button>
+						</div>	
+					</div>
+					<div class="single-input-row">
+						<div class="form-floating col-8">
+							<input id="emailInput" type="email" class="form-control" placeholder="">
+							<label for="emailInput">이메일을 입력하세요.</label>
+						</div>
+						<div class="mx-3">
+						</div>	
+					</div>
+					<div class="col-8">
+						<button id="joinBtn" type="button" class="form-control my-4" disabled="true">회원 가입</button>
+						<div style="font-size:13px;">이미 회원이신가요?</div>
+						<button onClick="location.href = '/user/login-page';" id="loginPageBtn" type="button" class="form-control my-1">로그인</button>
+					</div>
 				</div>
 			</div>
 		</div>
+		<jsp:include page="/WEB-INF/jsp/common/footer.jsp" />
 	</div>
 
 
