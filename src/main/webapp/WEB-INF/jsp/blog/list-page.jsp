@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>누구씨의 블로그</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link href="/static/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -27,12 +28,30 @@
 			<div class="d-flex justify-content-between my-3">
 				<aside>
 					<div class="category-box bg-secondary d-flex flex-column justify-content-between">
-						<div>
-							<ul class="nav">
-								<li class="nav-item"><a class="nav-link nav-link-style" href="#">전체 글 (12)</a></li>
-								<li class="nav-item"><a class="nav-link nav-link-style" href="#">JAVA (9)</a></li>
-								<li class="nav-item"><a class="nav-link nav-link-style" href="#">자료 구조 (3)</a></li>
+						<div class="p-1">
+							<ul class="nav my-2">
+								<li class="my-1">
+									<a class="nav-link nav-link-style d-inline" href="#">전체 글 (12)</a>
+								</li>
+								<li class="my-1">
+									<a class="nav-link nav-link-style d-inline" href="#">JAVA (9)</a>
+									<button type="button" class="btn-danger" style="width:25px; height:25px; font-size:10px;" >
+										<i class="bi bi-folder-minus"></i>
+									</button>
+								</li>
+								<li class="my-1">
+									<a class="nav-link nav-link-style d-inline" href="#">자료구조 (3)</a>
+									<button type="button" class="btn-danger" style="width:25px; height:25px; font-size:10px;" >
+										<i class="bi bi-folder-minus"></i>
+									</button>
+								</li>
 							</ul>
+							<div class="d-flex align-items-center mx-3 my-3">
+								<div class="col-8"><input type="text" class="form-control"></div>
+								<button type="button" class="btn-success mx-2" style="width:25px; height:25px; font-size:10px;" font-size:10px;">
+									<i class="bi bi-folder-plus"></i>
+								</button>		
+							</div>
 						</div>
 						<div class="d-flex justify-content-between">
 								<button type="button" class="btn btn-sm btn-primary">글쓰기</button>
