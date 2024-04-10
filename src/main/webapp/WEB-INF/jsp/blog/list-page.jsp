@@ -10,14 +10,7 @@
 </head>
 <body>
 	<div id="wrap">
-		<header class="d-flex align-items-center justify-content-between px-5 text-center">
-			<div></div>
-			<div class="h2">스터디투게더</div>
-			<div>
-				<span><b>${nickname }</b> 님 반갑습니다!</span>
-				<a href="#">로그아웃</a>
-			</div>
-		</header>
+		<jsp:include page="/WEB-INF/jsp/common/header.jsp" />
 		<nav class="bg-secondary d-flex justify-content-around align-items-center">
 			<ul class="nav nav-fill w-100">
 				<li class="nav-item"><a class="nav-link nav-link-style" href="#">블로그</a></li>
