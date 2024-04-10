@@ -9,10 +9,10 @@
 <link href="/static/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<div id="wrap" class="bg-warning">
-		<header class="bg-info d-flex align-items-center justify-content-between px-5 text-center">
+	<div id="wrap">
+		<header class="d-flex align-items-center justify-content-between px-5 text-center">
 			<div></div>
-			<div>스터디투게더</div>
+			<div class="h2">스터디투게더</div>
 			<div>
 				<span><b>${nickname }</b> 님 반갑습니다!</span>
 				<a href="#">로그아웃</a>
@@ -27,28 +27,54 @@
 				<li class="nav-item"><a class="nav-link nav-link-style" href="#">계정 관리</a></li>
 			</ul>
 		</nav>
-		<div class="d-flex p-3 justify-content-between">
-			<aside>
-				<div class="category-box bg-secondary d-flex flex-column justify-content-between">
-					<div>
-						<ul class="nav">
-							<li class="nav-item"><a class="nav-link nav-link-style" href="#">전체 글 (12)</a></li>
-							<li class="nav-item"><a class="nav-link nav-link-style" href="#">JAVA (9)</a></li>
-							<li class="nav-item"><a class="nav-link nav-link-style" href="#">자료 구조 (3)</a></li>
-						</ul>
+		<div class="p-3 bg-dark">
+			<div class="sub-header bg-info d-flex align-items-center justify-content-center">
+				<span class="h2">누구누구의 블로그</span>
+			</div>
+			<div class="d-flex justify-content-between my-3">
+				<aside>
+					<div class="category-box bg-secondary d-flex flex-column justify-content-between">
+						<div>
+							<ul class="nav">
+								<li class="nav-item"><a class="nav-link nav-link-style" href="#">전체 글 (12)</a></li>
+								<li class="nav-item"><a class="nav-link nav-link-style" href="#">JAVA (9)</a></li>
+								<li class="nav-item"><a class="nav-link nav-link-style" href="#">자료 구조 (3)</a></li>
+							</ul>
+						</div>
+						<div class="d-flex justify-content-between">
+								<button type="button" class="btn btn-sm btn-primary">글쓰기</button>
+								<button type="button" class="btn btn-sm btn-danger">카테고리 편집</button>
+						</div>
 					</div>
-					<div class="d-flex justify-content-between">
-							<button type="button" class="btn btn-sm btn-primary">글쓰기</button>
-							<button type="button" class="btn btn-sm btn-danger">카테고리 편집</button>
+				</aside>
+				<main class="bg-light p-3">
+					<div class="h2">전체 글</div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>No.</th>
+								<th>글 제목</th>
+								<th>업로드</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>재귀함수란 무엇인가?</td>
+								<td>2024-04-03 14:12:15</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Collection 프레임워크란?</td>
+								<td>2024-04-06 11:41:24</td>
+							</tr>
+						</tbody>
+					</table>
+				</main>
+				<div>
+					<div class="widget-box bg-danger">
+					
 					</div>
-				</div>
-			</aside>
-			<main class="bg-primary">
-				
-			</main>
-			<div>
-				<div class="widget-box bg-danger">
-				
 				</div>
 			</div>
 		</div>

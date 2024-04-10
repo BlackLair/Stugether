@@ -18,6 +18,10 @@ nav{
 	color:#FFFFFF;
 }
 
+.sub-header{
+	height: 100px;
+}
+
 aside{
 	width: 200px;
 }
