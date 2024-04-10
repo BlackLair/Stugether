@@ -23,4 +23,9 @@ public class BlogController {
 		if(page == null) page = 1;
 		return "blog/list-page";
 	}
+	
+	@GetMapping("/upload-page")
+	public String uploadView() {
+		return "blog/upload-post-page";
+	}
 }
