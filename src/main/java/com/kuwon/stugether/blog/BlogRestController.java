@@ -21,6 +21,7 @@ public class BlogRestController {
 	@Autowired
 	BlogService blogService;
 	
+	// 블로그 에디터 삽입 이미지 임시 저장
 	@PostMapping("/upload-image")
 	public Map<String, String> uploadImage(@RequestParam("file") MultipartFile file
 										, HttpSession session){
@@ -36,10 +37,23 @@ public class BlogRestController {
 		return resultMap;
 	}
 	
+	// 블로그 에디터 이미지 제거
 	@DeleteMapping("/delete-image")
 	public void deleteImage(@RequestParam("file") String fileName
 							, HttpSession session) {
 		int userId = (int) session.getAttribute("userId");
 		blogService.deleteTempImage(fileName, userId);
+	}
+	
+	@PostMapping("/upload-post")
+	public Map<String, String> uploadPost(@RequestParam("categoryId") int cotegoryId
+							, @RequestParam("title") String title
+							, @RequestParam("content") String content
+							, HttpSession session){
+		int userId = (int)session.getAttribute("userId");
+		Map<String, String> resultMap = new HashMap<>();
+		String result = blogService.addPost(cotegoryId, title, content, userId);
+		resultMap.put("result", result);
+		return resultMap;
 	}
 }

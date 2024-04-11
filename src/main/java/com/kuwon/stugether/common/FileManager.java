@@ -1,6 +1,8 @@
 package com.kuwon.stugether.common;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,6 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileManager {
 	public final static String FILE_UPLOAD_PATH = "C:\\Users\\JW K\\Desktop\\megaIT\\springProject\\upload\\stugether";
+	public final static String TYPE_BLOG = "blog";
+	public final static String TYPE_GROUP = "group";
+	public final static String TYPE_PROBLEM = "problem";
+	public final static String TYPE_QUESTION = "question";
 	
 	// summernote 이미지 작성 시 임시 파일 저장
 	public static String saveTempFile(MultipartFile file, int userId) {
@@ -53,8 +59,60 @@ public class FileManager {
 		Path path = Paths.get(filePath);
 		try {
 			Files.delete(path);
-		}catch(IOException e) {
+		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+	// 업로드된 게시물 사진 저장
+	public static boolean saveImage(int userId, String type, String currentTime) {
+		String tempPath = FILE_UPLOAD_PATH + "/temp/" + userId + "/"; // 임시 이미지 파일 경로
+		String targetPath = FILE_UPLOAD_PATH + "/" + type + "/" + userId + "_" + currentTime + "/"; // 이미지가 저장될 경로
+		File folder1 = new File(tempPath);
+		File folder2 = new File(targetPath);
+		if(!folder1.exists()) {
+			folder1.mkdir();
+		}
+		if(!folder2.exists()) {
+			folder2.mkdir();
+		}
+		
+		File[] target_file = folder1.listFiles(); // 복사할 파일들을 가져옴
+		
+		for(File file : target_file) { // 각 파일 복사
+			File temp = new File(folder2.getAbsolutePath() + File.separator + file.getName());
+			
+			if(file.isDirectory()) {
+				temp.mkdir();
+			}else {
+				FileInputStream fis = null;
+	            FileOutputStream fos = null;
+	            try {
+	                fis = new FileInputStream(file);
+	                fos = new FileOutputStream(temp);
+	                
+	                byte[] b = new byte[4096];
+	                int cnt = 0;
+	                while ((cnt = fis.read(b)) != -1) {
+	                    fos.write(b, 0, cnt);
+	                }
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	                return false;
+	            } finally {
+	                try {
+	                    fis.close();
+	                    fos.close();
+	                } catch (IOException e) {
+	                    e.printStackTrace();
+	                    return false;
+	                }
+	            }
+	            file.delete(); // 파일 복사 후 임시 폴더에 있던 파일 삭제
+			}
+		}
+		folder1.delete(); // 임시 폴더에 있던 사용자 폴더 삭제
+		return true;
+	}
+	
 }

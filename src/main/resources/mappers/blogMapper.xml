@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.kuwon.stugether.blog.repository.BlogRepository">
+  	<select id="selectBlogCategoryList" parameterType="int"
+  	resultType="com.kuwon.stugether.blog.domain.BlogCategory">
+  		SELECT
+  			`id`
+  			, `userId`
+  			, `name`
+  			, `createdAt`
+  			, `updatedAt`
+  		FROM
+  			`blog_category`
+  		WHERE
+  			`userId` = #{userId};
+  	</select>
+  	<select id="selectBlogCategory" parameterType="map"
+  	resultType="com.kuwon.stugether.blog.domain.BlogCategory">
+  		SELECT
+  			`id`
+  			, `userId`
+  			, `name`
+  			, `createdAt`
+  			, `updatedAt`
+  		FROM
+  			`blog_category`
+  		WHERE
+  			`id` = #{categoryId}
+  		AND `userId` = #{userId};
+  	</select>
+  	
+  	<insert id="insertPost" parameterType="map">
+  		INSERT INTO
+  			`blog_post`
+  		(
+  			`userId`
+  			, `blogCategoryId`
+  			, `title`
+  			, `content`
+  		)
+  		VALUE
+  		(
+  			#{userId}
+  			, #{categoryId}
+  			, #{title}
+  			, #{content}
+  		);
+  		
+  	</insert>
+  </mapper>
