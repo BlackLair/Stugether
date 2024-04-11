@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,17 +33,18 @@
 						<h2>블로그 작성</h2>
 					</div>
 					<div class="d-flex justify-content-center my-3 w-100">
-						<select class="form-control" style="width:180px;">
-							<option>카테고리 선택</option>
-							<option>JAVA</option>
-							<option>자료 구조</option>
+						<select id="categorySelect" class="form-control" style="width:180px;">
+							<option value="">카테고리 선택</option>
+							<c:forEach var="category" items="${categoryList }">
+								<option value="${category.id }">${category.name }</option>
+							</c:forEach>
 						</select>
-						<input type="text" class="form-control" placeholder="제목을 입력하세요.">
+						<input id="titleInput" type="text" class="form-control" placeholder="제목을 입력하세요.">
 					</div>
 					<div id="summernote"></div>
 					<div class="d-flex justify-content-between my-3">
 						<button type="button" class="btn btn-dark">이전으로</button>
-						<button type="button" class="btn btn-primary">등록</button>
+						<button id="uploadBtn" type="button" class="btn btn-primary">등록</button>
 					</div>
 				</main>
 			</div>
@@ -57,6 +59,39 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-ko-KR.min.js"></script>
 <script>
 	$(document).ready(function(){
+		$("#uploadBtn").on("click", function(){
+			let category = $("#categorySelect").val();
+			let title = $("#titleInput").val();
+			let content = $("#summernote").summernote('code');
+			if(category == ""){
+				alert("카테고리를 선택하세요.");
+				return;
+			}
+			if(title == ""){
+				alert("제목을 입력하세요.");
+				return;
+			}
+			if(content == ""){
+				alert("내용을 입력하세요.");
+			}
+			$.ajax({
+				url: "/blog/upload-post"
+				, type: "POST"
+				, data:{"categoryId" : category
+					, "title" : title
+					, "content" : content
+				}
+				, success:function(data){
+					alert(data.result);
+				}
+				, error:function(){
+					alert("게시물 업로드 에러");
+				}
+				
+			});
+		});
+		
+		
 		function uploadSummernoteImageFile(file, el, caption){ // 임시 이미지 파일 업로드
 			data = new FormData();
 			data.append("file", file);
