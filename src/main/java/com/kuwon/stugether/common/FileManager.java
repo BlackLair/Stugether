@@ -19,11 +19,11 @@ public class FileManager {
 	public final static String TYPE_QUESTION = "question";
 	
 	// summernote 이미지 작성 시 임시 파일 저장
-	public static String saveTempFile(MultipartFile file, int userId) {
+	public static String saveTempFile(MultipartFile file, int userId, String editorToken) {
 		if(file == null) {
 			return null;
 		}
-		String directoryName = "/temp/" + userId;
+		String directoryName = "/temp/" + userId + "_" + editorToken;
 		String directoryPath = FILE_UPLOAD_PATH + directoryName;
 		File directory = new File(directoryPath);
 		if(!directory.exists()) {
@@ -54,8 +54,8 @@ public class FileManager {
 	}
 
 	// summernote에 작성된 임시 이미지 파일 삭제
-	public static void deleteTempImage(String fileName, int userId) {
-		String filePath = FILE_UPLOAD_PATH + "/temp/" + userId + "/" + fileName;
+	public static void deleteTempImage(String fileName, int userId, String editorToken) {
+		String filePath = FILE_UPLOAD_PATH + "/temp/" + userId + "_" + editorToken + "/" + fileName;
 		Path path = Paths.get(filePath);
 		try {
 			Files.delete(path);
@@ -65,8 +65,8 @@ public class FileManager {
 	}
 	
 	// 업로드된 게시물 사진 저장
-	public static boolean saveImage(int userId, String type, String currentTime) {
-		String tempPath = FILE_UPLOAD_PATH + "/temp/" + userId + "/"; // 임시 이미지 파일 경로
+	public static boolean saveImage(int userId, String type, String currentTime, String editorToken) {
+		String tempPath = FILE_UPLOAD_PATH + "/temp/" + userId + "_" + editorToken + "/"; // 임시 이미지 파일 경로
 		String targetPath = FILE_UPLOAD_PATH + "/" + type + "/" + userId + "_" + currentTime + "/"; // 이미지가 저장될 경로
 		File folder1 = new File(tempPath);
 		File folder2 = new File(targetPath);

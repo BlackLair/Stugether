@@ -59,6 +59,18 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-ko-KR.min.js"></script>
 <script>
 	$(document).ready(function(){
+		let editorToken = "";
+		$.ajax({
+			url: "/editor/token"
+			, type: "GET"
+			, success:function(data){
+				editorToken = data;
+				alert(editorToken);
+			}
+			, error:function(){
+				alert("에디터 토큰 로드 실패. 새로고침해주세요.");
+			}
+		});
 		$("#uploadBtn").on("click", function(){
 			let category = $("#categorySelect").val();
 			let title = $("#titleInput").val();
@@ -80,6 +92,7 @@
 				, data:{"categoryId" : category
 					, "title" : title
 					, "content" : content
+					, "editorToken" : editorToken
 				}
 				, success:function(data){
 					alert(data.result);
@@ -95,6 +108,7 @@
 		function uploadSummernoteImageFile(file, el, caption){ // 임시 이미지 파일 업로드
 			data = new FormData();
 			data.append("file", file);
+			data.append("editorToken", editorToken);
 			$.ajax({
 				data: data
 				, type: "POST"
@@ -117,7 +131,7 @@
 		function deleteSummernoteImageFile(imageName){ // 임시 이미지 파일 삭제
 			data = new FormData();
 			data.append("file", imageName);
-			alert("imageName : " + imageName);
+			data.append("editorToken", editorToken);
 			$.ajax({
 				data: data
 				, type: "DELETE"

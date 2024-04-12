@@ -16,12 +16,12 @@ public class BlogService {
 	@Autowired
 	BlogRepository blogRepository;
 	
-	public String uploadTempImage(MultipartFile file, int userId) {
-		return FileManager.saveTempFile(file, userId);
+	public String uploadTempImage(MultipartFile file, int userId, String editorToken) {
+		return FileManager.saveTempFile(file, userId, editorToken);
 	}
 	
-	public void deleteTempImage(String fileName, int userId) {
-		FileManager.deleteTempImage(fileName, userId);
+	public void deleteTempImage(String fileName, int userId, String editorToken) {
+		FileManager.deleteTempImage(fileName, userId, editorToken);
 	}
 	
 	public List<BlogCategory> getBlogCategoryList(int userId){
@@ -29,7 +29,7 @@ public class BlogService {
 	}
 	
 
-	public String addPost(int categoryId, String title, String content, int userId) {
+	public String addPost(int categoryId, String title, String content, int userId, String editorToken) {
 		// 카테고리 존재 유무 확인
 		if(blogRepository.selectBlogCategory(userId, categoryId) == null) {
 			return "category not exist";
@@ -37,7 +37,7 @@ public class BlogService {
 		
 		// 글에 포함된 image 태그의 src 주소 변경
 		String currentTime = System.currentTimeMillis() + "";
-		content = content.replaceAll("/temp/" + userId, "/blog/" + userId + "_" + currentTime);
+		content = content.replaceAll("/temp/" + userId + "_" + editorToken, "/blog/" + userId + "_" + currentTime);
 		
 		// 글 정보를 DB에 저장
 		if(blogRepository.insertPost(userId, categoryId, title, content) == 0) {
@@ -45,7 +45,7 @@ public class BlogService {
 		}
 		
 		// 글에 포함된 이미지 파일들을 임시 폴더에서 보관 폴더로 이동
-		FileManager.saveImage(userId, FileManager.TYPE_BLOG, currentTime);
+		FileManager.saveImage(userId, FileManager.TYPE_BLOG, currentTime, editorToken);
 		// 결과 반환
 		return "success";
 	}
