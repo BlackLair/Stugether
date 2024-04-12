@@ -9,10 +9,9 @@ import com.kuwon.stugether.user.domain.User;
 public interface UserRepository {
 	public int selectExistByLoginId(@Param("loginId") String loginId);
 	public int selectExistByNickname(@Param("nickname") String nickname);
-	public int insertUser(@Param("loginId") String loginId
-						, @Param("password") String password
-						, @Param("nickname") String nickname
-						, @Param("email") String email);
+	public int insertUser(User user);
 	public User selectByLoginIdAndPassword(@Param("loginId") String loginId
 										, @Param("password") String password);
+	
+	public User selectById(@Param("userId") int userId);
 }
