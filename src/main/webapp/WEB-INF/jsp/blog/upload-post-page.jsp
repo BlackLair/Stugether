@@ -25,7 +25,7 @@
 		</nav>
 		<div class="p-3 bg-dark">
 			<div class="sub-header bg-info d-flex align-items-center justify-content-center">
-				<span class="h2">누구누구의 블로그</span>
+				<span class="h2">${nickname }의 블로그</span>
 			</div>
 			<div class="d-flex justify-content-center">
 				<main class="bg-light p-3 my-3">
