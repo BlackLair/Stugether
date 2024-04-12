@@ -1,13 +1,16 @@
 package com.kuwon.stugether.blog.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.kuwon.stugether.blog.domain.BlogCategory;
+import com.kuwon.stugether.blog.domain.BlogPost;
+import com.kuwon.stugether.blog.dto.BlogCategoryDTO;
+import com.kuwon.stugether.blog.dto.BlogCategoryDetail;
+import com.kuwon.stugether.blog.dto.BlogPostInfo;
 import com.kuwon.stugether.blog.repository.BlogRepository;
 import com.kuwon.stugether.common.FileManager;
 
@@ -17,8 +20,45 @@ public class BlogService {
 	BlogRepository blogRepository;
 
 	// 블로그 카테고리 목록 로드
-	public List<BlogCategory> getBlogCategoryList(int userId){
-		return blogRepository.selectBlogCategoryList(userId); 
+	public BlogCategoryDTO getBlogCategoryList(int userId){
+		List<BlogCategory> blogCategoryList = blogRepository.selectBlogCategoryList(userId);
+		List<BlogCategoryDetail> blogCategoryDetailList = new ArrayList<BlogCategoryDetail>();
+		BlogCategoryDTO blogCategoryDTO = new BlogCategoryDTO();
+		int allPostCount = 0;
+		for(BlogCategory blogCategory : blogCategoryList) {
+			BlogCategoryDetail blogCategoryDetail = new BlogCategoryDetail();
+			blogCategoryDetail.setId(blogCategory.getId());
+			blogCategoryDetail.setName(blogCategory.getName());
+			blogCategoryDetail.setPostCount(blogRepository.selectPostCountByCategory(blogCategory.getUserId(), blogCategory.getId()));
+			blogCategoryDetailList.add(blogCategoryDetail);
+			allPostCount += blogCategoryDetail.getPostCount();
+		}
+		blogCategoryDTO.setBlogCategoryDetailList(blogCategoryDetailList);
+		blogCategoryDTO.setAllPostCount(allPostCount);
+		return blogCategoryDTO;
+	}
+	
+	// 각 카테고리 게시글 개수
+	
+	
+	//  블로그 글 목록 로드
+	public List<BlogPostInfo> getBlogPostList(int userId, Integer categoryId, int page){
+		List<BlogPostInfo> blogPostInfoList = new ArrayList<>();
+		List<BlogPost> blogPostList;
+		if(categoryId == null)
+			blogPostList = blogRepository.selectAllBlogPost(userId, (page - 1) * 10);
+		else {
+			blogPostList = blogRepository.selectBlogPostByCategoryId(userId, categoryId, (page - 1) * 10);
+		}
+		for(BlogPost blogPost : blogPostList) {
+			BlogPostInfo blogPostInfo = new BlogPostInfo();
+			blogPostInfo.setId(blogPost.getId());
+			blogPostInfo.setTitle(blogPost.getTitle());
+			blogPostInfo.setUserId(blogPost.getUserId());
+			blogPostInfo.setCreatedAt(blogPost.getCreatedAt());
+			blogPostInfoList.add(blogPostInfo);
+		}
+		return blogPostInfoList;
 	}
 	
 	// 게시글 등록 작업

@@ -50,4 +50,65 @@
   		);
   		
   	</insert>
+  	
+  	<select id="selectAllBlogPost" parameterType="map"
+  	resultType="com.kuwon.stugether.blog.domain.BlogPost">
+  		SELECT
+  			`id`
+  			, `userId`
+  			, `blogCategoryId`
+  			, `title`
+  			, `content`
+  			, `createdAt`
+  			, `updatedAt`
+  		FROM
+  			`blog_post`
+  		WHERE
+  			`userId` = #{userId}
+  		ORDER BY
+  			`id` DESC
+  		LIMIT 10 OFFSET #{page};
+  	</select>
+  	<select id="selectPostCountByCategory" parameterType="map"
+  	resultType="int">
+  		SELECT
+  			count(*)
+  		FROM
+  			`blog_post`
+  		WHERE
+  			`userId` = #{userId}
+  		AND `blogCategoryId` = #{categoryId};
+  	</select>
+  	<select id="selectBlogPostByCategoryId" parameterType="map"
+  	resultType="com.kuwon.stugether.blog.domain.BlogPost">
+  		SELECT
+  			`id`
+  			, `userId`
+  			, `blogCategoryId`
+  			, `title`
+  			, `content`
+  			, `createdAt`
+  			, `updatedAt`
+  		FROM
+  			`blog_post`
+  		WHERE
+  			`userId` = #{userId}
+  		AND `blogCategoryId` = #{categoryId}
+  		ORDER BY
+  			`id` DESC
+  		LIMIT 10 OFFSET #{page};
+  	</select>
+  	<insert id="insertCategory" parameterType="map">
+  		INSERT INTO
+  			`blog_category`
+  		(
+  			`userId`
+  			, `name`
+  		)
+  		VALUE
+  		(
+  			#{userId}
+  			, #{name}
+  		)
+  	</insert>
   </mapper>

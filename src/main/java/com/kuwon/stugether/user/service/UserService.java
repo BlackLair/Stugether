@@ -60,4 +60,11 @@ public class UserService {
 		String encryptPassword = EncryptUtils.sha256(password);
 		return userRepository.selectByLoginIdAndPassword(loginId, encryptPassword);
 	}
+	
+	// 유저 정보 반환
+	public UserDTO getUser(int userId) {
+		User user = userRepository.selectById(userId);
+		UserDTO userDTO = new UserDTO(user);
+		return userDTO;
+	}
 }
