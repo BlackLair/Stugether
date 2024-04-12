@@ -24,6 +24,7 @@ $(document).ready(function(){
 				, "title" : title
 				, "content" : content
 				, "editorToken" : editorToken
+				, "type" : postType
 			}
 			, success:function(data){
 				alert(data.result);
@@ -52,7 +53,7 @@ $(document).ready(function(){
 					if(caption == ""){
 						caption = "이미지";
 					}
-					uploadSummernoteImageFile(files[i], this, caption, postType, editorToken); // 임시 이미지 업로드
+					uploadSummernoteImageFile(files[i], this, caption, editorToken); // 임시 이미지 업로드
 				}
 			}
 			, onMediaDelete: function($target, editor, $editable){ // 글 작성 중 이미지 삭제 시
@@ -61,7 +62,7 @@ $(document).ready(function(){
 						.attr('src')
 						.split('/')
 						.pop();
-					deleteSummernoteImageFile(deletedImageUrl, postType, editorToken);
+					deleteSummernoteImageFile(deletedImageUrl, editorToken);
 				}
 			}
 		}

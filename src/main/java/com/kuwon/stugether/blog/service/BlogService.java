@@ -15,20 +15,13 @@ import com.kuwon.stugether.common.FileManager;
 public class BlogService {
 	@Autowired
 	BlogRepository blogRepository;
-	
-	public String uploadTempImage(MultipartFile file, int userId, String editorToken) {
-		return FileManager.saveTempFile(file, userId, editorToken);
-	}
-	
-	public void deleteTempImage(String fileName, int userId, String editorToken) {
-		FileManager.deleteTempImage(fileName, userId, editorToken);
-	}
-	
+
+	// 블로그 카테고리 목록 로드
 	public List<BlogCategory> getBlogCategoryList(int userId){
 		return blogRepository.selectBlogCategoryList(userId); 
 	}
 	
-
+	// 게시글 등록 작업
 	public String addPost(int categoryId, String title, String content, int userId, String editorToken) {
 		// 카테고리 존재 유무 확인
 		if(blogRepository.selectBlogCategory(userId, categoryId) == null) {

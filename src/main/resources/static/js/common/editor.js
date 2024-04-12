@@ -14,14 +14,15 @@ function getToken(){
 	});
 	return token;
 }
-function uploadSummernoteImageFile(file, el, caption, type, editorToken){ // 임시 이미지 파일 업로드
+// 임시 이미지 파일 업로드
+function uploadSummernoteImageFile(file, el, caption, editorToken){ 
 	data = new FormData();
 	data.append("file", file);
 	data.append("editorToken", editorToken);
 	$.ajax({
 		data: data
 		, type: "POST"
-		, url: "/" + type + "/upload-image"
+		, url: "/editor/upload-image"
 		, contentType: false
 		, enctype: "multipart/form-data"
 		, processData: false
@@ -36,15 +37,15 @@ function uploadSummernoteImageFile(file, el, caption, type, editorToken){ // 임
 		}
 	});
 }
-
-function deleteSummernoteImageFile(imageName, type, editorToken){ // 임시 이미지 파일 삭제
+// 임시 이미지 파일 삭제
+function deleteSummernoteImageFile(imageName, editorToken){ 
 	data = new FormData();
 	data.append("file", imageName);
 	data.append("editorToken", editorToken);
 	$.ajax({
 		data: data
 		, type: "DELETE"
-		, url: "/" + type + "/delete-image"
+		, url: "/editor/delete-image"
 		, contentType: false
 		, enctype: "multipart/form-data"
 		, processData: false
