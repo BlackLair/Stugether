@@ -59,7 +59,7 @@
 						</div>
 						<c:if test="${userId eq ownerDTO.id }">
 							<div class="d-flex justify-content-between">
-									<button type="button" class="btn btn-sm btn-primary">글쓰기</button>
+									<button onClick="location.href = '/blog/upload-page';" type="button" class="btn btn-sm btn-primary">글쓰기</button>
 									<button type="button" class="btn btn-sm btn-danger">카테고리 편집</button>
 							</div>
 						</c:if>
