@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kuwon.stugether.blog.domain.BlogPost;
 import com.kuwon.stugether.blog.dto.BlogCategoryDTO;
 import com.kuwon.stugether.blog.dto.BlogPostInfo;
 import com.kuwon.stugether.blog.service.BlogService;
@@ -43,6 +44,12 @@ public class BlogController {
 		model.addAttribute("categoryDTO", blogCategoryDTO);
 		model.addAttribute("ownerDTO", ownerDTO);
 		List<BlogPostInfo> blogPostInfoList = blogService.getBlogPostList(ownerId, category, page);
+		if(category != null) {
+			String categoryName = blogService.getBlogCategoryName(category);
+			model.addAttribute("categoryName", categoryName);
+		}else {
+			model.addAttribute("categoryName", "전체 글");
+		}
 		model.addAttribute("postList", blogPostInfoList);
 		return "blog/list-page";
 	}
@@ -54,5 +61,18 @@ public class BlogController {
 		BlogCategoryDTO blogCategoryDTO = blogService.getBlogCategoryList(userId);
 		model.addAttribute("categoryDTO", blogCategoryDTO);
 		return "blog/upload-post-page";
+	}
+	
+	@GetMapping("/post-detail-page")
+	public String postDetailView(@RequestParam("postId") int postId
+								, Model model) {
+		BlogPostInfo blogPost = blogService.getBlogPost(postId);
+		int ownerId = blogPost.getUserId();
+		UserDTO ownerDTO = userService.getUser(ownerId);
+		BlogCategoryDTO blogCategoryDTO = blogService.getBlogCategoryList(ownerId);
+		model.addAttribute("categoryDTO", blogCategoryDTO);
+		model.addAttribute("blogPost", blogPost);
+		model.addAttribute("ownerDTO", ownerDTO);
+		return "blog/post-detail-page";
 	}
 }

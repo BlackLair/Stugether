@@ -10,6 +10,9 @@ import lombok.Setter;
 public class BlogPostInfo {
 	private int id;
 	private int userId;
+	private String categoryName;
+	private int blogCategoryId;
 	private String title;
+	private String content;
 	private Date createdAt;
 }

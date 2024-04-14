@@ -66,25 +66,45 @@
 					</div>
 				</aside>
 				<main class="p-3">
-					<div class="h2">${categoryName }</div>
-					<table class="table">
-						<thead>
-							<tr>
-								<th>No.</th>
-								<th>글 제목</th>
-								<th>업로드</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="post" items="${postList }">
-								<tr>
-									<td>${post.id }</td>
-									<td><a href="/blog/post-detail-page?postId=${post.id }">${post.title }</a></td>
-									<td><fmt:formatDate value="${post.createdAt }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+					<div class="d-flex justify-content-between align-items-start w-100">
+						<div>
+							<div>${blogPost.categoryName }</div>
+							<h2>${blogPost.title }</h2>
+						</div>
+						<div style="width:180px; border-left:1px solid black;">
+							<div class="mx-2">
+								<div><fmt:formatDate value="${blogPost.createdAt }" pattern="yyyy-MM-dd HH:mm:ss"/></div>
+								<div>글 번호 : ${blogPost.id }</div>
+								<div class="d-flex">
+									<button type="button">수정</button>
+									<button type="button">삭제</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<hr>
+					<div style="overflow-y:auto;" class="article w-100">
+						${blogPost.content }
+					</div>
+					<hr>
+					<div class="w-100 bg-dark text-light">
+						<div>댓글</div>
+						<hr class="bg-white">
+						<div class="reply-div">
+							<div class="d-flex justify-content-between">
+								<div class="d-flex">
+									<div><b>나는사람</b> : </div>
+									<div>댓글 내용</div>
+								</div>
+								<!-- 삭제 버튼 여기에 추가하기 -->
+							</div>
+							<hr class="bg-white m-1">
+							<div class="d-flex">
+								<input type="text" class="form-control reply-input">
+								<button type="button" class="form-control reply-btn">등록</button>
+							</div>
+						</div>
+					</div>
 				</main>
 				<div>
 					<div class="widget-box bg-danger">

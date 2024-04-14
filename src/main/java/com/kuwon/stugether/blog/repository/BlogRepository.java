@@ -27,6 +27,10 @@ public interface BlogRepository {
 													, @Param("categoryId") int categoryId
 													, @Param("page") int page);
 	
+	public BlogPost selectBlogPostById(@Param("postId") int postId);
+	
 	public int insertCategory(@Param("userId") int userId
 							, @Param("name") String name);
+	
+	public String selectCategoryNameById(@Param("categoryId") int categoryId);
 }

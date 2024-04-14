@@ -22,6 +22,12 @@ nav{
 	height: 100px;
 }
 
+.article{
+	min-height: 600px;
+	background-color: #FFFFFF;
+	word-break:break-all;
+}
+
 aside{
 	width: 200px;
 }
@@ -36,6 +42,7 @@ aside{
 main{
 	width: 700px;
 	min-height: 500px;
+	background-color: #DDDDDD;
 }
 
 .box-half{
@@ -62,4 +69,11 @@ footer{
 
 .note-editor .dropdown-toggle::after {
 	display: none;
+}
+
+.reply-input{
+	width:85%;
+}
+.reply-btn{
+	width:15%;
 }

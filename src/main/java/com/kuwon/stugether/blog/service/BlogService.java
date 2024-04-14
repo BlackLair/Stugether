@@ -38,7 +38,10 @@ public class BlogService {
 		return blogCategoryDTO;
 	}
 	
-	// 각 카테고리 게시글 개수
+	// 카테고리 이름 가져오기
+	public String getBlogCategoryName(int categoryId) {
+		return blogRepository.selectCategoryNameById(categoryId);
+	}
 	
 	
 	//  블로그 글 목록 로드
@@ -56,9 +59,25 @@ public class BlogService {
 			blogPostInfo.setTitle(blogPost.getTitle());
 			blogPostInfo.setUserId(blogPost.getUserId());
 			blogPostInfo.setCreatedAt(blogPost.getCreatedAt());
+			if(categoryId != null)
+				blogPostInfo.setBlogCategoryId(categoryId);
 			blogPostInfoList.add(blogPostInfo);
 		}
 		return blogPostInfoList;
+	}
+	
+	// 블로그 게시글 1개 정보 로드
+	public BlogPostInfo getBlogPost(int postId) {
+		BlogPost post = blogRepository.selectBlogPostById(postId);
+		BlogPostInfo postInfo = new BlogPostInfo();
+		postInfo.setId(postId);
+		postInfo.setTitle(post.getTitle());
+		postInfo.setUserId(post.getUserId());
+		postInfo.setBlogCategoryId(post.getBlogCategoryId());
+		postInfo.setCategoryName(blogRepository.selectCategoryNameById(postInfo.getBlogCategoryId()));
+		postInfo.setContent(post.getContent());
+		postInfo.setCreatedAt(post.getCreatedAt());
+		return postInfo;
 	}
 	
 	// 게시글 등록 작업

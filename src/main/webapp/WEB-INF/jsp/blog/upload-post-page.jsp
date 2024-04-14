@@ -23,7 +23,7 @@
 				<li class="nav-item"><a class="nav-link nav-link-style" href="#">계정 관리</a></li>
 			</ul>
 		</nav>
-		<div class="p-3 bg-dark">
+		<section class="p-3 bg-dark">
 			<div class="sub-header bg-info d-flex align-items-center justify-content-center">
 				<span class="h2">${nickname }의 블로그</span>
 			</div>
@@ -35,7 +35,7 @@
 					<div class="d-flex justify-content-center my-3 w-100">
 						<select id="categorySelect" class="form-control" style="width:180px;">
 							<option value="">카테고리 선택</option>
-							<c:forEach var="category" items="${categoryList }">
+							<c:forEach var="category" items="${categoryDTO.blogCategoryDetailList }">
 								<option value="${category.id }">${category.name }</option>
 							</c:forEach>
 						</select>
@@ -48,7 +48,7 @@
 					</div>
 				</main>
 			</div>
-		</div>
+		</section>
 	</div>
 	
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

@@ -98,6 +98,21 @@
   			`id` DESC
   		LIMIT 10 OFFSET #{page};
   	</select>
+  	<select id="selectBlogPostById" parameterType="int"
+  	resultType="com.kuwon.stugether.blog.domain.BlogPost">
+  		SELECT
+  			`id`
+  			, `userId`
+  			, `blogCategoryId`
+  			, `title`
+  			, `content`
+  			, `createdAt`
+  			, `updatedAt`
+  		FROM
+  			`blog_post`
+  		WHERE
+  			`id` = #{postId};
+  	</select>
   	<insert id="insertCategory" parameterType="map">
   		INSERT INTO
   			`blog_category`
@@ -111,4 +126,13 @@
   			, #{name}
   		)
   	</insert>
+  	<select id="selectCategoryNameById" parameterType="int"
+  	resultType="string">
+  		SELECT
+  			`name`
+  		FROM
+  			`blog_category`
+  		WHERE
+  			`id` = #{categoryId};
+  	</select>
   </mapper>
