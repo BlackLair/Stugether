@@ -48,6 +48,9 @@ public class BlogRestController {
 		if(userId == postInfo.getUserId()) {
 			result = blogService.removePost(postId);
 		}
+		else {
+			result = "permission denied";
+		}
 		Map<String, String> resultMap = new HashMap<>();
 		resultMap.put("result", result);
 		return resultMap;
