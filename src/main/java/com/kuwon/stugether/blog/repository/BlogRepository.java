@@ -30,4 +30,6 @@ public interface BlogRepository {
 							, @Param("name") String name);
 	
 	public String selectCategoryNameById(@Param("categoryId") int categoryId);
+	
+	public int deletePostById(@Param("postId") int postId);
 }

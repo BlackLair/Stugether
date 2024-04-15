@@ -120,4 +120,18 @@ public class FileManager {
 		return targetPath.replace(FILE_UPLOAD_PATH, "");
 	}
 	
+	// 저장된 파일 삭제
+	public static void deleteImage(String imagePath) {
+		if(imagePath == null) {
+			return;
+		}
+		String fullFilePath = FILE_UPLOAD_PATH + imagePath.replace("/images", "");
+		File targetFolder = new File(fullFilePath);
+		File[] files = targetFolder.listFiles();
+		
+		for(File file : files) {
+			file.delete();
+		}
+		targetFolder.delete();
+	}
 }

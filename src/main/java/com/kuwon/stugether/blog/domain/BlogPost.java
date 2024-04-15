@@ -13,6 +13,7 @@ public class BlogPost {
 	private int blogCategoryId;
 	private String title;
 	private String content;
+	private String imagePath;
 	private Date createdAt;
 	private Date updatedAt;
 }

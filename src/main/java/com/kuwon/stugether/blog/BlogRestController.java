@@ -4,14 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kuwon.stugether.blog.domain.BlogPost;
+import com.kuwon.stugether.blog.dto.BlogPostInfo;
 import com.kuwon.stugether.blog.service.BlogService;
-import com.kuwon.stugether.common.FileManager;
-import com.kuwon.stugether.editor.service.EditorService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -36,9 +37,20 @@ public class BlogRestController {
 		resultMap.put("postId", post.getId());
 		return resultMap;
 	}
+	
+	// 게시물 삭제
+	@DeleteMapping("/remove-post")
+	public Map<String, String> removePost(@RequestParam("postId") int postId
+										, HttpSession session){
+		int userId = (int)session.getAttribute("userId");
+		BlogPostInfo postInfo = blogService.getBlogPost(postId);
+		String result = "";
+		if(userId == postInfo.getUserId()) {
+			result = blogService.removePost(postId);
+		}
 		Map<String, String> resultMap = new HashMap<>();
-		String result = blogService.addPost(cotegoryId, title, content, userId, editorToken);
 		resultMap.put("result", result);
 		return resultMap;
 	}
+	
 }

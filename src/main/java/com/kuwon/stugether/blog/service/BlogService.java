@@ -108,4 +108,17 @@ public class BlogService {
 		// 결과 반환
 		return "success";
 	}
+	
+	// 게시물 삭제 작업
+	public String removePost(int postId) {
+		BlogPost post = blogRepository.selectBlogPostById(postId);
+		if(post == null) {
+			return "not exist";
+		}
+		String imagePath = post.getImagePath();
+		if(blogRepository.deletePostById(postId) == 1) {
+			FileManager.deleteImage(imagePath);
+		}
+		return "success";
+	}
 }

@@ -62,6 +62,7 @@
   			, `blogCategoryId`
   			, `title`
   			, `content`
+  			, `imagePath`
   			, `createdAt`
   			, `updatedAt`
   		FROM
@@ -109,6 +110,7 @@
   			, `blogCategoryId`
   			, `title`
   			, `content`
+  			, `imagePath`
   			, `createdAt`
   			, `updatedAt`
   		FROM
@@ -138,4 +140,10 @@
   		WHERE
   			`id` = #{categoryId};
   	</select>
+  	<delete id="deletePostById" parameterType="int">
+  		DELETE FROM
+  			`blog_post`
+  		WHERE
+  			`id` = #{postId};
+  	</delete>
   </mapper>

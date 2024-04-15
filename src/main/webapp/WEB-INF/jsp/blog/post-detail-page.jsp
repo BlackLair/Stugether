@@ -76,8 +76,10 @@
 								<div><fmt:formatDate value="${blogPost.createdAt }" pattern="yyyy-MM-dd HH:mm:ss"/></div>
 								<div>글 번호 : ${blogPost.id }</div>
 								<div class="d-flex">
-									<button type="button">수정</button>
-									<button type="button">삭제</button>
+									<c:if test="${userId eq ownerDTO.id }">
+										<button type="button">수정</button>
+										<button id="deleteBtn" type="button">삭제</button>
+									</c:if>
 								</div>
 							</div>
 						</div>
@@ -114,10 +116,33 @@
 			</div>
 		</section>
 	</div>
-	
+	<input id="postData" type="text" data-user-id="${userId }" data-post-id="${blogPost.id }" data-category-id="${blogPost.blogCategoryId }" hidden="true" >
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-		
+
+<script>
+	$(document).ready(function(){
+		$("#deleteBtn").on("click", function(){
+			let id = Number($("#postData").data("post-id"));
+			let userId = Number($("#postData").data("user-id"));
+			let categoryId = Number($("#postData").data("category-id"));
+			if(confirm("정말 삭제하시겠습니까?")){
+				$.ajax({
+					url: "/blog/remove-post"
+					, type: "DELETE"
+					, data:{postId: id}
+					, success:function(data){
+						if(data.result == "success"){
+							alert("삭제되었습니다.");
+							location.href = "/blog/list-page?category=" + categoryId + "&userId=" + userId;
+						}
+					}
+				});
+			}
+		});
+	});
+</script>
+
 </body>
 </html>
