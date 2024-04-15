@@ -12,36 +12,17 @@ import com.kuwon.stugether.blog.dto.BlogCategoryDTO;
 import com.kuwon.stugether.blog.dto.BlogCategoryDetail;
 import com.kuwon.stugether.blog.dto.BlogPostInfo;
 import com.kuwon.stugether.blog.repository.BlogRepository;
+import com.kuwon.stugether.blog.repository.CategoryRepository;
 import com.kuwon.stugether.common.FileManager;
 
 @Service
 public class BlogService {
 	@Autowired
 	BlogRepository blogRepository;
+	@Autowired
+	CategoryRepository categoryRepository;
 
-	// 블로그 카테고리 목록 로드
-	public BlogCategoryDTO getBlogCategoryList(int userId){
-		List<BlogCategory> blogCategoryList = blogRepository.selectBlogCategoryList(userId);
-		List<BlogCategoryDetail> blogCategoryDetailList = new ArrayList<BlogCategoryDetail>();
-		BlogCategoryDTO blogCategoryDTO = new BlogCategoryDTO();
-		int allPostCount = 0;
-		for(BlogCategory blogCategory : blogCategoryList) {
-			BlogCategoryDetail blogCategoryDetail = new BlogCategoryDetail();
-			blogCategoryDetail.setId(blogCategory.getId());
-			blogCategoryDetail.setName(blogCategory.getName());
-			blogCategoryDetail.setPostCount(blogRepository.selectPostCountByCategory(blogCategory.getUserId(), blogCategory.getId()));
-			blogCategoryDetailList.add(blogCategoryDetail);
-			allPostCount += blogCategoryDetail.getPostCount();
-		}
-		blogCategoryDTO.setBlogCategoryDetailList(blogCategoryDetailList);
-		blogCategoryDTO.setAllPostCount(allPostCount);
-		return blogCategoryDTO;
-	}
 	
-	// 카테고리 이름 가져오기
-	public String getBlogCategoryName(int categoryId) {
-		return blogRepository.selectCategoryNameById(categoryId);
-	}
 	
 	
 	//  블로그 글 목록 로드
@@ -49,7 +30,7 @@ public class BlogService {
 		List<BlogPostInfo> blogPostInfoList = new ArrayList<>();
 		List<BlogPost> blogPostList;
 		if(categoryId == null)
-			blogPostList = blogRepository.selectAllBlogPost(userId, (page - 1) * 10);
+			blogPostList = blogRepository.selectAllBlogPostLIMIT(userId, (page - 1) * 10);
 		else {
 			blogPostList = blogRepository.selectBlogPostByCategoryId(userId, categoryId, (page - 1) * 10);
 		}
@@ -75,7 +56,7 @@ public class BlogService {
 		postInfo.setTitle(post.getTitle());
 		postInfo.setUserId(post.getUserId());
 		postInfo.setBlogCategoryId(post.getBlogCategoryId());
-		postInfo.setCategoryName(blogRepository.selectCategoryNameById(postInfo.getBlogCategoryId()));
+		postInfo.setCategoryName(categoryRepository.selectBlogCategoryNameById(postInfo.getBlogCategoryId()));
 		postInfo.setContent(post.getContent());
 		postInfo.setCreatedAt(post.getCreatedAt());
 		return postInfo;
@@ -84,7 +65,7 @@ public class BlogService {
 	// 게시글 등록 작업
 	public String addPost(int categoryId, String title, String content, int userId, String editorToken, BlogPost post) {
 		// 카테고리 존재 유무 확인
-		if(blogRepository.selectBlogCategory(userId, categoryId) == null) {
+		if(categoryRepository.selectBlogCategory(userId, categoryId) == null) {
 			return "category not exist";
 		}
 		

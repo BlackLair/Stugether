@@ -40,7 +40,7 @@
 										<div class="d-flex align-items-center">
 											<a class="nav-link nav-link-style" href="/blog/list-page?userId=${ownerDTO.id }&category=${category.id}">${category.name } (${category.postCount })</a>
 											<c:if test="${userId eq ownerDTO.id }">
-												<button type="button" class="btn-danger" style="width:25px; height:25px; font-size:10px;" >
+												<button type="button" data-category-id="${category.id }" class="btn-danger removeCategoryBtn edit-category" style="width:25px; height:25px; font-size:10px;" >
 													<i class="bi bi-folder-minus"></i>
 												</button>
 											</c:if>
@@ -49,18 +49,17 @@
 								</c:forEach>
 							</ul>
 							<c:if test="${userId eq ownerDTO.id }">
-								<div class="d-flex align-items-center mx-3 my-3">
-									<div class="col-8"><input type="text" class="form-control"></div>
-									<button type="button" class="btn-success mx-2" style="width:25px; height:25px; font-size:10px;" font-size:10px;">
+								<div class="d-flex align-items-center mx-3 my-3 edit-category">
+									<div class="col-8"><input id="newCategoryInput" type="text" class="form-control"></div>
+									<button type="button" id="addCategoryBtn" class="btn-success mx-2" style="width:25px; height:25px; font-size:10px;" font-size:10px;">
 										<i class="bi bi-folder-plus"></i>
 									</button>		
 								</div>
 							</c:if>
 						</div>
 						<c:if test="${userId eq ownerDTO.id }">
-							<div class="d-flex justify-content-between">
+							<div class="d-flex justify-content-start">
 									<button onClick="location.href = '/blog/upload-page';" type="button" class="btn btn-sm btn-primary">글쓰기</button>
-									<button type="button" class="btn btn-sm btn-danger">카테고리 편집</button>
 							</div>
 						</c:if>
 					</div>
@@ -98,6 +97,14 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-		
+<script src="/static/js/blog/blogCategoryEdit.js"></script>
+
+
+<script>
+	$(document).ready(function(){
+		addCategoryUIEvent();
+	});
+</script>
+
 </body>
 </html>

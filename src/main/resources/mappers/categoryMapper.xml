@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.kuwon.stugether.blog.repository.CategoryRepository">
+	<select id="selectBlogCategoryList" parameterType="int"
+  	resultType="com.kuwon.stugether.blog.domain.BlogCategory">
+  		SELECT
+  			`id`
+  			, `userId`
+  			, `name`
+  			, `createdAt`
+  			, `updatedAt`
+  		FROM
+  			`blog_category`
+  		WHERE
+  			`userId` = #{userId};
+  	</select>
+  	<select id="selectBlogCategory" parameterType="map"
+  	resultType="com.kuwon.stugether.blog.domain.BlogCategory">
+  		SELECT
+  			`id`
+  			, `userId`
+  			, `name`
+  			, `createdAt`
+  			, `updatedAt`
+  		FROM
+  			`blog_category`
+  		WHERE
+  			`id` = #{categoryId}
+  		AND `userId` = #{userId};
+  	</select>
+  	<insert id="insertBlogCategory" parameterType="map">
+  		INSERT INTO
+  			`blog_category`
+  		(
+  			`userId`
+  			, `name`
+  		)
+  		VALUE
+  		(
+  			#{userId}
+  			, #{name}
+  		)
+  	</insert>
+  	<select id="selectBlogCategoryNameById" parameterType="int"
+  	resultType="string">
+  		SELECT
+  			`name`
+  		FROM
+  			`blog_category`
+  		WHERE
+  			`id` = #{categoryId};
+  	</select>
+  	<select id="selectBlogCategoryByUserIdAndName" parameterType="map">
+  		SELECT
+  			count(*)
+  		FROM
+  			`blog_category`
+  		WHERE
+  			`userId` = #{userId}
+  		AND `name` = #{name};
+  	</select>
+  	<delete id="deleteBlogCategoryById" parameterType="map">
+  		DELETE FROM
+  			`blog_category`
+  		WHERE
+  			`id` = #{categoryId}
+  		AND `userId` = #{userId};
+  	</delete>
+ </mapper>
