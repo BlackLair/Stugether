@@ -19,7 +19,7 @@ public class FileManager {
 	public final static String TYPE_QUESTION = "question";
 	
 	// summernote 이미지 작성 시 임시 파일 저장
-	public static String saveTempFile(MultipartFile file, int userId, String editorToken) {
+	public static String saveTempImage(MultipartFile file, int userId, String editorToken) {
 		if(file == null) {
 			return null;
 		}
@@ -65,7 +65,7 @@ public class FileManager {
 	}
 	
 	// 업로드된 게시물 사진 저장
-	public static boolean saveImage(int userId, String type, String currentTime, String editorToken) {
+	public static String saveImage(int userId, String type, String currentTime, String editorToken) {
 		String tempPath = FILE_UPLOAD_PATH + "/temp/" + userId + "_" + editorToken + "/"; // 임시 이미지 파일 경로
 		String targetPath = FILE_UPLOAD_PATH + "/" + type + "/" + userId + "_" + currentTime + "/"; // 이미지가 저장될 경로
 		File folder1 = new File(tempPath);
@@ -73,12 +73,16 @@ public class FileManager {
 		if(!folder1.exists()) {
 			folder1.mkdir();
 		}
+		
+		
+		File[] target_file = folder1.listFiles(); // 복사할 파일들을 가져옴
+		if(target_file.length == 0) {
+			folder1.delete();
+			return null;
+		}
 		if(!folder2.exists()) {
 			folder2.mkdir();
 		}
-		
-		File[] target_file = folder1.listFiles(); // 복사할 파일들을 가져옴
-		
 		for(File file : target_file) { // 각 파일 복사
 			File temp = new File(folder2.getAbsolutePath() + File.separator + file.getName());
 			
@@ -98,21 +102,22 @@ public class FileManager {
 	                }
 	            } catch (Exception e) {
 	                e.printStackTrace();
-	                return false;
+	                return null;
 	            } finally {
 	                try {
 	                    fis.close();
 	                    fos.close();
 	                } catch (IOException e) {
 	                    e.printStackTrace();
-	                    return false;
+	                    return null;
 	                }
 	            }
 	            file.delete(); // 파일 복사 후 임시 폴더에 있던 파일 삭제
 			}
 		}
 		folder1.delete(); // 임시 폴더에 있던 사용자 폴더 삭제
-		return true;
+		
+		return targetPath.replace(FILE_UPLOAD_PATH, "");
 	}
 	
 }

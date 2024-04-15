@@ -69,6 +69,7 @@ public class BlogService {
 	// 블로그 게시글 1개 정보 로드
 	public BlogPostInfo getBlogPost(int postId) {
 		BlogPost post = blogRepository.selectBlogPostById(postId);
+		if(post == null) return null;
 		BlogPostInfo postInfo = new BlogPostInfo();
 		postInfo.setId(postId);
 		postInfo.setTitle(post.getTitle());
@@ -81,7 +82,7 @@ public class BlogService {
 	}
 	
 	// 게시글 등록 작업
-	public String addPost(int categoryId, String title, String content, int userId, String editorToken) {
+	public String addPost(int categoryId, String title, String content, int userId, String editorToken, BlogPost post) {
 		// 카테고리 존재 유무 확인
 		if(blogRepository.selectBlogCategory(userId, categoryId) == null) {
 			return "category not exist";
@@ -91,13 +92,19 @@ public class BlogService {
 		String currentTime = System.currentTimeMillis() + "";
 		content = content.replaceAll("/temp/" + userId + "_" + editorToken, "/blog/" + userId + "_" + currentTime);
 		
-		// 글 정보를 DB에 저장
-		if(blogRepository.insertPost(userId, categoryId, title, content) == 0) {
+		
+		// 글에 포함된 이미지 파일들을 임시 폴더에서 보관 폴더로 이동, 글 정보를 DB에 저장
+		String filePath = FileManager.saveImage(userId, FileManager.TYPE_BLOG, currentTime, editorToken);
+		post.setUserId(userId);
+		post.setBlogCategoryId(categoryId);
+		post.setTitle(title);
+		post.setContent(content);
+		post.setImagePath(filePath);
+		int count = blogRepository.insertPost(post);
+		if( count == 0) {
 			return "insert failure";
 		}
 		
-		// 글에 포함된 이미지 파일들을 임시 폴더에서 보관 폴더로 이동
-		FileManager.saveImage(userId, FileManager.TYPE_BLOG, currentTime, editorToken);
 		// 결과 반환
 		return "success";
 	}

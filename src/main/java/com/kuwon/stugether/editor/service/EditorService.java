@@ -13,7 +13,7 @@ public class EditorService {
 	BlogRepository blogRepository;
 	// 이미지 임시 업로드
 	public String uploadTempImage(MultipartFile file, int userId, String editorToken) {
-		return FileManager.saveTempFile(file, userId, editorToken);
+		return FileManager.saveTempImage(file, userId, editorToken);
 	}
 	
 	// 임시 이미지 삭제

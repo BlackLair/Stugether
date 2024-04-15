@@ -23,12 +23,19 @@ public class BlogRestController {
 	
 	// 게시글 등록
 	@PostMapping("/upload-post")
-	public Map<String, String> uploadPost(@RequestParam("categoryId") int cotegoryId
+	public Map<String, Object> uploadPost(@RequestParam("categoryId") int categoryId
 							, @RequestParam("editorToken") String editorToken
 							, @RequestParam("title") String title
 							, @RequestParam("content") String content
 							, HttpSession session){
 		int userId = (int)session.getAttribute("userId");
+		Map<String, Object> resultMap = new HashMap<>();
+		BlogPost post = new BlogPost();
+		String result = blogService.addPost(categoryId, title, content, userId, editorToken, post);
+		resultMap.put("result", result);
+		resultMap.put("postId", post.getId());
+		return resultMap;
+	}
 		Map<String, String> resultMap = new HashMap<>();
 		String result = blogService.addPost(cotegoryId, title, content, userId, editorToken);
 		resultMap.put("result", result);

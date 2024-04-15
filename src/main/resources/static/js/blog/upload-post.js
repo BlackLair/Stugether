@@ -28,6 +28,9 @@ $(document).ready(function(){
 			}
 			, success:function(data){
 				alert(data.result);
+				if(data.result == "success"){
+					location.href = "/blog/post-detail-page?postId=" + data.postId;
+				}
 			}
 			, error:function(){
 				alert("게시물 업로드 에러");

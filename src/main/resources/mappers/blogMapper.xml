@@ -32,7 +32,8 @@
   		AND `userId` = #{userId};
   	</select>
   	
-  	<insert id="insertPost" parameterType="map">
+  	<insert id="insertPost" parameterType="com.kuwon.stugether.blog.domain.BlogPost"
+  	useGeneratedKeys="true" keyProperty="id">
   		INSERT INTO
   			`blog_post`
   		(
@@ -40,13 +41,15 @@
   			, `blogCategoryId`
   			, `title`
   			, `content`
+  			, `imagePath`
   		)
   		VALUE
   		(
-  			#{userId}
-  			, #{categoryId}
-  			, #{title}
-  			, #{content}
+  			#{post.userId}
+  			, #{post.blogCategoryId}
+  			, #{post.title}
+  			, #{post.content}
+  			, #{post.imagePath}
   		);
   		
   	</insert>
