@@ -32,7 +32,7 @@
 				<main class="p-3">
 					<div class="d-flex justify-content-between align-items-start w-100">
 						<div>
-							<div>${blogPost.categoryName }</div>
+							<div><a href="/blog/list-page?userId=${ownerDTO.id }&category=${blogPost.blogCategoryId}">${blogPost.categoryName }</a></div>
 							<h2>${blogPost.title }</h2>
 						</div>
 						<div style="width:180px; border-left:1px solid black;">
