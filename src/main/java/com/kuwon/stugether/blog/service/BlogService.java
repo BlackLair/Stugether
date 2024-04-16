@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kuwon.stugether.blog.domain.BlogPost;
 import com.kuwon.stugether.blog.dto.BlogPostInfo;
 import com.kuwon.stugether.blog.repository.BlogCategoryRepository;
+import com.kuwon.stugether.blog.repository.BlogReplyRepository;
 import com.kuwon.stugether.blog.repository.BlogRepository;
 import com.kuwon.stugether.common.FileManager;
 
@@ -18,6 +19,8 @@ public class BlogService {
 	BlogRepository blogRepository;
 	@Autowired
 	BlogCategoryRepository categoryRepository;
+	@Autowired
+	BlogReplyRepository blogReplyRepository;
 
 	
 	
@@ -97,6 +100,7 @@ public class BlogService {
 		if(blogRepository.deletePostById(postId) == 1) {
 			FileManager.deleteImage(imagePath);
 		}
+		blogReplyRepository.deleteReplyByPostId(postId);
 		return "success";
 	}
 }

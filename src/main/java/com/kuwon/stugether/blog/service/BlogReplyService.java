@@ -48,4 +48,11 @@ public class BlogReplyService {
 		}
 		return replyDTOList;
 	}
+	
+	public String removeReply(int replyId, int userId) {
+		int count = blogReplyRepository.deleteReply(replyId, userId);
+		if(count == 1)
+			return "success";
+		return "failure";
+	}
 }

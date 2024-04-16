@@ -140,6 +140,27 @@
 		// 카테고리 편집 UI 이벤트 등록
 		addCategoryUIEvent();
 		
+		$(".delete-btn").on("click", function(){
+			if(!confirm("댓글을 삭제하시겠습니까?")){
+				return;
+			}
+			let replyId = $(this).val();
+			$.ajax({
+				url: "/blog/reply/remove"
+				, type: "DELETE"
+				, data:{"replyId":replyId}
+				, success:function(data){
+					if(data.result != "success"){
+						alert("댓글 삭제에 실패했습니다.");
+					}
+					location.reload();
+				}
+				, error:function(){
+					alert("댓글 삭제 에러");
+				}
+			});
+		});
+		
 		// 댓글 등록
 		$("#replyForm").on("submit", function(e){
 			e.preventDefault();

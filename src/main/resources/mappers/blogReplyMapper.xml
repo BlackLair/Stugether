@@ -34,4 +34,19 @@
   		WHERE
   			`blogPostId` = #{postId};
   	</select>
+  	
+  	<delete id="deleteReply" parameterType="map">
+  		DELETE FROM
+  			`blog_reply`
+  		WHERE
+  			`id` = #{replyId}
+  		AND `userId` = #{userId};
+  	</delete>
+  	
+  	<delete id="deleteReplyByPostId" parameterType="int">
+  		DELETE FROM
+  			`blog_reply`
+  		WHERE
+  			`blogPostId` = #{postId};
+  	</delete>
   </mapper>

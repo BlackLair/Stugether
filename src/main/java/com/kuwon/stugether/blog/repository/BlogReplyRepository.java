@@ -14,4 +14,8 @@ public interface BlogReplyRepository {
 						, @Param("content") String content);
 	
 	public List<BlogReply> selectReplyByPostId(@Param("postId") int postId);
+	
+	public int deleteReply(@Param("replyId") int replyId
+						, @Param("userId") int userId);
+	public int deleteReplyByPostId(@Param("postId") int postId);
 }
