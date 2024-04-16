@@ -15,6 +15,7 @@ import com.kuwon.stugether.user.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
+
 @RequestMapping("/user")
 @RestController
 public class UserRestController {
@@ -38,7 +39,7 @@ public class UserRestController {
 	}
 	
 	@PostMapping("/join") // 회원가입 요청
-	public Map<String, String> join( @RequestParam("loginId") String loginId
+	public Map<String, String> join(@RequestParam("loginId") String loginId
 									, @RequestParam("password") String password
 									, @RequestParam("nickname") String nickname
 									, @RequestParam("email") String email){

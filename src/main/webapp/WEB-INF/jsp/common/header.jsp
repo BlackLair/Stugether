@@ -5,6 +5,6 @@
 			<div class="h2">스터디투게더</div>
 			<div>
 				<span><b>${nickname }</b> 님 반갑습니다!</span>
-				<a href="#">로그아웃</a>
+				<a href="/user/logout">로그아웃</a>
 			</div>
 		</header>
