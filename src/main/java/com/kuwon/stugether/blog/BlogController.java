@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kuwon.stugether.blog.dto.BlogCategoryDTO;
 import com.kuwon.stugether.blog.dto.BlogPostInfo;
-import com.kuwon.stugether.blog.service.BlogService;
+import com.kuwon.stugether.blog.dto.BlogReplyDTO;
 import com.kuwon.stugether.blog.service.BlogCategoryService;
+import com.kuwon.stugether.blog.service.BlogReplyService;
+import com.kuwon.stugether.blog.service.BlogService;
 import com.kuwon.stugether.user.dto.UserDTO;
 import com.kuwon.stugether.user.service.UserService;
 
@@ -27,6 +29,8 @@ public class BlogController {
 	UserService userService;
 	@Autowired
 	BlogCategoryService categoryService;
+	@Autowired
+	BlogReplyService blogReplyService;
 	
 	@GetMapping("/my-page")
 	public String myPageView(HttpSession session) {
@@ -72,8 +76,11 @@ public class BlogController {
 		int ownerId = blogPost.getUserId();
 		UserDTO ownerDTO = userService.getUser(ownerId);
 		BlogCategoryDTO blogCategoryDTO = categoryService.getBlogCategoryList(ownerId);
-		model.addAttribute("categoryDTO", blogCategoryDTO);
+		List<BlogReplyDTO> replyDTOList = blogReplyService.getReplyList(postId);
+		
 		model.addAttribute("blogPost", blogPost);
+		model.addAttribute("categoryDTO", blogCategoryDTO);
+		model.addAttribute("replyDTOList", replyDTOList);
 		model.addAttribute("ownerDTO", ownerDTO);
 		return "blog/post-detail-page";
 	}

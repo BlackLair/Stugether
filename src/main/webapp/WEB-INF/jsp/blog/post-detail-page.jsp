@@ -89,21 +89,35 @@
 					</div>
 					<hr>
 					<div class="w-100 bg-dark text-light">
-						<div>댓글</div>
+						<div>댓글 ${replyDTOList.size() }</div>
 						<hr class="bg-white">
 						<div class="reply-div">
-							<div class="d-flex justify-content-between">
-								<div class="d-flex">
-									<div><b>나는사람</b> : </div>
-									<div>댓글 내용</div>
+							<c:forEach var="reply" items="${replyDTOList }">
+								<div class="d-flex justify-content-between">
+									<div class="d-flex justify-content-between align-items-center w-100">
+										<div class="d-flex">
+											<div><b>${reply.userNickname }</b> : </div>
+											<div>${reply.content } </div>
+										</div>
+										<div class="d-flex align-items-center">
+											<fmt:formatDate value="${reply.createdAt }" pattern="yyyy-MM-dd HH:mm:ss" />
+											<div style="width:60px;" class="mx-2">
+												<c:if test="${userId eq reply.userId }">
+													<button value="${reply.id }" type="button" class="btn btn-sm btn-danger delete-btn">삭제</button>
+												</c:if>
+											</div>
+										</div>
+									</div>
+									<!-- 삭제 버튼 여기에 추가하기 -->
 								</div>
-								<!-- 삭제 버튼 여기에 추가하기 -->
-							</div>
-							<hr class="bg-white m-1">
-							<div class="d-flex">
-								<input type="text" class="form-control reply-input">
-								<button type="button" class="form-control reply-btn">등록</button>
-							</div>
+								<hr class="bg-white m-1">
+							</c:forEach>
+							<form id="replyForm">
+								<div class="d-flex">
+									<input id="replyInput" type="text" class="form-control reply-input" placeholder="댓글을 작성하세요.">
+									<button id="replyBtn" type="submit" class="form-control reply-btn">등록</button>
+								</div>
+							</form>
 						</div>
 					</div>
 				</main>
@@ -123,19 +137,53 @@
 
 <script>
 	$(document).ready(function(){
+		// 카테고리 편집 UI 이벤트 등록
 		addCategoryUIEvent();
+		
+		// 댓글 등록
+		$("#replyForm").on("submit", function(e){
+			e.preventDefault();
+			let content = $("#replyInput").val();
+			let postId = Number($("#postData").data("post-id"));
+			if(content == ""){
+				alert("댓글 내용을 입력하세요.");
+				return;
+			}
+			$.ajax({
+				url: "/blog/reply/upload"
+				, type: "POST"
+				, data: {"postId":postId
+						, "content":content}
+				, success:function(data){
+					if(data.result == "success"){
+						location.reload();
+					}else if(data.result == "not exist"){
+						alert("존재하지 않는 게시물입니다.");
+						let userId = $("#postData").data("user-id");
+						location.href = "/blog/list-page?userId=" + Number(userId);
+					}else{
+						alert("댓글 작성 실패");
+					}
+				}
+				, error:function(data){
+					alert("댓글 작성 오류");
+				}
+			});
+		});
+		
+		// 게시물 삭제 버튼
 		$("#deleteBtn").on("click", function(){
-			let id = Number($("#postData").data("post-id"));
-			let userId = Number($("#postData").data("user-id"));
+			let postId = Number($("#postData").data("post-id"));
 			let categoryId = Number($("#postData").data("category-id"));
 			if(confirm("정말 삭제하시겠습니까?")){
 				$.ajax({
 					url: "/blog/remove-post"
 					, type: "DELETE"
-					, data:{"postId": id}
+					, data:{"postId": postId}
 					, success:function(data){
 						if(data.result == "success"){
 							alert("삭제되었습니다.");
+							let userId = $("#postData").data("user-id");
 							location.href = "/blog/list-page?category=" + categoryId + "&userId=" + userId;
 						}
 					}
