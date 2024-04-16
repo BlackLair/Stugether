@@ -27,9 +27,10 @@ $(document).ready(function(){
 				, "type" : postType
 			}
 			, success:function(data){
-				alert(data.result);
 				if(data.result == "success"){
 					location.href = "/blog/post-detail-page?postId=" + data.postId;
+				}else{
+					alert("게시물 업로드 실패");
 				}
 			}
 			, error:function(){
