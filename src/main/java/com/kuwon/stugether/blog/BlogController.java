@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kuwon.stugether.blog.dto.BlogCategoryDTO;
 import com.kuwon.stugether.blog.dto.BlogPostInfo;
 import com.kuwon.stugether.blog.service.BlogService;
-import com.kuwon.stugether.blog.service.CategoryService;
+import com.kuwon.stugether.blog.service.BlogCategoryService;
 import com.kuwon.stugether.user.dto.UserDTO;
 import com.kuwon.stugether.user.service.UserService;
 
@@ -26,7 +26,7 @@ public class BlogController {
 	@Autowired
 	UserService userService;
 	@Autowired
-	CategoryService categoryService;
+	BlogCategoryService categoryService;
 	
 	@GetMapping("/my-page")
 	public String myPageView(HttpSession session) {

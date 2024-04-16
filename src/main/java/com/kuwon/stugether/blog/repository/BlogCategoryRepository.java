@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.kuwon.stugether.blog.domain.BlogCategory;
 
 @Mapper
-public interface CategoryRepository {
+public interface BlogCategoryRepository {
 	public List<BlogCategory> selectBlogCategoryList(@Param("userId") int userId);
 	public BlogCategory selectBlogCategory(@Param("userId") int userId
 			, @Param("categoryId") int categoryId);

@@ -10,22 +10,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kuwon.stugether.blog.service.CategoryService;
+import com.kuwon.stugether.blog.service.BlogCategoryService;
 
 import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/blog/category")
 @RestController
-public class CategoryRestController {
+public class BlogCategoryRestController {
 	@Autowired
-	CategoryService categoryService;
+	BlogCategoryService blogCategoryService;
 	
 	@PostMapping("/add")
 	public Map<String, String> addCategory(@RequestParam("name") String name
 										, HttpSession session){
 		int userId = (int)session.getAttribute("userId");
 		Map<String, String> resultMap = new HashMap<>();
-		resultMap.put("result", categoryService.addCategory(userId, name));
+		resultMap.put("result", blogCategoryService.addCategory(userId, name));
 		return resultMap;
 	}
 	
@@ -34,7 +34,7 @@ public class CategoryRestController {
 											, HttpSession session){
 		int userId = (int)session.getAttribute("userId");
 		Map<String, String> resultMap = new HashMap<>();
-		String result = categoryService.removeCategory(userId, categoryId);
+		String result = blogCategoryService.removeCategory(userId, categoryId);
 		resultMap.put("result", result);
 		return resultMap;
 	}

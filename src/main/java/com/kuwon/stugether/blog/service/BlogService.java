@@ -6,13 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kuwon.stugether.blog.domain.BlogCategory;
 import com.kuwon.stugether.blog.domain.BlogPost;
-import com.kuwon.stugether.blog.dto.BlogCategoryDTO;
-import com.kuwon.stugether.blog.dto.BlogCategoryDetail;
 import com.kuwon.stugether.blog.dto.BlogPostInfo;
+import com.kuwon.stugether.blog.repository.BlogCategoryRepository;
 import com.kuwon.stugether.blog.repository.BlogRepository;
-import com.kuwon.stugether.blog.repository.CategoryRepository;
 import com.kuwon.stugether.common.FileManager;
 
 @Service
@@ -20,7 +17,7 @@ public class BlogService {
 	@Autowired
 	BlogRepository blogRepository;
 	@Autowired
-	CategoryRepository categoryRepository;
+	BlogCategoryRepository categoryRepository;
 
 	
 	

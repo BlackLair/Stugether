@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kuwon.stugether.blog.repository.BlogRepository;
-import com.kuwon.stugether.blog.repository.CategoryRepository;
+import com.kuwon.stugether.blog.repository.BlogCategoryRepository;
 import com.kuwon.stugether.common.EncryptUtils;
 import com.kuwon.stugether.common.RegExpUtils;
 import com.kuwon.stugether.user.domain.User;
@@ -18,7 +18,7 @@ public class UserService {
 	@Autowired
 	BlogRepository blogRepository;
 	@Autowired
-	CategoryRepository categoryRepository;
+	BlogCategoryRepository categoryRepository;
 	
 	// 중복 아이디 검사
 	public boolean checkDuplicatedId(String loginId) {
