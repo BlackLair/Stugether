@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 				<aside>
 					<div class="category-box bg-secondary d-flex flex-column justify-content-between">
 						<div class="p-1">
@@ -12,7 +14,7 @@
 										<div class="d-flex align-items-center">
 											<a class="nav-link nav-link-style" href="/blog/list-page?userId=${ownerDTO.id }&category=${category.id}">${category.name } (${category.postCount })</a>
 											<c:if test="${userId eq ownerDTO.id }">
-												<button type="button" class="btn-danger edit-category" style="width:25px; height:25px; font-size:10px;" >
+												<button type="button" data-category-id="${category.id }" class="btn-danger removeCategoryBtn edit-category" style="width:25px; height:25px; font-size:10px;" >
 													<i class="bi bi-folder-minus"></i>
 												</button>
 											</c:if>
@@ -22,17 +24,16 @@
 							</ul>
 							<c:if test="${userId eq ownerDTO.id }">
 								<div class="d-flex align-items-center mx-3 my-3 edit-category">
-									<div class="col-8"><input type="text" class="form-control edit-category"></div>
-									<button type="button" class="btn-success mx-2 edit-category" style="width:25px; height:25px; font-size:10px; font-size:10px;">
+									<div class="col-8"><input id="newCategoryInput" type="text" class="form-control"></div>
+									<button type="button" id="addCategoryBtn" class="btn-success mx-2" style="width:25px; height:25px; font-size:10px;" font-size:10px;">
 										<i class="bi bi-folder-plus"></i>
 									</button>		
 								</div>
 							</c:if>
 						</div>
 						<c:if test="${userId eq ownerDTO.id }">
-							<div class="d-flex justify-content-between">
+							<div class="d-flex justify-content-start">
 									<button onClick="location.href = '/blog/upload-page';" type="button" class="btn btn-sm btn-primary">글쓰기</button>
-									<button type="button" class="btn btn-sm btn-danger">카테고리 편집</button>
 							</div>
 						</c:if>
 					</div>
