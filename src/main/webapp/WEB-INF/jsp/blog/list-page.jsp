@@ -29,9 +29,9 @@
 			</div>
 			<div class="d-flex justify-content-between my-3">
 				<jsp:include page="/WEB-INF/jsp/blog/blog-category.jsp" />
-				<main class="p-3 text-center">
+				<main class="p-3">
 					<div class="h2">${categoryName }</div>
-					<table class="table">
+					<table class="table text-center">
 						<thead>
 							<tr>
 								<th>No.</th>
