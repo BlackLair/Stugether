@@ -10,7 +10,7 @@ spring:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
   application:
-    name: Memo
+    name: Stugether
 
 mybatis:
   mapper-locations: mappers/*Mapper.xml
