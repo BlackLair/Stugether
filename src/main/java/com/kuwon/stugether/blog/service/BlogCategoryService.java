@@ -32,13 +32,16 @@ public class BlogCategoryService {
 				BlogCategoryDetail blogCategoryDetail = new BlogCategoryDetail();
 				blogCategoryDetail.setId(blogCategory.getId());
 				blogCategoryDetail.setName(blogCategory.getName());
-				blogCategoryDetail.setPostCount(blogRepository.selectPostCountByCategory(blogCategory.getUserId(), blogCategory.getId()));
+				blogCategoryDetail.setPostCount(getBlogCategoryPostCount(blogCategory.getUserId(), blogCategory.getId()));
 				blogCategoryDetailList.add(blogCategoryDetail);
 				allPostCount += blogCategoryDetail.getPostCount();
 			}
 			blogCategoryDTO.setBlogCategoryDetailList(blogCategoryDetailList);
 			blogCategoryDTO.setAllPostCount(allPostCount);
 			return blogCategoryDTO;
+		}
+		public int getBlogCategoryPostCount(int userId, int categoryId) {
+			return blogRepository.selectPostCountByCategory(userId, categoryId);
 		}
 		
 		// 카테고리 이름 가져오기

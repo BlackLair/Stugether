@@ -10,4 +10,6 @@ import lombok.Setter;
 public class BlogCategoryDTO {
 	private List<BlogCategoryDetail> blogCategoryDetailList;
 	private int allPostCount;
+	private int currentPages;
+	private Integer currentCategoryId;
 }

@@ -29,7 +29,7 @@
 			</div>
 			<div class="d-flex justify-content-between my-3">
 				<jsp:include page="/WEB-INF/jsp/blog/blog-category.jsp" />
-				<main class="p-3">
+				<main class="p-3 text-center">
 					<div class="h2">${categoryName }</div>
 					<table class="table">
 						<thead>
@@ -49,6 +49,11 @@
 							</c:forEach>
 						</tbody>
 					</table>
+					<div class="page-div d-flex w-100 justify-content-center">
+						<c:forEach var="i" begin="1" end="${categoryDTO.currentPages }" step="1">
+							<a class="mx-2" href="/blog/list-page?userId=${ownerDTO.id }&category=${categoryDTO.currentCategoryId}&page=${i}">${i } </a>
+						</c:forEach>
+					</div>
 				</main>
 				<div>
 					<div class="widget-box bg-danger">

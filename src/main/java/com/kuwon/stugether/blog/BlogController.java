@@ -47,15 +47,21 @@ public class BlogController {
 		// 추후 회원 존재 여부 확인 기능 추가
 		UserDTO ownerDTO = userService.getUser(ownerId);
 		BlogCategoryDTO blogCategoryDTO = categoryService.getBlogCategoryList(ownerId);
-		model.addAttribute("categoryDTO", blogCategoryDTO);
-		model.addAttribute("ownerDTO", ownerDTO);
+		
 		List<BlogPostInfo> blogPostInfoList = blogService.getBlogPostList(ownerId, category, page);
 		if(category != null) {
 			String categoryName = categoryService.getBlogCategoryName(category);
+			int pages = categoryService.getBlogCategoryPostCount(ownerId, category) / 10 + 1;
+			blogCategoryDTO.setCurrentPages(pages);
 			model.addAttribute("categoryName", categoryName);
 		}else {
+			int pages = blogCategoryDTO.getAllPostCount() / 10 + 1;
+			blogCategoryDTO.setCurrentPages(pages);
 			model.addAttribute("categoryName", "전체 글");
 		}
+		blogCategoryDTO.setCurrentCategoryId(category);
+		model.addAttribute("categoryDTO", blogCategoryDTO);
+		model.addAttribute("ownerDTO", ownerDTO);
 		model.addAttribute("postList", blogPostInfoList);
 		return "blog/list-page";
 	}
