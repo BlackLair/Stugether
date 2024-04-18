@@ -42,7 +42,7 @@
 						</div>
 					</div>
 					<hr>
-					<div style="overflow-y:auto;" class="article w-100">
+					<div style="overflow-y:auto;" class="article w-100 card card-body">
 						${blogPost.content }
 					</div>
 					<hr>
