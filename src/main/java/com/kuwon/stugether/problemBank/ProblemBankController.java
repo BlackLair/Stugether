@@ -19,4 +19,12 @@ public class ProblemBankController {
 		
 		return "problemBank/my-problem-page";
 	}
+	
+	@GetMapping("/problem-detail-page")
+	public String problemDetailView(@RequestParam("problemId") int problemId
+								, HttpSession session, Model model) {
+		int userId = (int) session.getAttribute("userId");
+		
+		return "problemBank/problem-detail-page";
+	}
 }

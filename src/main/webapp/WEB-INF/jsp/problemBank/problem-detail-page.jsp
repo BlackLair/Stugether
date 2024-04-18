@@ -19,50 +19,35 @@
 		<section class="p-3 bg-dark">
 			<div class="d-flex justify-content-center">
 				<div style="width:800px;" class="bg-white p-3 d-flex flex-column align-items-center">
-					<h2>나의 문제 모음</h2>
+					<h2>문제 상세보기</h2>
 					<jsp:include page="/WEB-INF/jsp/problemBank/problem-bank-menu.jsp" />
-					<table style="width:700px;" class="table my-3">
-						<thead>
-							<tr>
-								<th>문제 번호</th>
-								<th>문제 제목</th>
-								<th>유형</th>
-								<th>제작자</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>1</td>
-								<td><a href="#">피보나치 수열</a></td>
-								<td>주관식</td>
-								<td>제작자명</td>
-								<td>
-									<button type="button" class="btn btn-sm btn-danger">삭제</button>
-								</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td><a href="#">고속 푸리에 변환</a></td>
-								<td>주관식</td>
-								<td>제작자명</td>
-								<td>
-									<button type="button" class="btn btn-sm btn-danger">삭제</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<div class="page-div d-flex w-100 justify-content-center">
-						<nav class="d-flex justify-content-center">
-							<ul class="pagination pagination-sm">
-								<li class="page-item">
-									<a class="page-link" href="#">1</a>
-								</li>
-							</ul>
-						</nav>
-					</div>
-					<div class="d-flex w-100 justify-content-end">
-						<button type="button" class="btn btn-primary">문제 추가</button>
+					<div class="my-3 p-3 d-flex flex-column" style="width:700px; background-color:#DDDDDD;">
+						<div class="d-flex justify-content-between">
+							<h2>#1 : 피보나치 수열</h2>
+							<div>제작자 : 테스트1<br>유형 : 객관식</div>
+						</div>
+						<hr>
+						<h4>문제</h4>
+						<div class="bg-white card card-body">
+							다음 중 N번째 피보나치 수열을 구할 때 가장 비효율적인 방식은 무엇인가?
+						</div>
+						<hr>
+						<h4>보기</h4>
+						<div class="bg-white card card-body">
+							1. DP 풀이<br>
+							2. 재귀 함수 풀이<br>
+							3. 일반항 풀이
+						</div>
+						<hr>
+						<button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#collapseExample">정답 및 풀이 보기</button>
+						<div class="collapse" id="collapseExample">
+							<div class="card card-body">
+								정답 : 2. 재귀 함수 풀이<br>
+								재귀 함수를 통해 피보나치 수열을 구하게 되면 시간 복잡도가 O(2^N)이므로 매우 비효율적이다.
+							</div>
+						</div>
+						<hr>
+						<button type="button" class="btn btn-dark">뒤로 가기</button>
 					</div>
 				</div>
 			</div>
