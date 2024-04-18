@@ -16,15 +16,7 @@
 <body>
 	<div id="wrap">
 		<jsp:include page="/WEB-INF/jsp/common/header.jsp" />
-		<nav class="bg-secondary d-flex justify-content-around align-items-center">
-			<ul class="nav nav-fill w-100">
-				<li class="nav-item"><a class="nav-link nav-link-style" href="#">블로그</a></li>
-				<li class="nav-item"><a class="nav-link nav-link-style" href="#">그룹</a></li>
-				<li class="nav-item"><a class="nav-link nav-link-style" href="#">문제 은행</a></li>
-				<li class="nav-item"><a class="nav-link nav-link-style" href="#">질문과 답변</a></li>
-				<li class="nav-item"><a class="nav-link nav-link-style" href="#">계정 관리</a></li>
-			</ul>
-		</nav>
+		<jsp:include page="/WEB-INF/jsp/common/menu.jsp" />
 		<section class="p-3 bg-dark">
 			<div class="sub-header bg-info d-flex align-items-center justify-content-center">
 				<span class="h2">${ownerDTO.nickname }의 블로그</span>
@@ -70,6 +62,7 @@
 				</div>
 			</div>
 		</section>
+		<jsp:include page="/WEB-INF/jsp/common/footer.jsp" />
 	</div>
 	
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
