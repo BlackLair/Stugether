@@ -36,7 +36,7 @@ public class BlogController {
 	@Autowired
 	BlogMemoService blogMemoService;
 	
-	@GetMapping("/my-page")
+	@GetMapping("/home-page")
 	public String myPageView(HttpSession session) {
 		int userId = (int)session.getAttribute("userId");
 		return "redirect:/blog/list-page?userId=" + userId; // 추후 변경 예정
