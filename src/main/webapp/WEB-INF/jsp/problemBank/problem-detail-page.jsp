@@ -49,7 +49,7 @@
 							</div>
 						</div>
 						<hr>
-						<button onClick="history.back()s" type="button" class="btn btn-dark">뒤로 가기</button>
+						<button onClick="history.back();" type="button" class="btn btn-dark">뒤로 가기</button>
 					</div>
 				</div>
 			</div>

@@ -57,7 +57,7 @@
 						</nav>
 					</div>
 					<div class="d-flex w-100 justify-content-end">
-						<button type="button" class="btn btn-primary">문제 추가</button>
+						<button onClick="location.href = '/problem-bank/create-problem-page';" type="button" class="btn btn-primary">문제 추가</button>
 					</div>
 				</div>
 			</div>
