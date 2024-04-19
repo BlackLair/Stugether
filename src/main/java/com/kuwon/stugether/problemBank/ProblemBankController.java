@@ -42,4 +42,9 @@ public class ProblemBankController {
 		model.addAttribute("problemDTO", problemDTO);
 		return "problemBank/problem-detail-page";
 	}
+	
+	@GetMapping("/create-problem-page")
+	public String createProblemView() {
+		return "problemBank/create-problem-page";
+	}
 }
