@@ -28,11 +28,6 @@ public class ProblemService {
 			ProblemInfoDTO problemDTO = new ProblemInfoDTO();
 			problemDTO.setId(problem.getId());
 			problemDTO.setTitle(problem.getTitle());
-			if(problem.getIsMultipleChoice() > 0)
-				problemDTO.setType("객관식");
-			else {
-				problemDTO.setType("주관식");
-			}
 			problemDTO.setUserId(problem.getUserId());
 			User user = userRepository.selectById(userId);
 			problemDTO.setUserNickname(user.getNickname());
@@ -48,7 +43,7 @@ public class ProblemService {
 	public ProblemDTO getProblem(int problemId) {
 		Problem problem = problemRepository.selectProblemById(problemId);
 		ProblemDTO problemDTO = new ProblemDTO();
-		problemDTO.setData(problem);
+		problemDTO.generateDTO(problem);
 		User user = userRepository.selectById(problem.getUserId());
 		problemDTO.setUserNickname(user.getNickname());
 		return problemDTO;

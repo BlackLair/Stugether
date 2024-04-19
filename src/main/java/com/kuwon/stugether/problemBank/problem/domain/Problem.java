@@ -13,7 +13,6 @@ public class Problem {
 	private String title;
 	private String content;
 	private String imagePath;
-	private int isMultipleChoice;
 	private String answer;
 	private String choice;
 	private String solution;

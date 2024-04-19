@@ -23,14 +23,14 @@ public class ProblemDTO {
 	private Date createdAt;
 	private Date updatedAt;
 	
-	public void setData(Problem problem) {
+	public void generateDTO(Problem problem) {
 		id = problem.getId();
 		userId = problem.getUserId();
 		title = problem.getTitle();
 		content = problem.getContent();
 		imagePath = problem.getImagePath();
 		answer = problem.getAnswer();
-		if(problem.getIsMultipleChoice() == 1) {
+		if(problem.getChoice() != null) {
 			choice = problem.getChoice().split("[#]{5}");
 			type = "객관식";
 		}else {
