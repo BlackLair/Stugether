@@ -44,12 +44,12 @@
 						<button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#collapseExample">정답 및 풀이 보기</button>
 						<div class="collapse" id="collapseExample">
 							<div class="card card-body">
-								정답 : 2. 재귀 함수 풀이<br>
-								재귀 함수를 통해 피보나치 수열을 구하게 되면 시간 복잡도가 O(2^N)이므로 매우 비효율적이다.
+								정답 : ${problemDTO.answer }<br>
+								${problemDTO.solution }
 							</div>
 						</div>
 						<hr>
-						<button onClick="history.back()" type="button" class="btn btn-dark">뒤로 가기</button>
+						<button onClick="history.back()s" type="button" class="btn btn-dark">뒤로 가기</button>
 					</div>
 				</div>
 			</div>
