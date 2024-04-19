@@ -23,22 +23,24 @@
 					<jsp:include page="/WEB-INF/jsp/problemBank/problem-bank-menu.jsp" />
 					<div class="my-3 p-3 d-flex flex-column" style="width:700px; background-color:#DDDDDD;">
 						<div class="d-flex justify-content-between">
-							<h2>#1 : 피보나치 수열</h2>
-							<div>제작자 : 테스트1<br>유형 : 객관식</div>
+							<h2>#${problemDTO.id } : ${problemDTO.title }</h2>
+							<div>제작자 : ${problemDTO.userNickname }<br>유형 : ${problemDTO.type }</div>
 						</div>
 						<hr>
 						<h4>문제</h4>
 						<div class="bg-white card card-body">
-							다음 중 N번째 피보나치 수열을 구할 때 가장 비효율적인 방식은 무엇인가?
+							${problemDTO.content }
 						</div>
 						<hr>
-						<h4>보기</h4>
-						<div class="bg-white card card-body">
-							1. DP 풀이<br>
-							2. 재귀 함수 풀이<br>
-							3. 일반항 풀이
-						</div>
-						<hr>
+						<c:if test="${problemDTO.type eq '객관식' }">
+							<h4>보기</h4>
+							<div class="bg-white card card-body">
+								<c:forEach var="option" items="${problemDTO.choice }" varStatus="status">
+									${status.count }. ${option }<br>
+								</c:forEach>
+							</div>
+							<hr>
+						</c:if>
 						<button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#collapseExample">정답 및 풀이 보기</button>
 						<div class="collapse" id="collapseExample">
 							<div class="card card-body">
@@ -47,7 +49,7 @@
 							</div>
 						</div>
 						<hr>
-						<button type="button" class="btn btn-dark">뒤로 가기</button>
+						<button onClick="history.back()" type="button" class="btn btn-dark">뒤로 가기</button>
 					</div>
 				</div>
 			</div>

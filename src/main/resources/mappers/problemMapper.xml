@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.kuwon.stugether.problemBank.problem.repository.ProblemRepository">
+	<select id="selectProblemList" parameterType="map">
+		SELECT
+			`id`
+			, `userId`
+			, `title`
+			, `content`
+			, `imagePath`
+			, `isMultipleChoice`
+			, `answer`
+			, `choice`
+			, `solution`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`problem`
+		WHERE
+			`userId` = #{userId}
+		ORDER BY
+			`id` DESC
+		LIMIT 10 OFFSET #{page};
+	</select>
+	<select id="selectProblemCount" parameterType="int">
+		SELECT
+			count(*)
+		FROM
+			`problem`
+		WHERE
+			`userId` = #{userId};
+	</select>
+	<select id="selectProblemById" parameterType="int"
+	resultType="com.kuwon.stugether.problemBank.problem.domain.Problem">
+		SELECT
+			`id`
+			, `userId`
+			, `title`
+			, `content`
+			, `imagePath`
+			, `isMultipleChoice`
+			, `answer`
+			, `choice`
+			, `solution`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`problem`
+		WHERE
+			`id` = #{problemId};
+	</select>
+</mapper>

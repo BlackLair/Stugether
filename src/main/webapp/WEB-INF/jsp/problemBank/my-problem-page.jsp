@@ -21,7 +21,7 @@
 				<div style="width:800px;" class="bg-white p-3 d-flex flex-column align-items-center">
 					<h2>나의 문제 모음</h2>
 					<jsp:include page="/WEB-INF/jsp/problemBank/problem-bank-menu.jsp" />
-					<table style="width:700px;" class="table my-3">
+					<table style="width:700px;" class="table my-3 text-center">
 						<thead>
 							<tr>
 								<th>문제 번호</th>
@@ -32,32 +32,27 @@
 							</tr>
 						</thead>
 						<tbody>
+							<c:forEach var="problem" items="${problemInfoDTOList }">
 							<tr>
-								<td>1</td>
-								<td><a href="#">피보나치 수열</a></td>
-								<td>주관식</td>
-								<td>제작자명</td>
+								<td>${problem.id }</td>
+								<td><a href="/problem-bank/problem-detail-page?problemId=${problem.id }">${problem.title }</a></td>
+								<td>${problem.type }</td>
+								<td>${problem.userNickname }</td>
 								<td>
 									<button type="button" class="btn btn-sm btn-danger">삭제</button>
 								</td>
 							</tr>
-							<tr>
-								<td>2</td>
-								<td><a href="#">고속 푸리에 변환</a></td>
-								<td>주관식</td>
-								<td>제작자명</td>
-								<td>
-									<button type="button" class="btn btn-sm btn-danger">삭제</button>
-								</td>
-							</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 					<div class="page-div d-flex w-100 justify-content-center">
 						<nav class="d-flex justify-content-center">
 							<ul class="pagination pagination-sm">
-								<li class="page-item">
-									<a class="page-link" href="#">1</a>
-								</li>
+								<c:forEach var="i" begin="1" end="${pageCount }" step="1">
+									<li class="page-item">
+										<a class="page-link" href="#">${i } </a>
+									</li>
+								</c:forEach>
 							</ul>
 						</nav>
 					</div>
