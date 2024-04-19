@@ -14,7 +14,7 @@
 										<div class="d-flex align-items-center">
 											<a class="nav-link nav-link-style" href="/blog/list-page?userId=${ownerDTO.id }&category=${category.id}">${category.name } (${category.postCount })</a>
 											<c:if test="${userId eq ownerDTO.id }">
-												<button type="button" data-category-id="${category.id }" class="btn-danger removeCategoryBtn edit-category" style="width:25px; height:25px; font-size:10px;" >
+												<button type="button" data-category-id="${category.id }" class="form-control btn-danger mx-2 btn-mini"  >
 													<i class="bi bi-folder-minus"></i>
 												</button>
 											</c:if>
