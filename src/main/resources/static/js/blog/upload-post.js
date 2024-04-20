@@ -28,7 +28,7 @@ $(document).ready(function(){
 			}
 			, success:function(data){
 				if(data.result == "success"){
-					location.href = "/blog/post-detail-page?postId=" + data.postId;
+					location.replace("/blog/post-detail-page?postId=" + data.postId);
 				}else{
 					alert("게시물 업로드 실패");
 				}

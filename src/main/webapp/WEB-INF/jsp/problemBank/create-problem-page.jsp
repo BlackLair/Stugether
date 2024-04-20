@@ -42,14 +42,14 @@
 					</div>
 					<div class="none-choice-div d-none">
 						<div class="card card-body">
-							<input type="text" class="form-control" placeholder="정답을 입력하세요.">
+							<input id="answerInput" type="text" class="form-control" placeholder="정답을 입력하세요.">
 						</div>
 					</div>
 					<div class="my-3 d-flex align-items-center">
 							<h4>문제 풀이 작성</h4>
 						</div>
 					<div class="card card-body">
-						<textarea class="form-control" type="textarea" style="height:100px; resize:none;" placeholder="문제 풀이를 입력하세요."></textarea>
+						<textarea id="solutionInput" class="form-control" type="textarea" style="height:100px; resize:none;" placeholder="문제 풀이를 입력하세요."></textarea>
 					</div>
 					<div class="d-flex justify-content-between my-3">
 						<button type="button" class="btn btn-dark">이전으로</button>
@@ -79,18 +79,72 @@
 		let choiceList = []; // 입력된 객관식 문제 선택지
 		
 		$("#uploadBtn").on("click", function(){
-			choiceList = [];
-			let answer = -1;
-			$("input:radio[name=choice]").each(function(i, elements){
-				if($(this).is(":checked")){
-					answer = i;
+			let title = $("#titleInput").val();
+			let content = $("#summernote").summernote('code');
+			let type = $("#typeSelect").val();
+			let solution = $("#solutionInput").val();
+			if(title == ""){
+				alert("제목을 입력하세요.");
+				return;
+			}
+			if(content == ""){
+				alert("내용을 입력하세요.");
+			}
+			if(solution == ""){
+				alert("풀이를 입력하세요.");
+				return;
+			}
+			
+			let choiceList = null; // 객관식 문제 보기 배열
+			let answer = "-1"; // 정답
+			if(type == "객관식"){
+				choiceList = [];
+				$("input:radio[name=choice]").each(function(i, elements){
+					if($(this).is(":checked")){
+						answer = "" + (i + 1); // 실제 정답 번호는 인덱스 + 1
+					}
+					choiceList.push("" + $(this).data("choice"));
+				});
+				if(answer == "-1"){
+					alert("정답을 선택하세요.");
+					return;
 				}
-				choiceList.push("" + $(this).data("choice"));
+			}else{
+				answer = $("#answerInput").val();
+				if(answer == ""){
+					alert("정답을 입력하세요.");
+					return;
+				}
+			}
+			$.ajax({
+				url: "/problem-bank/create-problem"
+				, type: "POST"
+				, data: {
+					"title":title
+					, "content":content
+					, "answer":answer
+					, "choice":choiceList
+					, "solution":solution
+					, "editorToken":editorToken
+				}
+				, success:function(data){
+					if(data.result == "success"){
+						let problemId = data.problemId;
+						location.href = "/problem-bank/problem-detail-page?problemId=" + problemId;
+					}else{
+						alert("문제 생성 실패");
+					}
+				}
+				, error:function(){
+					alert("문제 생성 오류");
+				}
 			});
+
 			////////////// 테스트 코드 /////////////
 			if(answer >= 0)
 				console.log("답:" + choiceList[answer] + "(" + (answer + 1) + "번)");
 			console.log(choiceList);
+			console.log($("#typeSelect").val());
 			/////////////////////////////////////
 		});
 		

@@ -13,4 +13,7 @@ public interface ProblemRepository {
 										, @Param("page") int page);
 	public int selectProblemCount(@Param("userId") int userId);
 	public Problem selectProblemById(@Param("problemId") int problemId);
+	
+	public int insertProblem(Problem problem);
+	
 }

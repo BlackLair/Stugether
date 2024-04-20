@@ -50,4 +50,28 @@
 		WHERE
 			`id` = #{problemId};
 	</select>
+	<insert id="insertProblem" parameterType="map"
+	useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+			`problem`
+		(
+			`userId`
+			, `title`
+			, `content`
+			, `imagePath`
+			, `answer`
+			, `choice`
+			, `solution`
+		)
+		VALUE
+		(
+			#{userId}
+			, #{title}
+			, #{content}
+			, #{imagePath}
+			, #{answer}
+			, #{choice}
+			, #{solution}
+		);
+	</insert>
 </mapper>
