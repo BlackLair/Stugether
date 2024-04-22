@@ -52,7 +52,7 @@
 						<textarea id="solutionInput" class="form-control" type="textarea" style="height:100px; resize:none;" placeholder="문제 풀이를 입력하세요."></textarea>
 					</div>
 					<div class="d-flex justify-content-between my-3">
-						<button type="button" class="btn btn-dark">이전으로</button>
+						<button onClick="history.back();" type="button" class="btn btn-dark">이전으로</button>
 						<button id="uploadBtn" type="button" class="btn btn-primary">등록</button>
 					</div>
 					

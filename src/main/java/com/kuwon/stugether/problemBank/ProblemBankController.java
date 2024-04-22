@@ -47,4 +47,17 @@ public class ProblemBankController {
 	public String createProblemView() {
 		return "problemBank/create-problem-page";
 	}
+	
+	@GetMapping("/my-workbook-page")
+	public String myWorkbookView(@RequestParam(value="page", required=false) Integer page
+								, HttpSession session, Model model) {
+		if(page == null) page = 1;
+		
+		return "problemBank/my-workbook-page";
+	}
+	
+	@GetMapping("/create-workbook-page")
+	public String createWorkbookView() {
+		return "problemBank/create-workbook-page";
+	}
 }
