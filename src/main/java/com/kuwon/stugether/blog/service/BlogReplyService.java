@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.HtmlUtils;
 
 import com.kuwon.stugether.blog.domain.BlogReply;
 import com.kuwon.stugether.blog.dto.BlogReplyDTO;
@@ -26,7 +27,8 @@ public class BlogReplyService {
 		if(blogRepository.selectBlogPostById(postId) == null) {
 			return "not exist";
 		}
-		int count = blogReplyRepository.insertReply(postId, userId, content);
+		String htmlEscapeContent = HtmlUtils.htmlEscape(content);
+		int count = blogReplyRepository.insertReply(postId, userId, htmlEscapeContent);
 		if(count == 1) {
 			return "success";
 		}
