@@ -16,4 +16,6 @@ public interface ProblemRepository {
 	
 	public int insertProblem(Problem problem);
 	
+	public int deleteProblem(@Param("problemId") int problemId);
+	
 }

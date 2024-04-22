@@ -74,4 +74,10 @@
 			, #{solution}
 		);
 	</insert>
+	<delete id="deleteProblem" parameterType="int">
+		DELETE FROM
+			`problem`
+		WHERE
+			`id` = #{problemId};
+	</delete>
 </mapper>

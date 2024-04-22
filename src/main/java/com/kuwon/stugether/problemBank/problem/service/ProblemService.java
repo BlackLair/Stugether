@@ -96,4 +96,26 @@ public class ProblemService {
 		}
 		return "success";
 	}
+	
+	public String removeProblem(int userId, int problemId) {
+		Problem problem = problemRepository.selectProblemById(problemId);
+		if(problem == null) {
+			return "not exist";
+		}
+		if(problem.getUserId() != userId) {
+			return "permission denied";
+		}
+		
+		String imagePath = problem.getImagePath();
+		
+		if(problemRepository.deleteProblem(problemId) == 1) {
+			FileManager.deleteImage(imagePath);
+			return "success";
+		}
+		return "failure";
+		
+		
+		
+		
+	}
 }

@@ -39,7 +39,9 @@
 								<td>${problem.type }</td>
 								<td>${problem.userNickname }</td>
 								<td>
-									<button type="button" class="btn btn-sm btn-danger">삭제</button>
+									<button value="${problem.id }" type="button" class="btn btn-sm btn-danger btn-delete">
+										<i class="bi bi-trash3-fill"></i>
+									</button>
 								</td>
 							</tr>
 							</c:forEach>
@@ -71,7 +73,34 @@
 
 
 <script>
-
+	$(document).ready(function(){
+		$(".btn-delete").on("click", function(){
+			let problemId = Number($(this).val());
+			if(confirm("정말 삭제하시겠습니까?")){
+				$.ajax({
+					url: "/problem-bank/remove-problem"
+					, type: "DELETE"
+					, data: {"problemId": problemId}
+					, success:function(data){
+						if(data.result == "success"){
+							alert("삭제되었습니다.");
+						}else if(data.result == "not exist"){
+							alert("존재하지 않는 문제입니다.");
+							
+						}else if(data.result == "permission denied"){
+							alert("삭제할 권한이 없습니다.");
+						}else{
+							alert("문제 삭제 실패");
+						}
+						location.reload();
+					}
+					, error:function(data){
+						alert("문제 삭제 에러");
+					}
+				});
+			}
+		});
+	});
 </script>
 
 </body>
