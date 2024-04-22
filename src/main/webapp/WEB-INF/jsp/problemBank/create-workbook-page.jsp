@@ -42,7 +42,8 @@
 										<i class="bi bi-trash3-fill"></i>
 									</button>
 								</td>
-								<tr>
+							</tr>
+							<tr>
 								<td>4</td>
 								<td>짱쉬운그림문제</td>
 								<td>객관식</td>
@@ -52,9 +53,20 @@
 									</button>
 								</td>
 							</tr>
-							</tr>
 						</tbody>
 					</table>
+					<div class="d-flex align-items-center">
+						<div>문제 추가</div>
+						<div class="col-4 mx-3">
+							<input type="text" class="form-control" placeholder="문제 번호를 입력하세요.">
+						</div>
+						<button type="button" class="btn btn-primary mx-3">문제 추가</button>
+						<div class="d-flex">총 문제 수 : <div id="problemCount" class="mx-2">2</div></div>
+					</div>
+					<div class="d-flex justify-content-between my-3">
+						<button type="button" class="btn btn-dark">이전으로</button>
+						<button type="button" class="btn btn-primary">문제집 생성</button>
+					</div>
 				</main>
 			</div>
 		</section>
