@@ -33,18 +33,20 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>123</td>
-								<td><a href="#">종합문제 1</a></td>
-								<td>30</td>
-								<td>만든사람천재임</td>
-								<td>87%</td>
-								<td>
-									<button value="문제집아이디" type="button" class="btn btn-sm btn-danger btn-delete">
-										<i class="bi bi-trash3-fill"></i>
-									</button>
-								</td>
-							</tr>
+							<c:forEach var="workbook" items="${workbookInfoList }">
+								<tr>
+									<td>${workbook.id }</td>
+									<td><a href="#">${workbook.title }</a></td>
+									<td>${workbook.problemCount }</td>
+									<td>${workbook.userNickname }</td>
+									<td>${workbook.myScore }/${workbook.problemCount }</td>
+									<td>
+										<button value="${workbook.id }" type="button" class="btn btn-sm btn-danger btn-delete">
+											<i class="bi bi-trash3-fill"></i>
+										</button>
+									</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 					<div class="page-div d-flex w-100 justify-content-center">
