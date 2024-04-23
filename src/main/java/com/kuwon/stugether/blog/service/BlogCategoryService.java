@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.HtmlUtils;
 
 import com.kuwon.stugether.blog.domain.BlogCategory;
 import com.kuwon.stugether.blog.domain.BlogPost;
@@ -54,7 +55,7 @@ public class BlogCategoryService {
 			if(blogCategoryRepository.selectBlogCategoryByUserIdAndName(userId, name) == 1) {
 				return "already exist";
 			}
-			if(blogCategoryRepository.insertBlogCategory(userId, name) == 1) {
+			if(blogCategoryRepository.insertBlogCategory(userId, HtmlUtils.htmlEscape(name)) == 1) {
 				return "success";
 			};
 			return "failure";

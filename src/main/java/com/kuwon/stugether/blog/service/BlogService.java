@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.HtmlUtils;
 
 import com.kuwon.stugether.blog.domain.BlogPost;
 import com.kuwon.stugether.blog.dto.BlogPostInfo;
@@ -78,7 +79,7 @@ public class BlogService {
 		String filePath = FileManager.saveImage(userId, FileManager.TYPE_BLOG, currentTime, editorToken);
 		post.setUserId(userId);
 		post.setBlogCategoryId(categoryId);
-		post.setTitle(title);
+		post.setTitle(HtmlUtils.htmlEscape(title));
 		post.setContent(content);
 		post.setImagePath(filePath);
 		int count = blogRepository.insertPost(post);
