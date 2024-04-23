@@ -66,4 +66,14 @@ public class ProblemBankController {
 	public String createWorkbookView() {
 		return "problemBank/create-workbook-page";
 	}
+	
+	@GetMapping("/workbook-test-page")
+	public String workbookTestView() {
+		return "problemBank/workbook-test-page";
+	}
+	
+	@GetMapping("/workbook-result-page")
+	public String workbookResultView() {
+		return "problemBank/workbook-result-page";
+	}
 }
