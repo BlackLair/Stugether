@@ -40,4 +40,57 @@
 			`userId` = #{userId}
 		AND `workbookId` = #{workbookId};
 	</select>
+	<insert id="insertWorkbook"
+	parameterType="com.kuwon.stugether.problemBank.workbook.domain.Workbook"
+	useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+			`workbook`
+		(
+			`userId`
+			, `title`
+		)
+		VALUE
+		(
+			#{workbook.userId}
+			, #{workbook.title}
+		);
+	</insert>
+	<insert id="insertProblem" parameterType="map">
+		INSERT INTO
+			`workbook_problem_list`
+		(
+			`workbookId`
+			, `problemId`
+		)
+		VALUE
+		(
+			#{workbookId}
+			, #{problemId}
+		);
+	</insert>
+	<select id="selectWorkbook" parameterType="int"
+	resultType="com.kuwon.stugether.problemBank.workbook.domain.Workbook">
+		SELECT
+			`id`
+			, `userId`
+			, `title`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`workbook`
+		WHERE
+			`id` = #{workbookId};
+	</select>
+	<delete id="deleteProblemFromWorkbook" parameterType="int">
+		DELETE FROM
+			`workbook_problem_list`
+		WHERE
+			`workbookId` = #{workbookId};
+	</delete>
+	<delete id="deleteWorkbook" parameterType="int">
+		DELETE FROM
+			`workbook`
+		WHERE
+			`id` = #{workbookId};
+	</delete>
 </mapper>

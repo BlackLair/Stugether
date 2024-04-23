@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.HtmlUtils;
 
 import com.kuwon.stugether.common.FileManager;
 import com.kuwon.stugether.problemBank.problem.domain.Problem;
@@ -51,6 +52,19 @@ public class ProblemService {
 	// 단일 문제 정보 가져오기
 	public ProblemDTO getProblem(int problemId) {
 		Problem problem = problemRepository.selectProblemById(problemId);
+		if(problem == null)
+			return null;
+		ProblemDTO problemDTO = new ProblemDTO();
+		problemDTO.generateDTO(problem);
+		User user = userRepository.selectById(problem.getUserId());
+		problemDTO.setUserNickname(user.getNickname());
+		return problemDTO;
+	}
+	
+	public ProblemDTO getProblem(int problemId, int userId) {
+		Problem problem = problemRepository.selectProblemByIdAndUserId(problemId, userId);
+		if(problem == null)
+			return null;
 		ProblemDTO problemDTO = new ProblemDTO();
 		problemDTO.generateDTO(problem);
 		User user = userRepository.selectById(problem.getUserId());
@@ -75,17 +89,17 @@ public class ProblemService {
 		String filePath = FileManager.saveImage(userId, FileManager.TYPE_PROBLEM, currentTime, editorToken);
 		
 		problem.setUserId(userId);
-		problem.setTitle(title);
+		problem.setTitle(HtmlUtils.htmlEscape(title));
 		problem.setImagePath(filePath);
-		problem.setSolution(solution);
+		problem.setSolution(HtmlUtils.htmlEscape(solution));
 		problem.setContent(content);
-		problem.setAnswer(answer);
+		problem.setAnswer(HtmlUtils.htmlEscape(answer));
 		String choiceStr = null;
 		if(choiceList != null) {
 			choiceStr = "";
 			for(String singleChoice : choiceList) {
 				choiceStr = choiceStr + "#####";
-				choiceStr = choiceStr + singleChoice;
+				choiceStr = choiceStr + HtmlUtils.htmlEscape(singleChoice);
 			}
 			choiceStr = choiceStr.replaceFirst("#####", "");
 		}
@@ -113,9 +127,5 @@ public class ProblemService {
 			return "success";
 		}
 		return "failure";
-		
-		
-		
-		
 	}
 }

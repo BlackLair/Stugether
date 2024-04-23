@@ -50,6 +50,25 @@
 		WHERE
 			`id` = #{problemId};
 	</select>
+	<select id="selectProblemByIdAndUserId" parameterType="map"
+	resultType="com.kuwon.stugether.problemBank.problem.domain.Problem">
+		SELECT
+			`id`
+			, `userId`
+			, `title`
+			, `content`
+			, `imagePath`
+			, `answer`
+			, `choice`
+			, `solution`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`problem`
+		WHERE
+			`id` = #{problemId}
+		AND `userId` = #{userId};
+	</select>
 	<insert id="insertProblem" parameterType="map"
 	useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO

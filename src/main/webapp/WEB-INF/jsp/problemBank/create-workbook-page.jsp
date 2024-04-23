@@ -21,7 +21,7 @@
 						<h2>문제집 생성</h2>
 					</div>
 					<div>
-						<input type="text" class="form-control" placeholder="문제집 제목을 입력하세요.">
+						<input id="titleInput" type="text" class="form-control" placeholder="문제집 제목을 입력하세요.">
 					</div>
 					<table class="table text-center">
 						<thead>
@@ -32,40 +32,20 @@
 								<th width="10%"></th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td>2</td>
-								<td>피이보나치 수열</td>
-								<td>주관식</td>
-								<td>
-									<button value="문제아이디" type="button" class="btn btn-sm btn-danger btn-delete">
-										<i class="bi bi-trash3-fill"></i>
-									</button>
-								</td>
-							</tr>
-							<tr>
-								<td>4</td>
-								<td>짱쉬운그림문제</td>
-								<td>객관식</td>
-								<td>
-									<button value="문제아이디" type="button" class="btn btn-sm btn-danger btn-delete">
-										<i class="bi bi-trash3-fill"></i>
-									</button>
-								</td>
-							</tr>
+						<tbody id="problemTbody">
 						</tbody>
 					</table>
 					<div class="d-flex align-items-center">
 						<div>문제 추가</div>
 						<div class="col-4 mx-3">
-							<input type="text" class="form-control" placeholder="문제 번호를 입력하세요.">
+							<input id="problemIdInput" type="text" class="form-control" placeholder="문제 번호를 입력하세요.">
 						</div>
-						<button type="button" class="btn btn-primary mx-3">문제 추가</button>
-						<div class="d-flex">총 문제 수 : <div id="problemCount" class="mx-2">2</div></div>
+						<button id="addProblemBtn" type="button" class="btn btn-primary mx-3">문제 추가</button>
+						<div class="d-flex">총 문제 수 : <div id="problemCount" class="mx-2">0</div></div>
 					</div>
 					<div class="d-flex justify-content-between my-3">
-						<button type="button" class="btn btn-dark">이전으로</button>
-						<button type="button" class="btn btn-primary">문제집 생성</button>
+						<button onClick="history.back();" type="button" class="btn btn-dark">이전으로</button>
+						<button id="addWorkbookBtn" type="button" class="btn btn-primary">문제집 생성</button>
 					</div>
 				</main>
 			</div>
@@ -79,7 +59,99 @@
 
 <script>
 	$(document).ready(function(){
-
+		let problemCount = 0;
+		let problemList = [];
+		function setProblemCount(offset){
+			problemCount = problemCount + offset;
+			$("#problemCount").html(problemCount);
+		}
+		function setDeleteBtnEvent(){
+			$(".btn-delete").off("click");
+			$(".btn-delete").on("click", function(){
+				let tr = $(this).parent().parent();
+				let problemId = Number($(this).val());
+				tr.remove();
+				problemList.splice(problemList.indexOf(problemId), 1);
+				setProblemCount(-1);
+			});
+		}
+		
+		$("#addWorkbookBtn").on("click", function(){
+			if(problemCount == 0){
+				alert("추가된 문제가 없습니다.");
+				return;
+			}
+			let title = $("#titleInput").val();
+			if(title == ""){
+				alert("문제집 제목을 입력하세요.");
+				return;
+			}
+			$.ajax({
+				url: "/problem-bank/create-workbook"
+				, type: "POST"
+				, data: {"title":title, "problemIdList":problemList}
+				, success:function(data){
+					if(data.result == "success"){
+						alert("문제집이 생성되었습니다.");
+						location.href = "/problem-bank/my-workbook-page";
+					}else if(data.result == "empty"){
+						alert("추가된 문제가 없습니다.");
+					}else{
+						alert("문제집 생성 실패");
+					}
+				}
+				, error:function(){
+					alert("문제집 생성 오류");
+				}
+			});
+		});
+		
+		$("#addProblemBtn").on("click", function(){
+			let problemId = $("#problemIdInput").val();
+			$("#problemIdInput").val("");
+			if(problemId == ""){
+				alert("문제 번호를 입력하세요.");
+				return;
+			}
+			if(isNaN(problemId)){
+				alert("숫자만 입력 가능합니다.");
+				return;
+			}
+			problemId = Number(problemId);
+			if(problemList.includes(problemId)){
+				alert("이미 추가한 문제입니다.");
+				return;
+			}
+			$.ajax({
+				url: "/problem-bank/problem-exist"
+				, type: "GET"
+				, data: {"problemId":problemId}
+				, success:function(data){
+					if(data.result == "success"){
+						$("#problemTbody").append(`
+								<tr data-problem-id="` + problemId + `">
+								<td>` + problemId + `</td>
+								<td>` + data.title + `</td>
+								<td>` + data.type + `</td>
+								<td>
+									<button value="` + problemId + `" type="button" class="btn btn-sm btn-danger btn-delete">
+										<i class="bi bi-trash3-fill"></i>
+									</button>
+								</td>
+								</tr>
+								`);
+						setDeleteBtnEvent();
+						setProblemCount(1);
+						problemList.push(problemId);
+					}else if(data.result == "not exist"){
+						alert("존재하지 않는 문제입니다.");
+					}
+				}
+				, error:function(data){
+					alert("문제 정보 조회 오류");
+				}
+			});
+		});
 	});
 </script>
 </body>

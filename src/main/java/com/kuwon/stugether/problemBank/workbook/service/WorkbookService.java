@@ -5,7 +5,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.util.HtmlUtils;
 
+import com.kuwon.stugether.problemBank.problem.repository.ProblemRepository;
 import com.kuwon.stugether.problemBank.workbook.domain.Workbook;
 import com.kuwon.stugether.problemBank.workbook.dto.WorkbookInfo;
 import com.kuwon.stugether.problemBank.workbook.repository.WorkbookRepository;
@@ -14,6 +17,8 @@ import com.kuwon.stugether.user.repository.UserRepository;
 
 @Service
 public class WorkbookService {
+	@Autowired
+	ProblemRepository problemRepository;
 	@Autowired
 	WorkbookRepository workbookRepository;
 	@Autowired
@@ -33,5 +38,32 @@ public class WorkbookService {
 			workbookInfoList.add(workbookInfo);
 		}
 		return workbookInfoList;
+	}
+	
+	@Transactional
+	public String addWorkbook(int userId, String title, Integer[] problemIdList, Workbook workbook) {
+		if(problemIdList == null || problemIdList.length == 0) {
+			return "empty";
+		}
+		workbook.setUserId(userId);
+		workbook.setTitle(HtmlUtils.htmlEscape(title));
+		if(workbookRepository.insertWorkbook(workbook) == 0) {
+			return "failure";
+		}
+		int workbookId = workbook.getId();
+		for(int problemId : problemIdList) {
+			workbookRepository.insertProblem(workbookId, problemId);
+		}
+		return "success";
+	}
+	
+	public String removeWorkbook(int userId, int workbookId) {
+		Workbook workbook = workbookRepository.selectWorkbook(workbookId);
+		if(workbook.getUserId() != userId) {
+			return "permission denied";
+		}
+		workbookRepository.deleteProblemFromWorkbook(workbookId);
+		workbookRepository.deleteWorkbook(workbookId);
+		return "success";
 	}
 }

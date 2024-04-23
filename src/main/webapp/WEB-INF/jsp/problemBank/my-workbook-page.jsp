@@ -77,7 +77,28 @@
 <script>
 	$(document).ready(function(){
 		$(".btn-delete").on("click", function(){
-			
+			if(!confirm("정말 삭제하시겠습니까?")){
+				return;
+			}
+			let workbookId = $(this).val();
+			$.ajax({
+				url: "/problem-bank/remove-workbook"
+				, type: "DELETE"
+				, data: {"workbookId":workbookId}
+				, success:function(data){
+					if(data.result == "success"){
+						alert("삭제되었습니다.");
+						location.reload();
+					}else if(data.result == "permission denied"){
+						alert("권한이 없습니다.");
+					}else{
+						alert("삭제 실패");
+					}
+				}
+				, error:function(){
+					alert("삭제 에러");
+				}
+			});
 		});
 	});
 </script>
