@@ -13,8 +13,7 @@ public interface WorkbookRepository {
 											, @Param("page") int page);
 	
 	public int selectProblemCountByWorkBookId(@Param("workbookId") int workbookId);
-	public Integer selectScore(@Param("workbookId") int workbookId
-						, @Param("userId") int userId);
+
 	
 	public int insertWorkbook(@Param("workbook") Workbook workbook);
 	

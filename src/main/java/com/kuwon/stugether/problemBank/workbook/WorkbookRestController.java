@@ -68,4 +68,20 @@ public class WorkbookRestController {
 		resultMap.put("result", result);
 		return resultMap;
 	}
+	
+	@PostMapping("/problem-bank/submit-answer")
+	public Map<String, Object> submitAnswer(@RequestParam("workbookId") int workbookId
+											, @RequestParam(value="answer[]", required=false) String[] answer
+											, HttpSession session){
+		int userId = (int)session.getAttribute("userId");
+		int scoreId = workbookService.submitAnswer(userId, workbookId, answer);
+		Map<String, Object> resultMap = new HashMap<>();
+		if(scoreId == -1) {
+			resultMap.put("result", "failure");
+		}else {
+			resultMap.put("result", "success");
+			resultMap.put("scoreId", scoreId);
+		}
+		return resultMap;
+	}
 }

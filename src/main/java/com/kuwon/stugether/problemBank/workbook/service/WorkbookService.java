@@ -13,10 +13,12 @@ import com.kuwon.stugether.problemBank.problem.dto.ProblemDTO;
 import com.kuwon.stugether.problemBank.problem.repository.ProblemRepository;
 import com.kuwon.stugether.problemBank.workbook.domain.Workbook;
 import com.kuwon.stugether.problemBank.workbook.domain.WorkbookProblem;
+import com.kuwon.stugether.problemBank.workbook.domain.WorkbookScore;
 import com.kuwon.stugether.problemBank.workbook.dto.WorkbookInfo;
 import com.kuwon.stugether.problemBank.workbook.dto.WorkbookTestInfo;
 import com.kuwon.stugether.problemBank.workbook.repository.WorkbookProblemRepository;
 import com.kuwon.stugether.problemBank.workbook.repository.WorkbookRepository;
+import com.kuwon.stugether.problemBank.workbook.repository.WorkbookScoreRepository;
 import com.kuwon.stugether.user.domain.User;
 import com.kuwon.stugether.user.repository.UserRepository;
 
@@ -30,6 +32,8 @@ public class WorkbookService {
 	UserRepository userRepository;
 	@Autowired
 	WorkbookProblemRepository workbookProblemRepository;
+	@Autowired
+	WorkbookScoreRepository workbookScoreRepository;
 	
 	// 나의 문제집 목록 가져오기
 	public List<WorkbookInfo> getMyWorkbookList(int userId, Integer page){
@@ -39,7 +43,7 @@ public class WorkbookService {
 		String userNickname = user.getNickname();
 		for(Workbook workbook : workbookList) {
 			int problemCount = workbookRepository.selectProblemCountByWorkBookId(workbook.getId());
-			Integer score = workbookRepository.selectScore(workbook.getId(), userId);
+			Integer score = workbookScoreRepository.selectScore(workbook.getId(), userId);
 			if(score == null) // 문제집 푼 기록이 없는 경우
 				score = 0;
 			WorkbookInfo workbookInfo = new WorkbookInfo(workbook, userNickname, problemCount, score);
@@ -96,5 +100,32 @@ public class WorkbookService {
 		return workbookTestInfo;
 	}
 	
-
+	public int submitAnswer(int userId, int workbookId, String[] answer) {
+		int score = 0;
+		List<WorkbookProblem> workbookProblemList = workbookProblemRepository.selectWorkbookProblemList(workbookId);
+		for(int i = 0; i < answer.length; i++) {
+			WorkbookProblem workbookProblem = workbookProblemList.get(i);
+			int problemId = workbookProblem.getId();
+			Problem problem = problemRepository.selectProblemById(problemId);
+			if(problem.getAnswer().equals(answer[i])) {
+				score++;
+			}
+			
+		}
+		WorkbookScore workbookScore = new WorkbookScore();
+		workbookScore.setUserId(userId);
+		workbookScore.setWorkbookId(workbookId);
+		workbookScore.setScore(score);
+		String ans = "";
+		for(String str : answer) {
+			ans = "#####" + str;
+		}
+		ans = ans.replaceFirst("#####", "");
+		workbookScore.setAnswer(ans);
+		if(workbookScoreRepository.insertScore(workbookScore) == 1) {
+			return workbookScore.getId();
+		}
+		return -1;
+	}
+	
 }

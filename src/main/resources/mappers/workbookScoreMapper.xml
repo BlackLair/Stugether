@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.kuwon.stugether.problemBank.workbook.repository.WorkbookScoreRepository">
+	<select id="selectScore" parameterType="int"
+	resultType="Integer">
+		SELECT
+			`score`
+		FROM
+			`workbook_score`
+		WHERE
+			`userId` = #{userId}
+		AND `workbookId` = #{workbookId};
+	</select>
+	<insert id="insertScore" parameterType="com.kuwon.stugether.problemBank.workbook.domain.WorkbookScore"
+	useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+			`workbook_score`
+		(
+			`userId`
+			, `workbookId`
+			, `score`
+			, `answer`
+		)
+		VALUE
+		(
+			#{workbookScore.userId}
+			, #{workbookScore.workbookId}
+			, #{workbookScore.score}
+			, #{workbookScore.answer}
+		)
+	</insert>
+</mapper>
