@@ -36,7 +36,7 @@
 							<c:forEach var="workbook" items="${workbookInfoList }">
 								<tr>
 									<td>${workbook.id }</td>
-									<td><a href="#">${workbook.title }</a></td>
+									<td><a href="/problem-bank/workbook-test-page?workbookId=${workbook.id }">${workbook.title }</a></td>
 									<td>${workbook.problemCount }</td>
 									<td>${workbook.userNickname }</td>
 									<td>${workbook.myScore }/${workbook.problemCount }</td>
