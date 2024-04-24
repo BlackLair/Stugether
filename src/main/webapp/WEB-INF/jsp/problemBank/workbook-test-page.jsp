@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,29 +20,42 @@
 					<h2>문제집 풀기</h2>
 					<jsp:include page="/WEB-INF/jsp/problemBank/problem-bank-menu.jsp" />
 					<div style="width:700px;" class="d-flex justify-content-between align-items-center">
-						<div class="h2">문제집 이름</div>
+						<div class="h2">${workbookTestInfo.title }</div>
 						<div style="width:200px;">
-							<div>문항 수 : 10</div>
-							<div>제작자 : 나는문제제작자</div>
+							<div>문항 수 : ${workbookTestInfo.problemCount }</div>
+							<div>제작자 : ${workbookTestInfo.userNickname }</div>
 						</div>
 					</div>
-					<div class="my-3 p-3 d-flex flex-column" style="width:700px; background-color:#DDDDDD;">
-						<div class="card card-body">
-							1. 다음 중 올바르지 않은 것을 고르면?
-						</div>
-						<div class="card card-body">
-							<label><input name="1" type="radio" class="mx-1">1. 1 + 2 = 3</label>
-							<label><input name="1" type="radio" class="mx-1">2. VMware ESXi는 Type 2 하이퍼바이저이다.</label>
-						</div>
-					</div>
-					<div class="my-3 p-3 d-flex flex-column" style="width:700px; background-color:#DDDDDD;">
-						<div class="card card-body">
-							2. VMware vSphere의 기능으로, 클러스터 내 ESXi들의 성능 사용량에 따라 실행 중인 VM들을 vMotion을 통해 재배치하거나 새로 실행되는 VM의 Host를 결정하여 로드 밸런싱을 지원하는 기능은?(알파벳 3글자)
-						</div>
-						<div class="card card-body">
-							<input type="text" class="form-control">
-						</div>
-					</div>
+					<c:forEach var="problem" items="${workbookTestInfo.problemDTOList }" varStatus="problemStatus">
+						<c:choose>
+							<c:when test="${problem.type eq '객관식' }"> <!-- 객관식 -->
+								<div class="my-3 p-3 d-flex flex-column" style="width:700px; background-color:#DDDDDD;">
+									<div class="card card-body">
+										<span class="fw-bold">${problemStatus.count }. ${problem.title }</span>
+										<hr>
+										${problem.content }
+									</div>
+									<div class="card card-body">
+										<c:forEach var="choice" items="${problem.choice }" varStatus="choiceStatus">
+											<label><input name="${problemStatus.count }" type="radio" class="mx-1">${choiceStatus.count }. ${choice }</label>
+										</c:forEach>
+									</div>
+								</div>
+							</c:when>
+							<c:otherwise> <!--  주관식 -->
+								<div class="my-3 p-3 d-flex flex-column" style="width:700px; background-color:#DDDDDD;">
+									<div class="card card-body">
+										<span class="fw-bold">${problemStatus.count }. ${problem.title }</span>
+										<hr>
+										${problem.content }
+									</div>
+									<div class="card card-body">
+										<input type="text" class="form-control" placeholder="정답을 입력하세요.">
+									</div>
+								</div>							
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
 					<div class="d-flex justify-content-between align-items-center" style="width:700px;">
 						<button type="button" class="btn btn-dark">뒤로가기</button>
 						<button type="button" class="btn btn-primary">채점하기</button>

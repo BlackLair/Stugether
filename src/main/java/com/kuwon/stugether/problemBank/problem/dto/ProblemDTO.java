@@ -40,4 +40,9 @@ public class ProblemDTO {
 		createdAt = problem.getCreatedAt();
 		updatedAt = problem.getUpdatedAt();
 	}
+	
+	public void removeAnswer() {
+		this.answer = null;
+		this.solution = null;
+	}
 }

@@ -13,6 +13,7 @@ import com.kuwon.stugether.problemBank.problem.dto.ProblemDTO;
 import com.kuwon.stugether.problemBank.problem.dto.ProblemInfoDTO;
 import com.kuwon.stugether.problemBank.problem.service.ProblemService;
 import com.kuwon.stugether.problemBank.workbook.dto.WorkbookInfo;
+import com.kuwon.stugether.problemBank.workbook.dto.WorkbookTestInfo;
 import com.kuwon.stugether.problemBank.workbook.service.WorkbookService;
 
 import jakarta.servlet.http.HttpSession;
@@ -68,12 +69,18 @@ public class ProblemBankController {
 	}
 	
 	@GetMapping("/workbook-test-page")
-	public String workbookTestView() {
+	public String workbookTestView(@RequestParam("workbookId") int workbookId
+								, Model model) {
+		WorkbookTestInfo workbookTestInfo = workbookService.getProblemListforTest(workbookId);
+		
+		model.addAttribute("workbookTestInfo", workbookTestInfo);
 		return "problemBank/workbook-test-page";
 	}
 	
 	@GetMapping("/workbook-result-page")
 	public String workbookResultView() {
+		
+		
 		return "problemBank/workbook-result-page";
 	}
 }

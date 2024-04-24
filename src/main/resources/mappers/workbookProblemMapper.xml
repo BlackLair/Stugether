@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.kuwon.stugether.problemBank.workbook.repository.WorkbookProblemRepository">
+	<insert id="insertProblem" parameterType="map">
+		INSERT INTO
+			`workbook_problem_list`
+		(
+			`workbookId`
+			, `problemId`
+		)
+		VALUE
+		(
+			#{workbookId}
+			, #{problemId}
+		);
+	</insert>
+	<delete id="deleteProblemFromWorkbook" parameterType="int">
+		DELETE FROM
+			`workbook_problem_list`
+		WHERE
+			`workbookId` = #{workbookId};
+	</delete>
+	<select id="selectWorkbookProblemList" parameterType="int"
+	resultType="com.kuwon.stugether.problemBank.workbook.domain.WorkbookProblem">
+		SELECT
+			`id`
+			, `workbookId`
+			, `problemId`
+			, `createdAt`
+		FROM
+			`workbook_problem_list`
+		WHERE
+			`workbookId` = #{workbookId};
+	</select>
+</mapper>

@@ -17,10 +17,9 @@ public interface WorkbookRepository {
 						, @Param("userId") int userId);
 	
 	public int insertWorkbook(@Param("workbook") Workbook workbook);
-	public int insertProblem(@Param("workbookId") int workbookId
-							, @Param("problemId") int problemId);
+	
 	
 	public Workbook selectWorkbook(@Param("workbookId") int workbookId);
-	public int deleteProblemFromWorkbook(@Param("workbookId") int workbookId);
+	
 	public int deleteWorkbook(@Param("workbookId") int workbookId);
 }

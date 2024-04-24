@@ -55,19 +55,6 @@
 			, #{workbook.title}
 		);
 	</insert>
-	<insert id="insertProblem" parameterType="map">
-		INSERT INTO
-			`workbook_problem_list`
-		(
-			`workbookId`
-			, `problemId`
-		)
-		VALUE
-		(
-			#{workbookId}
-			, #{problemId}
-		);
-	</insert>
 	<select id="selectWorkbook" parameterType="int"
 	resultType="com.kuwon.stugether.problemBank.workbook.domain.Workbook">
 		SELECT
@@ -81,12 +68,7 @@
 		WHERE
 			`id` = #{workbookId};
 	</select>
-	<delete id="deleteProblemFromWorkbook" parameterType="int">
-		DELETE FROM
-			`workbook_problem_list`
-		WHERE
-			`workbookId` = #{workbookId};
-	</delete>
+
 	<delete id="deleteWorkbook" parameterType="int">
 		DELETE FROM
 			`workbook`
