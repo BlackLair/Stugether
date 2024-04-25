@@ -13,6 +13,7 @@ import com.kuwon.stugether.problemBank.problem.dto.ProblemDTO;
 import com.kuwon.stugether.problemBank.problem.dto.ProblemInfoDTO;
 import com.kuwon.stugether.problemBank.problem.service.ProblemService;
 import com.kuwon.stugether.problemBank.workbook.dto.WorkbookInfo;
+import com.kuwon.stugether.problemBank.workbook.dto.WorkbookScoreInfo;
 import com.kuwon.stugether.problemBank.workbook.dto.WorkbookTestInfo;
 import com.kuwon.stugether.problemBank.workbook.service.WorkbookService;
 
@@ -78,9 +79,14 @@ public class ProblemBankController {
 	}
 	
 	@GetMapping("/workbook-result-page")
-	public String workbookResultView() {
-		
-		
+	public String workbookResultView(@RequestParam("scoreId") int scoreId
+									, HttpSession session, Model model) throws Exception {
+		int userId = (int) session.getAttribute("userId");
+		WorkbookScoreInfo workbookScoreInfo = workbookService.getResult(userId, scoreId);
+		if(workbookScoreInfo == null) {
+			throw new Exception("존재하지 않는 채점 이력입니다.");
+		}
+		model.addAttribute(workbookScoreInfo);
 		return "problemBank/workbook-result-page";
 	}
 }

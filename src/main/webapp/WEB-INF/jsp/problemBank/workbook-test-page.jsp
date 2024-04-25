@@ -97,7 +97,7 @@
 					}
 					, success:function(data){
 						if(data.result == "success"){
-							alert("제출 성공 : " + data.scoreId);
+							location.href = "/problem-bank/workbook-result-page?scoreId=" + data.scoreId;
 						}else{
 							alert("제출 실패");
 						}

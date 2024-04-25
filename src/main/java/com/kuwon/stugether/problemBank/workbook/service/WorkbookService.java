@@ -129,7 +129,7 @@ public class WorkbookService {
 		return -1;
 	}
 	
-	public WorkbookScoreInfo getProblemList(int userId, int scoreId){
+	public WorkbookScoreInfo getResult(int userId, int scoreId){
 		WorkbookScore workbookScore = workbookScoreRepository.selectScoreById(userId, scoreId);
 		if(workbookScore == null)
 			return null;
@@ -154,13 +154,8 @@ public class WorkbookService {
 		WorkbookScoreInfo workbookScoreInfo = new WorkbookScoreInfo();
 		workbookScoreInfo.setWorkbookTestInfo(workbookTestInfo);
 		workbookScoreInfo.setUserAnswer(workbookScore.getAnswer().split("#####"));
-		int problemCount = workbookScoreInfo.getUserAnswer().length;
-		workbookScoreInfo.setIsCorrect(new boolean[problemCount]);
-		for(int i = 0; i < problemCount; i++) {
-			if(problemDTOList.get(i).getAnswer().equals(workbookScoreInfo.getUserAnswer()[i])) {
-				workbookScoreInfo.getIsCorrect()[i] = true;
-			}
-		}
+		workbookScoreInfo.setScore(workbookScore.getScore());
+		workbookScoreInfo.setCreatedAt(workbookScore.getCreatedAt());
 		return workbookScoreInfo;
 	}
 	
