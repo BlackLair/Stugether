@@ -15,6 +15,7 @@ import com.kuwon.stugether.problemBank.workbook.domain.Workbook;
 import com.kuwon.stugether.problemBank.workbook.domain.WorkbookProblem;
 import com.kuwon.stugether.problemBank.workbook.domain.WorkbookScore;
 import com.kuwon.stugether.problemBank.workbook.dto.WorkbookInfo;
+import com.kuwon.stugether.problemBank.workbook.dto.WorkbookScoreInfo;
 import com.kuwon.stugether.problemBank.workbook.dto.WorkbookTestInfo;
 import com.kuwon.stugether.problemBank.workbook.repository.WorkbookProblemRepository;
 import com.kuwon.stugether.problemBank.workbook.repository.WorkbookRepository;
@@ -105,7 +106,7 @@ public class WorkbookService {
 		List<WorkbookProblem> workbookProblemList = workbookProblemRepository.selectWorkbookProblemList(workbookId);
 		for(int i = 0; i < answer.length; i++) {
 			WorkbookProblem workbookProblem = workbookProblemList.get(i);
-			int problemId = workbookProblem.getId();
+			int problemId = workbookProblem.getProblemId();
 			Problem problem = problemRepository.selectProblemById(problemId);
 			if(problem.getAnswer().equals(answer[i])) {
 				score++;
@@ -118,7 +119,7 @@ public class WorkbookService {
 		workbookScore.setScore(score);
 		String ans = "";
 		for(String str : answer) {
-			ans = "#####" + str;
+			ans = ans + "#####" + str;
 		}
 		ans = ans.replaceFirst("#####", "");
 		workbookScore.setAnswer(ans);
@@ -126,6 +127,41 @@ public class WorkbookService {
 			return workbookScore.getId();
 		}
 		return -1;
+	}
+	
+	public WorkbookScoreInfo getProblemList(int userId, int scoreId){
+		WorkbookScore workbookScore = workbookScoreRepository.selectScoreById(userId, scoreId);
+		if(workbookScore == null)
+			return null;
+		int workbookId = workbookScore.getWorkbookId();
+		Workbook workbook = workbookRepository.selectWorkbook(workbookId);
+		if(workbook == null) {
+			return null;
+		}
+		List<WorkbookProblem> workbookProblemList = workbookProblemRepository.selectWorkbookProblemList(workbookId);
+		List<ProblemDTO> problemDTOList = new ArrayList<>();
+		for(WorkbookProblem workbookProblem : workbookProblemList) {
+			int problemId = workbookProblem.getProblemId();
+			Problem problem = problemRepository.selectProblemById(problemId);
+			ProblemDTO problemDTO = new ProblemDTO();
+			problemDTO.generateDTO(problem);
+			problemDTOList.add(problemDTO);
+		}
+		String userNickname = userRepository.selectById(workbook.getUserId()).getNickname();
+		WorkbookTestInfo workbookTestInfo = new WorkbookTestInfo();
+		workbookTestInfo.generate(workbook, problemDTOList, userNickname);
+		
+		WorkbookScoreInfo workbookScoreInfo = new WorkbookScoreInfo();
+		workbookScoreInfo.setWorkbookTestInfo(workbookTestInfo);
+		workbookScoreInfo.setUserAnswer(workbookScore.getAnswer().split("#####"));
+		int problemCount = workbookScoreInfo.getUserAnswer().length;
+		workbookScoreInfo.setIsCorrect(new boolean[problemCount]);
+		for(int i = 0; i < problemCount; i++) {
+			if(problemDTOList.get(i).getAnswer().equals(workbookScoreInfo.getUserAnswer()[i])) {
+				workbookScoreInfo.getIsCorrect()[i] = true;
+			}
+		}
+		return workbookScoreInfo;
 	}
 	
 }

@@ -10,4 +10,7 @@ public interface WorkbookScoreRepository {
 	public Integer selectScore(@Param("workbookId") int workbookId
 			, @Param("userId") int userId);
 	public int insertScore(@Param("workbookScore") WorkbookScore workbookScore);
+	
+	public WorkbookScore selectScoreById(@Param("userId") int userId
+										, @Param("scoreId") int scoreId);
 }

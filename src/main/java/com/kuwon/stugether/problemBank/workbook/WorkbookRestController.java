@@ -69,7 +69,7 @@ public class WorkbookRestController {
 		return resultMap;
 	}
 	
-	@PostMapping("/problem-bank/submit-answer")
+	@PostMapping("/submit-answer")
 	public Map<String, Object> submitAnswer(@RequestParam("workbookId") int workbookId
 											, @RequestParam(value="answer[]", required=false) String[] answer
 											, HttpSession session){

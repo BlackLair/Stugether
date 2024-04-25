@@ -30,16 +30,7 @@
 		WHERE
 			`workbookId` = #{workbookId};
 	</select>
-	<select id="selectScore" parameterType="int"
-	resultType="Integer">
-		SELECT
-			`score`
-		FROM
-			`workbook_score`
-		WHERE
-			`userId` = #{userId}
-		AND `workbookId` = #{workbookId};
-	</select>
+
 	<insert id="insertWorkbook"
 	parameterType="com.kuwon.stugether.problemBank.workbook.domain.Workbook"
 	useGeneratedKeys="true" keyProperty="id">
