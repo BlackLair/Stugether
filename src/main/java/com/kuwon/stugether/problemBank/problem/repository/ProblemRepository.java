@@ -9,7 +9,7 @@ import com.kuwon.stugether.problemBank.problem.domain.Problem;
 
 @Mapper
 public interface ProblemRepository {
-	public List<Problem> selectProblemList(@Param("userId") int userId
+	public List<Problem> selectProblemListByPage(@Param("userId") int userId
 										, @Param("page") int page);
 	public int selectProblemCount(@Param("userId") int userId);
 	public Problem selectProblemById(@Param("problemId") int problemId);

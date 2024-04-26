@@ -5,7 +5,7 @@
   
 
 <mapper namespace="com.kuwon.stugether.problemBank.workbook.repository.WorkbookRepository">
-	<select id="selectWorkbookList" parameterType="map"
+	<select id="selectWorkbookListByPage" parameterType="map"
 	resultType="com.kuwon.stugether.problemBank.workbook.domain.Workbook">
 		SELECT
 			`id`

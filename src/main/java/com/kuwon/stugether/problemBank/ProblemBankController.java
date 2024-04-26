@@ -32,7 +32,7 @@ public class ProblemBankController {
 							, HttpSession session, Model model) {
 		if(page == null) page = 1;
 		int userId = (int) session.getAttribute("userId");
-		List<ProblemInfoDTO> problemInfoDTOList = problemService.getProblemList(userId, page);
+		List<ProblemInfoDTO> problemInfoDTOList = problemService.getProblemListByPage(userId, page);
 		int totalCount = problemService.getProblemCountByUserId(userId);
 		model.addAttribute("problemInfoDTOList", problemInfoDTOList);
 		model.addAttribute("pageCount", (totalCount / 10) + 1);
@@ -41,7 +41,6 @@ public class ProblemBankController {
 	// 문제 상세보기 페이지
 	@GetMapping("/problem-detail-page")
 	public String problemDetailView(@RequestParam("problemId") int problemId
-								, @RequestParam(value="page", required=false) Integer page
 								, HttpSession session, Model model) {
 		int userId = (int) session.getAttribute("userId");
 		ProblemDTO problemDTO = problemService.getProblem(problemId);
@@ -60,6 +59,8 @@ public class ProblemBankController {
 		if(page == null) page = 1;
 		int userId = (int)session.getAttribute("userId");
 		List<WorkbookInfo> workbookInfoList = workbookService.getMyWorkbookList(userId, page);
+		int workbookCount = workbookInfoList.size();
+		model.addAttribute("pageCount", (workbookCount / 10) + 1);
 		model.addAttribute("workbookInfoList", workbookInfoList);
 		return "problemBank/my-workbook-page";
 	}
@@ -88,5 +89,12 @@ public class ProblemBankController {
 		}
 		model.addAttribute(workbookScoreInfo);
 		return "problemBank/workbook-result-page";
+	}
+	
+	@GetMapping("/score-history-page")
+	public String scoreHistoryView(@RequestParam(value="page", required=false) Integer page
+								, HttpSession session, Model model) {
+		
+		return "problemBank/score-history-page";
 	}
 }

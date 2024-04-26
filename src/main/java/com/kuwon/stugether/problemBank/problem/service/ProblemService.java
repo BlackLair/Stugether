@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.HtmlUtils;
 
 import com.kuwon.stugether.common.FileManager;
@@ -12,6 +13,8 @@ import com.kuwon.stugether.problemBank.problem.domain.Problem;
 import com.kuwon.stugether.problemBank.problem.dto.ProblemDTO;
 import com.kuwon.stugether.problemBank.problem.dto.ProblemInfoDTO;
 import com.kuwon.stugether.problemBank.problem.repository.ProblemRepository;
+import com.kuwon.stugether.problemBank.workbook.repository.WorkbookProblemRepository;
+import com.kuwon.stugether.problemBank.workbook.repository.WorkbookScoreRepository;
 import com.kuwon.stugether.user.domain.User;
 import com.kuwon.stugether.user.repository.UserRepository;
 
@@ -21,11 +24,15 @@ public class ProblemService {
 	ProblemRepository problemRepository;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	WorkbookProblemRepository workbookProblemRepository;
+	@Autowired
+	WorkbookScoreRepository workbookScoreRepository;
 	
 	// 문제 목록 불러오기
-	public List<ProblemInfoDTO> getProblemList(int userId, Integer page){
+	public List<ProblemInfoDTO> getProblemListByPage(int userId, Integer page){
 		if(page == null) page = 1;
-		List<Problem> problemList = problemRepository.selectProblemList(userId, (page - 1) * 10);
+		List<Problem> problemList = problemRepository.selectProblemListByPage(userId, (page - 1) * 10);
 		List<ProblemInfoDTO> problemInfoDTOList = new ArrayList<>();
 		for(Problem problem : problemList) {
 			ProblemInfoDTO problemDTO = new ProblemInfoDTO();

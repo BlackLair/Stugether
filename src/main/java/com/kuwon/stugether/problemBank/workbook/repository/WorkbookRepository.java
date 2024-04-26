@@ -9,7 +9,7 @@ import com.kuwon.stugether.problemBank.workbook.domain.Workbook;
 
 @Mapper
 public interface WorkbookRepository {
-	public List<Workbook> selectWorkbookList(@Param("userId") int userId
+	public List<Workbook> selectWorkbookListByPage(@Param("userId") int userId
 											, @Param("page") int page);
 	
 	public int selectProblemCountByWorkBookId(@Param("workbookId") int workbookId);

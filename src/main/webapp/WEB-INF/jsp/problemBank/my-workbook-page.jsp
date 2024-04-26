@@ -52,9 +52,9 @@
 					<div class="page-div d-flex w-100 justify-content-center">
 						<nav class="d-flex justify-content-center">
 							<ul class="pagination pagination-sm">
-								<c:forEach var="i" begin="1" end="2" step="1">
+								<c:forEach var="i" begin="1" end="${pageCount }" step="1">
 									<li class="page-item">
-										<a class="page-link" href="#">${i } </a>
+										<a class="page-link" href="/problem-bank/my-workbook-page?page=${i }">${i } </a>
 									</li>
 								</c:forEach>
 							</ul>
