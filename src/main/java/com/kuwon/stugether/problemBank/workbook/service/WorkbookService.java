@@ -163,7 +163,7 @@ public class WorkbookService {
 	}
 	
 	public List<WorkbookScoreListInfo> getWorkbookScoreListByPage(int userId, int page){
-		List<WorkbookScore> workbookScoreList = workbookScoreRepository.selectScoreListByPage(userId, page);
+		List<WorkbookScore> workbookScoreList = workbookScoreRepository.selectScoreListByPage(userId, (page - 1) * 10);
 		List<WorkbookScoreListInfo> workbookScoreListInfoList = new ArrayList<>();
 		for(WorkbookScore workbookScore : workbookScoreList) {
 			WorkbookScoreListInfo workbookScoreListInfo = new WorkbookScoreListInfo();

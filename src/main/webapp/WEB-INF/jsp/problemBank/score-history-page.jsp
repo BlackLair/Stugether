@@ -25,13 +25,21 @@
 						<thead>
 							<tr>
 								<th width="10%">번호</th>
-								<th>문제집 이름</th>
-								<th>제출 일시</th>
-								<th>점수</th>
+								<th width="50%">문제집 이름</th>
+								<th width="30%">제출 일시</th>
+								<th width="10%">점수</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="problem" items="${problemInfoDTOList }">
+							<c:forEach var="workbookScore" items="${workbookScoreList }">
+								<tr>
+									<td>${workbookScore.id }</td>
+									<td><a href="/problem-bank/workbook-result-page?scoreId=${workbookScore.id }">${workbookScore.title }</a></td>
+									<td>
+										<fmt:formatDate value="${workbookScore.createdAt }" pattern="yyyy/MM/dd HH:mm:ss"/>
+									</td>
+									<td>${workbookScore.score } / ${workbookScore.problemCount }</td>
+								</tr>
 							</c:forEach>
 						</tbody>
 					</table>

@@ -17,7 +17,7 @@
 			, #{problemId}
 		);
 	</insert>
-	<delete id="deleteProblemFromWorkbook" parameterType="int">
+	<delete id="deleteAllProblemFromWorkbook" parameterType="int">
 		DELETE FROM
 			`workbook_problem_list`
 		WHERE

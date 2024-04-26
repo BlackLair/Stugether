@@ -14,6 +14,7 @@ import com.kuwon.stugether.problemBank.problem.dto.ProblemInfoDTO;
 import com.kuwon.stugether.problemBank.problem.service.ProblemService;
 import com.kuwon.stugether.problemBank.workbook.dto.WorkbookInfo;
 import com.kuwon.stugether.problemBank.workbook.dto.WorkbookScoreInfo;
+import com.kuwon.stugether.problemBank.workbook.dto.WorkbookScoreListInfo;
 import com.kuwon.stugether.problemBank.workbook.dto.WorkbookTestInfo;
 import com.kuwon.stugether.problemBank.workbook.service.WorkbookService;
 
@@ -94,7 +95,12 @@ public class ProblemBankController {
 	@GetMapping("/score-history-page")
 	public String scoreHistoryView(@RequestParam(value="page", required=false) Integer page
 								, HttpSession session, Model model) {
-		
+		int userId = (int) session.getAttribute("userId");
+		if(page == null) page = 1;
+		List<WorkbookScoreListInfo> workbookScoreList = workbookService.getWorkbookScoreListByPage(userId, page);
+		int scoreCount = workbookScoreList.size();
+		model.addAttribute("workbookScoreList", workbookScoreList);
+		model.addAttribute("pageCount", (scoreCount / 10) + 1);
 		return "problemBank/score-history-page";
 	}
 }

@@ -149,8 +149,9 @@
 						</c:choose>
 
 					</c:forEach>
-					<div class="d-flex justify-content-between align-items-start" style="width:700px;">
-						<button onClick="location.href='/problem-bank/workbook-test-page?workbookId=${workbookTestInfo.id}';" type="button" class="btn btn-dark">다시 풀기</button>
+					<div class="d-flex justify-content-end align-items-start" style="width:700px;">
+						<button onClick="location.href='/problem-bank/score-history-page';" type="button" class="btn btn-secondary">제출 이력</button>
+						<button onClick="location.href='/problem-bank/workbook-test-page?workbookId=${workbookTestInfo.id}';" type="button" class="btn btn-dark mx-3">다시 풀기</button>
 					</div>
 				</div>
 			</div>
