@@ -16,6 +16,7 @@ import com.kuwon.stugether.problemBank.workbook.domain.WorkbookProblem;
 import com.kuwon.stugether.problemBank.workbook.domain.WorkbookScore;
 import com.kuwon.stugether.problemBank.workbook.dto.WorkbookInfo;
 import com.kuwon.stugether.problemBank.workbook.dto.WorkbookScoreInfo;
+import com.kuwon.stugether.problemBank.workbook.dto.WorkbookScoreListInfo;
 import com.kuwon.stugether.problemBank.workbook.dto.WorkbookTestInfo;
 import com.kuwon.stugether.problemBank.workbook.repository.WorkbookProblemRepository;
 import com.kuwon.stugether.problemBank.workbook.repository.WorkbookRepository;
@@ -38,7 +39,7 @@ public class WorkbookService {
 	
 	// 나의 문제집 목록 가져오기
 	public List<WorkbookInfo> getMyWorkbookList(int userId, Integer page){
-		List<Workbook> workbookList = workbookRepository.selectWorkbookList(userId, (page - 1) * 10);
+		List<Workbook> workbookList = workbookRepository.selectWorkbookListByPage(userId, (page - 1) * 10);
 		List<WorkbookInfo> workbookInfoList = new ArrayList<>();
 		User user = userRepository.selectById(userId); // 자신이 만든 문제집만 가져오므로 닉네임은 자신의 닉네임만 필요
 		String userNickname = user.getNickname();
@@ -75,7 +76,7 @@ public class WorkbookService {
 		if(workbook.getUserId() != userId) {
 			return "permission denied";
 		}
-		workbookProblemRepository.deleteProblemFromWorkbook(workbookId);
+		workbookProblemRepository.deleteAllProblemFromWorkbook(workbookId);
 		workbookRepository.deleteWorkbook(workbookId);
 		return "success";
 	}
@@ -157,6 +158,25 @@ public class WorkbookService {
 		workbookScoreInfo.setScore(workbookScore.getScore());
 		workbookScoreInfo.setCreatedAt(workbookScore.getCreatedAt());
 		return workbookScoreInfo;
+	}
+	
+	public List<WorkbookScoreListInfo> getWorkbookScoreListByPage(int userId, int page){
+		List<WorkbookScore> workbookScoreList = workbookScoreRepository.selectScoreListByPage(userId, page);
+		List<WorkbookScoreListInfo> workbookScoreListInfoList = new ArrayList<>();
+		for(WorkbookScore workbookScore : workbookScoreList) {
+			WorkbookScoreListInfo workbookScoreListInfo = new WorkbookScoreListInfo();
+			workbookScoreListInfo.setId(workbookScore.getId());
+			int problemCount = workbookRepository.selectProblemCountByWorkBookId(workbookScore.getWorkbookId());
+			workbookScoreListInfo.setProblemCount(problemCount);
+			workbookScoreListInfo.setScore(workbookScore.getScore());
+			Workbook workbook = workbookRepository.selectWorkbook(workbookScore.getWorkbookId());
+			workbookScoreListInfo.setTitle(workbook.getTitle());
+			workbookScoreListInfo.setCreatedAt(workbookScore.getCreatedAt());
+			workbookScoreListInfoList.add(workbookScoreListInfo);
+		}
+		return workbookScoreListInfoList;
+		
+		
 	}
 	
 }

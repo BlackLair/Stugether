@@ -118,7 +118,8 @@ public class ProblemService {
 		return "success";
 	}
 	
-	public String removeProblem(int userId, int problemId) {
+	@Transactional
+	public String removeProblem(int userId, int problemId) throws Exception {
 		Problem problem = problemRepository.selectProblemById(problemId);
 		if(problem == null) {
 			return "not exist";
@@ -131,6 +132,11 @@ public class ProblemService {
 		
 		if(problemRepository.deleteProblem(problemId) == 1) {
 			FileManager.deleteImage(imagePath);
+			List<Integer> workbookIdList = workbookProblemRepository.selectWorkbookIdListByProblemId(problemId);
+			for(int workbookId : workbookIdList) {
+				workbookScoreRepository.deleteScoreByWorkbookId(workbookId);
+			}
+			workbookProblemRepository.deleteProblemFromAllWorkbook(problemId);
 			return "success";
 		}
 		return "failure";

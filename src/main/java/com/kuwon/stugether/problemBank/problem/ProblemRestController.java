@@ -43,7 +43,7 @@ public class ProblemRestController {
 	
 	@DeleteMapping("/remove-problem")
 	public Map<String, String> removeProblem(@RequestParam("problemId") int problemId
-											, HttpSession session){
+											, HttpSession session) throws Exception{
 		int userId = (int) session.getAttribute("userId");
 		String result = problemService.removeProblem(userId, problemId);
 		Map<String, String> resultMap = new HashMap<>();

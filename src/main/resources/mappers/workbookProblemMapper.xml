@@ -35,4 +35,19 @@
 		WHERE
 			`workbookId` = #{workbookId};
 	</select>
+	<select id="selectWorkbookIdListByProblemId" parameterType="int"
+	resultType="Integer">
+		SELECT DISTINCT
+			`workbookId`
+		FROM
+			`workbook_problem_list`
+		WHERE
+			`problemId` = #{problemId};
+	</select>
+	<delete id="deleteProblemFromAllWorkbook" parameterType="int">
+		DELETE FROM
+			`workbook_problem_list`
+		WHERE
+			`problemId` = #{problemId};
+	</delete>
 </mapper>

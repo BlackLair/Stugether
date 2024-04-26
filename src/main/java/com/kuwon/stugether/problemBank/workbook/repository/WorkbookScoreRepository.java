@@ -1,5 +1,7 @@
 package com.kuwon.stugether.problemBank.workbook.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,4 +15,8 @@ public interface WorkbookScoreRepository {
 	
 	public WorkbookScore selectScoreById(@Param("userId") int userId
 										, @Param("scoreId") int scoreId);
+	
+	public List<WorkbookScore> selectScoreListByPage(@Param("userId") int userId
+													, @Param("page") int page);
+	public int deleteScoreByWorkbookId(@Param("workbookId") int workbookId);
 }

@@ -11,7 +11,11 @@ import com.kuwon.stugether.problemBank.workbook.domain.WorkbookProblem;
 public interface WorkbookProblemRepository {
 	public int insertProblem(@Param("workbookId") int workbookId
 			, @Param("problemId") int problemId);
-	public int deleteProblemFromWorkbook(@Param("workbookId") int workbookId);
+	public int deleteAllProblemFromWorkbook(@Param("workbookId") int workbookId);
 	
 	public List<WorkbookProblem> selectWorkbookProblemList(@Param("workbookId") int workbookId);
+	
+	public List<Integer> selectWorkbookIdListByProblemId(@Param("problemId") int problemId);
+	
+	public int deleteProblemFromAllWorkbook(@Param("problemId") int problemId);
 }

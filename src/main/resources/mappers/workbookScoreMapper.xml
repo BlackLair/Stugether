@@ -66,4 +66,10 @@
 		ORDER BY `id` DESC
 		LIMIT 10 OFFSET #{page};
 	</select>
+	<delete id="deleteScoreByWorkbookId" parameterType="int">
+		DELETE FROM
+			`workbook_score`
+		WHERE
+			`workbookId` = #{workbookId};
+	</delete>
 </mapper>
