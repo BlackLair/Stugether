@@ -71,6 +71,7 @@ public class WorkbookService {
 		return "success";
 	}
 	
+	@Transactional
 	public String removeWorkbook(int userId, int workbookId) {
 		Workbook workbook = workbookRepository.selectWorkbook(workbookId);
 		if(workbook.getUserId() != userId) {
@@ -78,6 +79,7 @@ public class WorkbookService {
 		}
 		workbookProblemRepository.deleteAllProblemFromWorkbook(workbookId);
 		workbookRepository.deleteWorkbook(workbookId);
+		workbookScoreRepository.deleteScoreByWorkbookId(workbookId);
 		return "success";
 	}
 	
