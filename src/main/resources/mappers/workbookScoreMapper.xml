@@ -49,4 +49,21 @@
 			`userId` = #{userId}
 		AND `id` = #{scoreId};
 	</select>
+	<select id="selectScoreListByPage" parameterType="map"
+	resultType="com.kuwon.stugether.problemBank.workbook.domain.WorkbookScore">
+		SELECT
+			`id`
+			, `userId`
+			, `workbookId`
+			, `score`
+			, `answer`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`workbook_score`
+		WHERE
+			`userId` = #{userId}
+		ORDER BY `id` DESC
+		LIMIT 10 OFFSET #{page};
+	</select>
 </mapper>
