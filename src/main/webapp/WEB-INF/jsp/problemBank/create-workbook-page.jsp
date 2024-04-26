@@ -93,7 +93,7 @@
 				, success:function(data){
 					if(data.result == "success"){
 						alert("문제집이 생성되었습니다.");
-						location.href = "/problem-bank/my-workbook-page";
+						location.replace("/problem-bank/my-workbook-page");
 					}else if(data.result == "empty"){
 						alert("추가된 문제가 없습니다.");
 					}else{

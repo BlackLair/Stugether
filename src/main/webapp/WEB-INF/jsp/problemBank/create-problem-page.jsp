@@ -130,7 +130,7 @@
 				, success:function(data){
 					if(data.result == "success"){
 						let problemId = data.problemId;
-						location.href = "/problem-bank/problem-detail-page?problemId=" + problemId;
+						location.replace("/problem-bank/problem-detail-page?problemId=" + problemId);
 					}else{
 						alert("문제 생성 실패");
 					}
