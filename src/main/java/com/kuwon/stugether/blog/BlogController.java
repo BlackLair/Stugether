@@ -46,10 +46,9 @@ public class BlogController {
 	@GetMapping("/list-page")
 	public String blogListView(@RequestParam("userId") int ownerId
 							, @RequestParam(value="category", required=false) Integer category
-							, @RequestParam(value="page", required=false) Integer page
+							, @RequestParam(value="page", defaultValue="1") Integer page
 							, Model model
 							, HttpSession session) {
-		if(page == null) page = 1; // 페이지 정보가 없으면 1페이지 글 목록 가져오기
 		// 추후 회원 존재 여부 확인 기능 추가
 		UserDTO ownerDTO = userService.getUser(ownerId); // 방문한 블로그 주인의 정보
 		int userId = (int)session.getAttribute("userId");

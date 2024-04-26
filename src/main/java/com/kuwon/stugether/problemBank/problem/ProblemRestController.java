@@ -37,7 +37,6 @@ public class ProblemRestController {
 		if(result.equals("success")) {
 			resultMap.put("problemId", problem.getId());
 		}
-		
 		return resultMap;
 	}
 	

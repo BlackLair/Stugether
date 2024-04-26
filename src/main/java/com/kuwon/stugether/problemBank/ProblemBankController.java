@@ -29,9 +29,8 @@ public class ProblemBankController {
 	WorkbookService workbookService;
 	// 나의 문제 목록 페이지
 	@GetMapping("/my-problem-page")
-	public String myProblemView(@RequestParam(value="page", required=false) Integer page
+	public String myProblemView(@RequestParam(value="page", defaultValue="1") Integer page
 							, HttpSession session, Model model) {
-		if(page == null) page = 1;
 		int userId = (int) session.getAttribute("userId");
 		List<ProblemInfoDTO> problemInfoDTOList = problemService.getProblemListByPage(userId, page);
 		int totalCount = problemService.getProblemCountByUserId(userId);
@@ -55,9 +54,8 @@ public class ProblemBankController {
 	}
 	// 나의 문제집 목록 페이지
 	@GetMapping("/my-workbook-page")
-	public String myWorkbookView(@RequestParam(value="page", required=false) Integer page
+	public String myWorkbookView(@RequestParam(value="page", defaultValue="1") Integer page
 								, HttpSession session, Model model) {
-		if(page == null) page = 1;
 		int userId = (int)session.getAttribute("userId");
 		List<WorkbookInfo> workbookInfoList = workbookService.getMyWorkbookList(userId, page);
 		int workbookCount = workbookInfoList.size();
@@ -93,14 +91,19 @@ public class ProblemBankController {
 	}
 	
 	@GetMapping("/score-history-page")
-	public String scoreHistoryView(@RequestParam(value="page", required=false) Integer page
+	public String scoreHistoryView(@RequestParam(value="page", defaultValue="1") Integer page
 								, HttpSession session, Model model) {
 		int userId = (int) session.getAttribute("userId");
-		if(page == null) page = 1;
 		List<WorkbookScoreListInfo> workbookScoreList = workbookService.getWorkbookScoreListByPage(userId, page);
 		int scoreCount = workbookScoreList.size();
 		model.addAttribute("workbookScoreList", workbookScoreList);
 		model.addAttribute("pageCount", (Math.max(0, scoreCount) / 10) + 1);
 		return "problemBank/score-history-page";
+	}
+	
+	@GetMapping("/search-workbook-page")
+	public String searchWorkbookView() {
+		
+		return "problemBank/search-workbook-page";
 	}
 }
