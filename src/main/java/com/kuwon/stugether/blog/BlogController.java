@@ -67,7 +67,7 @@ public class BlogController {
 			blogCategoryDTO.setCurrentPages(pages);
 			model.addAttribute("categoryName", categoryName);
 		}else { // 요청에 category 조건이 존재하지 않는 경우 (전체 글 요청)
-			int pages = blogCategoryDTO.getAllPostCount() / 10 + 1;
+			int pages = (Math.max(0, blogCategoryDTO.getAllPostCount() - 1) / 10) + 1;
 			blogCategoryDTO.setCurrentPages(pages);
 			model.addAttribute("categoryName", "전체 글");
 		}

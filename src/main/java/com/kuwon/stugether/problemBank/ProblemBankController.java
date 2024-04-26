@@ -36,7 +36,7 @@ public class ProblemBankController {
 		List<ProblemInfoDTO> problemInfoDTOList = problemService.getProblemListByPage(userId, page);
 		int totalCount = problemService.getProblemCountByUserId(userId);
 		model.addAttribute("problemInfoDTOList", problemInfoDTOList);
-		model.addAttribute("pageCount", (totalCount / 10) + 1);
+		model.addAttribute("pageCount", (Math.max(0, totalCount - 1) / 10) + 1);
 		return "problemBank/my-problem-page";
 	}
 	// 문제 상세보기 페이지
@@ -61,7 +61,7 @@ public class ProblemBankController {
 		int userId = (int)session.getAttribute("userId");
 		List<WorkbookInfo> workbookInfoList = workbookService.getMyWorkbookList(userId, page);
 		int workbookCount = workbookInfoList.size();
-		model.addAttribute("pageCount", (workbookCount / 10) + 1);
+		model.addAttribute("pageCount", (Math.max(0, workbookCount - 1) / 10) + 1);
 		model.addAttribute("workbookInfoList", workbookInfoList);
 		return "problemBank/my-workbook-page";
 	}
@@ -100,7 +100,7 @@ public class ProblemBankController {
 		List<WorkbookScoreListInfo> workbookScoreList = workbookService.getWorkbookScoreListByPage(userId, page);
 		int scoreCount = workbookScoreList.size();
 		model.addAttribute("workbookScoreList", workbookScoreList);
-		model.addAttribute("pageCount", (scoreCount / 10) + 1);
+		model.addAttribute("pageCount", (Math.max(0, scoreCount) / 10) + 1);
 		return "problemBank/score-history-page";
 	}
 }
