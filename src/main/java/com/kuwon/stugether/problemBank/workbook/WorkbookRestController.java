@@ -25,7 +25,7 @@ public class WorkbookRestController {
 	ProblemService problemService;
 	@Autowired
 	WorkbookService workbookService;
-	
+	// 문제집 생성 중 문제 등록 시 존재 여부 확인
 	@GetMapping("/problem-exist")
 	public Map<String, String> problemExist(@RequestParam("problemId") int problemId
 										, HttpSession session){
@@ -42,7 +42,7 @@ public class WorkbookRestController {
 		}
 		return resultMap;
 	}
-	
+	// 문제집 생성
 	@PostMapping("/create-workbook")
 	public Map<String, Object> createWorkbook(@RequestParam("title") String title
 											, @RequestParam(value="problemIdList[]", required=false) Integer[] problemIdList
@@ -58,7 +58,7 @@ public class WorkbookRestController {
 		
 		return resultMap;
 	}
-	
+	// 문제집 삭제
 	@DeleteMapping("/remove-workbook")
 	public Map<String, String> removeWorkbook(@RequestParam("workbookId") int workbookId
 											, HttpSession session){
@@ -68,7 +68,7 @@ public class WorkbookRestController {
 		resultMap.put("result", result);
 		return resultMap;
 	}
-	
+	// 문제집 답안 제출
 	@PostMapping("/submit-answer")
 	public Map<String, Object> submitAnswer(@RequestParam("workbookId") int workbookId
 											, @RequestParam(value="answer[]", required=false) String[] answer
@@ -82,6 +82,26 @@ public class WorkbookRestController {
 			resultMap.put("result", "success");
 			resultMap.put("scoreId", scoreId);
 		}
+		return resultMap;
+	}
+	// 문제집 즐겨찾기 추가
+	@PostMapping("/add-favorite-workbook")
+	public Map<String, String> addFavoriteWorkbook(@RequestParam("workbookId") int workbookId
+												, HttpSession session){
+		int userId = (int)session.getAttribute("userId");
+		Map<String, String> resultMap = new HashMap<>();
+		String result = workbookService.addWorkbookFavorite(userId, workbookId);
+		resultMap.put("result", result);
+		return resultMap;
+	}
+	// 문제집 즐겨찾기 삭제
+	@DeleteMapping("/remove-favorite-workbook")
+	public Map<String, String> removeFavoriteWorkbook(@RequestParam("workbookId") int workbookId
+													, HttpSession session){
+		int userId = (int)session.getAttribute("userId");
+		Map<String, String> resultMap = new HashMap<>();
+		String result = workbookService.removeWorkbookFavorite(userId, workbookId);
+		resultMap.put("result", result);
 		return resultMap;
 	}
 }

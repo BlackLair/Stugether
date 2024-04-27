@@ -14,7 +14,7 @@ public class WorkbookInfo {
 	private String title;
 	private int problemCount;
 	private int myScore;
-	
+	private boolean liked;
 	public WorkbookInfo(Workbook workbook, String userNickname, int problemCount, int myScore) {
 		this.id = workbook.getId();
 		this.userId = workbook.getUserId();

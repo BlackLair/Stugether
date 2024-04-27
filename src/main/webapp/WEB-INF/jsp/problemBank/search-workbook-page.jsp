@@ -53,8 +53,15 @@
 									<td>${workbook.userNickname }</td>
 									<td>${workbook.myScore }/${workbook.problemCount }</td>
 									<td>
-										<button value="${workbook.id }" type="button" class="btn btn-sm btn-warning">
-											<i class="bi bi-trash3-fill"></i>
+										<button value="${workbook.id }" type="button" class="btn-favorite btn btn-sm btn-warning">
+											<c:choose>
+												<c:when test="${workbook.liked }">
+													<i class="bi bi-star-fill"></i>
+												</c:when>
+												<c:otherwise>
+													<i class="bi bi-star"></i>
+												</c:otherwise>
+											</c:choose>
 										</button>
 									</td>
 								</tr>
@@ -97,6 +104,50 @@
 				return;
 			}
 			location.href = "/problem-bank/search-workbook-page?type=" + type + "&search=" + search; 
+		});
+		
+		$(".btn-favorite").on("click", function(){
+			let icon = $(this).children("i");
+			let isLiked = icon.hasClass("bi-star-fill");
+			let workbookId = $(this).val();
+			if(isLiked){
+				$.ajax({
+					url: "/problem-bank/remove-favorite-workbook"
+					, type: "DELETE"
+					, data:{"workbookId":workbookId}
+					, success:function(data){
+						if(data.result == "success"){
+							icon.removeClass("bi-star-fill");
+							icon.addClass("bi-star");
+						}
+						else{
+							alert("즐겨찾기 삭제 실패");
+						}
+					}
+					, error:function(){
+						alert("즐겨찾기 삭제 에러");
+					}
+				});
+			} else{
+				$.ajax({
+					url: "/problem-bank/add-favorite-workbook"
+					, type: "POST"
+					, data:{"workbookId":workbookId}
+					, success:function(data){
+						if(data.result == "success"){
+							icon.removeClass("bi-star");
+							icon.addClass("bi-star-fill");
+						}
+						else{
+							alert("즐겨찾기 추가 실패");
+						}
+					}
+					, error:function(){
+						alert("즐겨찾기 추가 에러");
+					}
+				});
+			}
+			
 		});
 	});
 </script>
