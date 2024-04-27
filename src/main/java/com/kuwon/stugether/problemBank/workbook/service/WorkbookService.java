@@ -54,6 +54,46 @@ public class WorkbookService {
 		return workbookInfoList;
 	}
 	
+	public List<WorkbookInfo> searchWorkbookList(int page, String type, String search, int myId){
+		List<WorkbookInfo> workbookInfoList = new ArrayList<>();
+		if(type == null || search == null)
+			return workbookInfoList;
+		
+		List<Workbook> workbookList = new ArrayList<>();
+		if(type.equals("workbookId")) {  // 번호로 검색
+			int workbookId = Integer.parseInt(search);
+			Workbook workbook = workbookRepository.selectWorkbook(workbookId);
+			if(workbook != null) {
+				workbookList.add(workbook);
+			}
+		}else if(type.equals("title")){  // 이름으로 검색
+			List<Workbook> workbookListSearched = workbookRepository.selectWorkbookByTitle(search, (page - 1) * 10);
+			if(workbookListSearched != null)
+			workbookList = workbookListSearched;
+		}else{// 닉네임으로 검색
+			List<User> userList = userRepository.selectUserByNickname(search);
+			List<Integer> userIdList = new ArrayList<>();
+			for(User user : userList) {
+				userIdList.add(user.getId());
+			}
+			if(userIdList.size() > 0)
+				workbookList = workbookRepository.selectWorkbookByIdList(userIdList, (page - 1) * 10);
+		}
+
+		for(Workbook workbook : workbookList) {
+			int userId = workbook.getUserId();
+			User user = userRepository.selectById(userId);
+			String userNickname = user.getNickname();
+			int problemCount = workbookRepository.selectProblemCountByWorkBookId(workbook.getId());
+			Integer score = workbookScoreRepository.selectScore(workbook.getId(), myId);
+			if(score == null) // 문제집 푼 기록이 없는 경우
+				score = 0;
+			WorkbookInfo workbookInfo = new WorkbookInfo(workbook, userNickname, problemCount, score);
+			workbookInfoList.add(workbookInfo);
+		}
+		return workbookInfoList;
+	}
+	
 	@Transactional
 	public String addWorkbook(int userId, String title, Integer[] problemIdList, Workbook workbook) {
 		if(problemIdList == null || problemIdList.length == 0) {
@@ -122,7 +162,7 @@ public class WorkbookService {
 		workbookScore.setScore(score);
 		String ans = "";
 		for(String str : answer) {
-			ans = ans + "#####" + str;
+			ans = ans + "#####" + HtmlUtils.htmlEscape(str);
 		}
 		ans = ans.replaceFirst("#####", "");
 		workbookScore.setAnswer(ans);

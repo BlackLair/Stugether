@@ -66,4 +66,35 @@
 		WHERE
 			`id` = #{workbookId};
 	</delete>
+	<select id="selectWorkbookByTitle" parameterType="map"
+	resultType="com.kuwon.stugether.problemBank.workbook.domain.Workbook">
+		SELECT
+			`id`
+			, `userId`
+			, `title`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`workbook`
+		WHERE
+			`title` LIKE CONCAT('%', #{search}, '%')
+		LIMIT 10 OFFSET #{page};
+	</select>
+	<select id="selectWorkbookByIdList" parameterType="map"
+	resultType="com.kuwon.stugether.problemBank.workbook.domain.Workbook">
+		SELECT
+			`id`
+			, `userId`
+			, `title`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`workbook`
+		WHERE
+			`userId` IN
+				<foreach collection="userIdList" item="userId" open="(" close=")" separator=",">
+					#{userId}
+				</foreach>
+		LIMIT 10 OFFSET #{page};
+	</select>
 </mapper>

@@ -19,26 +19,44 @@
 		<section class="p-3 bg-dark">
 			<div class="d-flex justify-content-center">
 				<div style="width:800px;" class="bg-white p-3 d-flex flex-column align-items-center">
-					<h2>제출 이력</h2>
+					<h2>문제집 검색</h2>
 					<jsp:include page="/WEB-INF/jsp/problemBank/problem-bank-menu.jsp" />
+					<form id="searchForm">
+						<div class="d-flex justify-content-center" style="width:500px;">
+							<input id="prevType" data-type="${type }" hidden="true">
+							<select id="searchTypeSelect" style="width:80px;" class="form-control">
+								<option value="workbookId">번호</option>
+								<option value="title">이름</option>
+								<option value="nickname">닉네임</option>
+							</select>
+							<input id="searchInput" type="text" style="width:250px;" class="form-control" value="${search }">
+							<button type="submit" class="btn btn-primary">검색</button>
+						</div>
+					</form>
 					<table style="width:700px;" class="table my-3 text-center">
 						<thead>
 							<tr>
 								<th width="10%">번호</th>
-								<th width="50%">문제집 이름</th>
-								<th width="30%">제출 일시</th>
-								<th width="10%">점수</th>
+								<th width="40%">제목</th>
+								<th width="10%">문제 수</th>
+								<th width="20%">제작자</th>
+								<th width="10%">내 점수</th>
+								<th width="10%"></th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="workbookScore" items="${workbookScoreList }">
+							<c:forEach var="workbook" items="${workbookInfoList }">
 								<tr>
-									<td>${workbookScore.id }</td>
-									<td><a href="/problem-bank/workbook-result-page?scoreId=${workbookScore.id }">${workbookScore.title }</a></td>
+									<td>${workbook.id }</td>
+									<td><a href="/problem-bank/workbook-test-page?workbookId=${workbook.id }">${workbook.title }</a></td>
+									<td>${workbook.problemCount }</td>
+									<td>${workbook.userNickname }</td>
+									<td>${workbook.myScore }/${workbook.problemCount }</td>
 									<td>
-										<fmt:formatDate value="${workbookScore.createdAt }" pattern="yyyy/MM/dd HH:mm:ss"/>
+										<button value="${workbook.id }" type="button" class="btn btn-sm btn-warning">
+											<i class="bi bi-trash3-fill"></i>
+										</button>
 									</td>
-									<td>${workbookScore.score } / ${workbookScore.problemCount }</td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -48,7 +66,7 @@
 							<ul class="pagination pagination-sm">
 								<c:forEach var="i" begin="1" end="${pageCount }" step="1">
 									<li class="page-item">
-										<a class="page-link" href="/problem-bank/score-history-page?page=${i }">${i } </a>
+										<a class="page-link" href="/problem-bank/search-workbook-page?page=${i }">${i } </a>
 									</li>
 								</c:forEach>
 							</ul>
@@ -66,7 +84,21 @@
 
 
 <script>
-
+	$(document).ready(function(){
+		let prevType = $("#prevType").data("type");
+		if(prevType != "")
+			$("#searchTypeSelect").val(prevType).attr("selected", "selected");
+		$("#searchForm").on("submit", function(e){
+			e.preventDefault();
+			let type = $("#searchTypeSelect").val();
+			let search = $("#searchInput").val();
+			if(search == ""){
+				alert("검색어를 입력하세요.");
+				return;
+			}
+			location.href = "/problem-bank/search-workbook-page?type=" + type + "&search=" + search; 
+		});
+	});
 </script>
 
 </body>

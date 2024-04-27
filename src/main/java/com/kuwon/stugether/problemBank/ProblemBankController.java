@@ -102,8 +102,15 @@ public class ProblemBankController {
 	}
 	
 	@GetMapping("/search-workbook-page")
-	public String searchWorkbookView() {
-		
+	public String searchWorkbookView(@RequestParam(value="page", defaultValue="1") Integer page
+									, @RequestParam(value="type", required=false) String type
+									, @RequestParam(value="search", required=false) String search
+									, HttpSession session, Model model) {
+		int userId = (int) session.getAttribute("userId");
+		List<WorkbookInfo> workbookInfoList = workbookService.searchWorkbookList(page, type, search, userId);
+		model.addAttribute("workbookInfoList", workbookInfoList);
+		model.addAttribute("type", type);
+		model.addAttribute("search", search);
 		return "problemBank/search-workbook-page";
 	}
 }
