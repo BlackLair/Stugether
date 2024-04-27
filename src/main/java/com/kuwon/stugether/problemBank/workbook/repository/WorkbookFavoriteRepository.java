@@ -11,4 +11,5 @@ public interface WorkbookFavoriteRepository {
 									, @Param("workbookId") int workbookId);
 	public int deleteWorkbookFavorite(@Param("userId") int userId
 									, @Param("workbookId") int workbookId);
+	public int deleteWorkbookFavoriteByWorkbookId(@Param("workbookId") int workbookId);
 }

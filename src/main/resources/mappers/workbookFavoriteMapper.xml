@@ -34,4 +34,10 @@
   			`userId` = #{userId}
   		AND `workbookId` = #{workbookId};
   	</delete>
+  	<delete id="deleteWorkbookFavoriteByWorkbookId" parameterType="int">
+  		DELETE FROM
+  			`workbook_favorite`
+  		WHERE
+  			`workbookId` = #{workbookId};
+  	</delete>
   </mapper>

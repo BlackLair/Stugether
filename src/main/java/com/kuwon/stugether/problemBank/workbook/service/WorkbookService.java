@@ -125,6 +125,7 @@ public class WorkbookService {
 		workbookProblemRepository.deleteAllProblemFromWorkbook(workbookId);
 		workbookRepository.deleteWorkbook(workbookId);
 		workbookScoreRepository.deleteScoreByWorkbookId(workbookId);
+		workbookFavoriteRepository.deleteWorkbookFavoriteByWorkbookId(workbookId);
 		return "success";
 	}
 	// 문제집 응시를 위한 문제 정보
