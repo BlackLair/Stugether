@@ -21,6 +21,7 @@ $(document).ready(function(){
 			, success: function(data){
 				if(data.result == "success"){
 					alert("회원가입 성공");
+					location.href = "/user/login-page";
 				}else{
 					alert("회원가입 실패");
 				}
