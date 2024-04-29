@@ -19,4 +19,6 @@ public interface WorkbookScoreRepository {
 	public List<WorkbookScore> selectScoreListByPage(@Param("userId") int userId
 													, @Param("page") int page);
 	public int deleteScoreByWorkbookId(@Param("workbookId") int workbookId);
+	
+	public int selectScoreCountByUserId(@Param("userId") int userId);
 }

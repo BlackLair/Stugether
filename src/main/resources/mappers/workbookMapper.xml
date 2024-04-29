@@ -59,7 +59,15 @@
 		WHERE
 			`id` = #{workbookId};
 	</select>
-
+	<select id="selectWorkbookCountByUserId" parameterType="int"
+	resultType="int">
+		SELECT
+			count(*)
+		FROM
+			`workbook`
+		WHERE
+			`userId` = #{userId};
+	</select>
 	<delete id="deleteWorkbook" parameterType="int">
 		DELETE FROM
 			`workbook`
@@ -77,8 +85,16 @@
 		FROM
 			`workbook`
 		WHERE
-			`title` LIKE CONCAT('%', #{search}, '%')
-		LIMIT 10 OFFSET #{page};
+			`title` LIKE CONCAT('%', #{search}, '%');
+	</select>
+	<select id="selectWorkbookCountByTitle" parameterType="string"
+	resultType="int">
+		SELECT
+			count(*)
+		FROM
+			`workbook`
+		WHERE
+			`title` LIKE CONCAT('%', #{search}, '%');
 	</select>
 	<select id="selectWorkbookByIdList" parameterType="map"
 	resultType="com.kuwon.stugether.problemBank.workbook.domain.Workbook">
@@ -94,7 +110,18 @@
 			`userId` IN
 				<foreach collection="userIdList" item="userId" open="(" close=")" separator=",">
 					#{userId}
-				</foreach>
-		LIMIT 10 OFFSET #{page};
+				</foreach>;
+	</select>
+	<select id="selectWorkbookCountByIdList" parameterType="map"
+	resultType="int">
+		SELECT
+			count(*)
+		FROM
+			`workbook`
+		WHERE
+			`userId` IN
+				<foreach collection="userIdList" item="userId" open="(" close=")" separator=",">
+					#{userId}
+				</foreach>;
 	</select>
 </mapper>

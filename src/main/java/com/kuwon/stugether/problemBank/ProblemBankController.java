@@ -95,9 +95,9 @@ public class ProblemBankController {
 								, HttpSession session, Model model) {
 		int userId = (int) session.getAttribute("userId");
 		List<WorkbookScoreListInfo> workbookScoreList = workbookService.getWorkbookScoreListByPage(userId, page);
-		int scoreCount = workbookScoreList.size();
+		int scoreCount = workbookService.getScoreCount(userId);
 		model.addAttribute("workbookScoreList", workbookScoreList);
-		model.addAttribute("pageCount", (Math.max(0, scoreCount) / 10) + 1);
+		model.addAttribute("pageCount", (Math.max(0, scoreCount - 1) / 10) + 1);
 		return "problemBank/score-history-page";
 	}
 	
@@ -107,8 +107,10 @@ public class ProblemBankController {
 									, @RequestParam(value="search", required=false) String search
 									, HttpSession session, Model model) {
 		int userId = (int) session.getAttribute("userId");
-		List<WorkbookInfo> workbookInfoList = workbookService.searchWorkbookList(page, type, search, userId);
-		model.addAttribute("workbookInfoList", workbookInfoList);
+		WorkbookInfoListDTO workbookInfoListDTO = workbookService.searchWorkbookList(page, type, search, userId);
+		model.addAttribute("workbookInfoList", workbookInfoListDTO.getWorkbookInfoList());
+		int totalCount = workbookInfoListDTO.getTotalCount();
+		model.addAttribute("pageCount", (Math.max(0, totalCount - 1) / 10) + 1);
 		model.addAttribute("type", type);
 		model.addAttribute("search", search);
 		return "problemBank/search-workbook-page";

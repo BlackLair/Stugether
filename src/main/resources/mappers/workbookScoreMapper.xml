@@ -72,4 +72,13 @@
 		WHERE
 			`workbookId` = #{workbookId};
 	</delete>
+	<select id="selectScoreCountByUserId" parameterType="int"
+	resultType="int">
+		SELECT
+			count(*)
+		FROM
+			`workbook_score`
+		WHERE
+			`userId` = #{userId};
+	</select>
 </mapper>

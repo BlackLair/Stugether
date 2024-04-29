@@ -15,6 +15,7 @@ import com.kuwon.stugether.problemBank.workbook.domain.Workbook;
 import com.kuwon.stugether.problemBank.workbook.domain.WorkbookProblem;
 import com.kuwon.stugether.problemBank.workbook.domain.WorkbookScore;
 import com.kuwon.stugether.problemBank.workbook.dto.WorkbookInfo;
+import com.kuwon.stugether.problemBank.workbook.dto.WorkbookInfoListDTO;
 import com.kuwon.stugether.problemBank.workbook.dto.WorkbookScoreInfo;
 import com.kuwon.stugether.problemBank.workbook.dto.WorkbookScoreListInfo;
 import com.kuwon.stugether.problemBank.workbook.dto.WorkbookTestInfo;
@@ -57,10 +58,13 @@ public class WorkbookService {
 		return workbookInfoList;
 	}
 	// 문제집 검색
-	public List<WorkbookInfo> searchWorkbookList(int page, String type, String search, int myId){
+	public WorkbookInfoListDTO searchWorkbookList(int page, String type, String search, int userId){
+		WorkbookInfoListDTO workbookInfoListDTO = new WorkbookInfoListDTO();
 		List<WorkbookInfo> workbookInfoList = new ArrayList<>();
-		if(type == null || search == null)
-			return workbookInfoList;
+		if(type == null || search == null) {
+			workbookInfoListDTO.setWorkbookInfoList(workbookInfoList);
+			return workbookInfoListDTO;	
+		}
 		
 		List<Workbook> workbookList = new ArrayList<>();
 		if(type.equals("workbookId")) {  // 번호로 검색
@@ -73,6 +77,7 @@ public class WorkbookService {
 			List<Workbook> workbookListSearched = workbookRepository.selectWorkbookByTitle(search, (page - 1) * 10);
 			if(workbookListSearched != null)
 			workbookList = workbookListSearched;
+			workbookInfoListDTO.setTotalCount(workbookRepository.selectWorkbookCountByTitle(search));
 		}else{// 닉네임으로 검색
 			List<User> userList = userRepository.selectUserByNickname(search);
 			List<Integer> userIdList = new ArrayList<>();
@@ -81,22 +86,24 @@ public class WorkbookService {
 			}
 			if(userIdList.size() > 0)
 				workbookList = workbookRepository.selectWorkbookByIdList(userIdList, (page - 1) * 10);
+			workbookInfoListDTO.setTotalCount(workbookRepository.selectWorkbookCountByIdList(userIdList));
 		}
 
 		for(Workbook workbook : workbookList) {
-			int userId = workbook.getUserId();
-			User user = userRepository.selectById(userId);
-			String userNickname = user.getNickname();
+			int creatorId = workbook.getUserId();
+			User user = userRepository.selectById(creatorId);
+			String creatorNickname = user.getNickname();
 			int problemCount = workbookRepository.selectProblemCountByWorkBookId(workbook.getId());
-			Integer score = workbookScoreRepository.selectScore(workbook.getId(), myId);
+			Integer score = workbookScoreRepository.selectScore(workbook.getId(), userId);
 			if(score == null) // 문제집 푼 기록이 없는 경우
 				score = 0;
-			WorkbookInfo workbookInfo = new WorkbookInfo(workbook, userNickname, problemCount, score);
+			WorkbookInfo workbookInfo = new WorkbookInfo(workbook, creatorNickname, problemCount, score);
 			if(workbookFavoriteRepository.selectWorkbookFavorite(userId, workbookInfo.getId()) > 0)
 				workbookInfo.setLiked(true);
 			workbookInfoList.add(workbookInfo);
 		}
-		return workbookInfoList;
+		workbookInfoListDTO.setWorkbookInfoList(workbookInfoList);
+		return workbookInfoListDTO;
 	}
 	// 문제집 생성
 	@Transactional
@@ -127,6 +134,9 @@ public class WorkbookService {
 		workbookScoreRepository.deleteScoreByWorkbookId(workbookId);
 		workbookFavoriteRepository.deleteWorkbookFavoriteByWorkbookId(workbookId);
 		return "success";
+	}
+	public int getWorkbookCountByUserId(int userId) {
+		return workbookRepository.selectWorkbookCountByUserId(userId);
 	}
 	// 문제집 응시를 위한 문제 정보
 	public WorkbookTestInfo getProblemListforTest(int workbookId){
@@ -206,6 +216,10 @@ public class WorkbookService {
 		workbookScoreInfo.setScore(workbookScore.getScore());
 		workbookScoreInfo.setCreatedAt(workbookScore.getCreatedAt());
 		return workbookScoreInfo;
+	}
+	// 문제집 제출 이력 개수
+	public int getScoreCount(int userId) {
+		return workbookScoreRepository.selectScoreCountByUserId(userId);
 	}
 	// 문제집 제출 이력 리스트 페이지 단위로 가져옴
 	public List<WorkbookScoreListInfo> getWorkbookScoreListByPage(int userId, int page){
