@@ -40,4 +40,23 @@
   		WHERE
   			`workbookId` = #{workbookId};
   	</delete>
+  	<select id="selectWorkbookFavoriteByUserId" parameterType="Integer">
+  		SELECT
+  			`workbookId`
+  		FROM
+  			`workbook_favorite`
+  		WHERE
+  			`userId` = #{userId}
+  		ORDER BY `id`
+  		LIMIT 10 OFFSET #{page};
+  	</select>
+  	<select id="selectWorkbookFavoriteCountByUserId" parameterType="int"
+  	resultType="int">
+  		SELECT
+  			count(*)
+  		FROM
+  			`workbook_favorite`
+  		WHERE
+  			`userId` = #{userId};
+  	</select>
   </mapper>

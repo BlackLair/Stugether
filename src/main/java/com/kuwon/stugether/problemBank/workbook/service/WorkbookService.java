@@ -253,5 +253,26 @@ public class WorkbookService {
 			return "success";
 		return "failure";
 	}
-	
+	// 즐겨찾기한 문제집 목록 가져오기
+	public List<WorkbookInfo> getFavoriteWorkbookList(int userId, int page){
+		List<Integer> workbookIdList = workbookFavoriteRepository.selectWorkbookFavoriteByUserId(userId, (page - 1) * 10);
+		List<WorkbookInfo> workbookInfoList = new ArrayList<>();
+		for(int workbookId : workbookIdList) {
+			Workbook workbook = workbookRepository.selectWorkbook(workbookId);
+					
+			int creatorId = workbook.getUserId();
+			User user = userRepository.selectById(creatorId);
+			String creatorNickname = user.getNickname();
+			int problemCount = workbookRepository.selectProblemCountByWorkBookId(workbook.getId());
+			Integer score = workbookScoreRepository.selectScore(workbook.getId(), userId);
+			if(score == null) // 문제집 푼 기록이 없는 경우
+				score = 0;
+			WorkbookInfo workbookInfo = new WorkbookInfo(workbook, creatorNickname, problemCount, score);
+			workbookInfoList.add(workbookInfo);
+		}
+		return workbookInfoList;
+	}
+	public int getFavoriteWorkbookCount(int userId) {
+		return workbookFavoriteRepository.selectWorkbookFavoriteCountByUserId(userId);
+	}
 }
