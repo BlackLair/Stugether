@@ -21,24 +21,17 @@
 				<div id="myGroupDiv" class="bg-light w-50 d-flex flex-column align-items-center">
 					<h2 class="my-3">내 그룹 바로가기</h2>
 					<div class="d-flex flex-column w-75 bg-gray p-3" style="min-Height:300px;">
-						<div class="w-100 my-2">
-							<div class="d-flex justify-content-between align-items-center">
-								<a href="#">알고리즘 스터디</a>
-								<div class="d-flex align-items-center">
-									<span class="mx-3">23명</span>
-									<button type="button" class="btn btn-danger">탈퇴</button>
+						<c:forEach var="groupInfo" items="${groupInfoList }">
+							<div class="w-100 my-2">
+								<div class="d-flex justify-content-between align-items-center">
+									<a href="#">${groupInfo.groupName }</a>
+									<div class="d-flex align-items-center">
+										<span class="mx-3">${groupInfo.memberCount }명</span>
+										<button type="button" class="btn btn-danger">탈퇴</button>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="w-100 my-2">
-							<div class="d-flex justify-content-between align-items-center">
-								<a href="#">운영체제 스터디</a>
-								<div class="d-flex align-items-center">
-									<span class="mx-3">7명</span>
-									<button type="button" class="btn btn-danger">탈퇴</button>
-								</div>
-							</div>
-						</div>
+						</c:forEach>
 					</div>
 					<div class="d-flex w-75 justify-content-end">
 						<button onClick="location.href = '/group/create-group-page';" type="button" class="btn btn-primary my-3">그룹 생성</button>
@@ -47,38 +40,33 @@
 				<div style="width:1px;" class="bg-dark"></div>
 				<div id="searchGroupDiv" class="bg-light w-50 d-flex flex-column align-items-center">
 					<h2 class="my-3">그룹 검색</h2>
-					<div class="d-flex align-items-center justify-content-center w-75">
-						<input type="text" style="width:220px;" class="form-control">
-						<button type="submit" class="btn btn-primary">검색</button>
-					</div>
-					<div class="my-3">
-						<table class="table">
+					<form id="searchForm" class="w-75">
+						<div class="d-flex align-items-center justify-content-center">
+							<input id="searchInput" type="text" style="width:220px;" class="form-control" value="${search }">
+							<button type="submit" class="btn btn-primary">검색</button>
+						</div>
+					</form>
+					<div class="my-3 w-75">
+						<table class="table text-center">
 							<thead>
 								<tr>
-									<th>그룹명</th>
-									<th>멤버 수</th>
-									<th></th>
+									<th width="60%">그룹명</th>
+									<th width="20%">멤버 수</th>
+									<th width="20%"></th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>
-										<a href="#">자바 스프링 입문 스터디 그룹</a>
-									</td>
-									<td>337명</td>
-									<td>
-										<button type="button" class="btn btn-sm btn-primary">가입</button>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<a href="#">네트워크 엔지니어 모여라</a>
-									</td>
-									<td>47명</td>
-									<td>
-										<button type="button" class="btn btn-sm btn-primary">가입</button>
-									</td>
-								</tr>
+								<c:forEach var="searchGroupInfo" items="${searchGroupInfoList }">
+									<tr>
+										<td>
+											<a href="#">${searchGroupInfo.groupName }</a>
+										</td>
+										<td>${searchGroupInfo.memberCount }명</td>
+										<td>
+											<button type="button" class="btn btn-sm btn-primary">가입</button>
+										</td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 						<div class="page-div d-flex w-100 justify-content-center">
@@ -86,7 +74,7 @@
 								<ul class="pagination pagination-sm">
 									<c:forEach var="i" begin="1" end="${pageCount }" step="1">
 										<li class="page-item">
-											<a class="page-link" href="/group/search-workbook-page?page=${i }">${i } </a>
+											<a class="page-link" href="/group/search-group-page?page=${i }&search=${search}">${i } </a>
 										</li>
 									</c:forEach>
 								</ul>
@@ -105,7 +93,13 @@
 
 
 <script>
-
+	$(document).ready(function(){
+		$("#searchForm").on("submit", function(e){
+			e.preventDefault();
+			let search = $("#searchInput").val();
+			location.href = "/group/search-group-page?page=1&search=" + search;
+		});
+	});
 </script>
 
 </body>

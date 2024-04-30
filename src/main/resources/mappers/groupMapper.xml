@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.kuwon.stugether.group.common.repository.GroupRepository">
+	<select id="selectExistGroupName" parameterType="string"
+	resultType="int">
+		SELECT EXISTS(
+			SELECT
+				`id`
+			FROM
+				`group`
+			WHERE
+				`groupName` = #{groupName}
+		);
+	</select>
+	<insert id="insertGroup" parameterType="com.kuwon.stugether.group.common.domain.Group"
+	useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+			`group`
+		(
+			`userId`
+			, `groupName`
+			, `description`
+		)
+		VALUE
+		(
+			#{group.userId}
+			, #{group.groupName}
+			, #{group.description}
+		);
+	</insert>
+	<select id="selectGroupById" parameterType="int"
+	resultType="com.kuwon.stugether.group.common.domain.Group">
+		SELECT
+			`id`
+			, `userId`
+			, `groupName`
+			, `description`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`group`
+		WHERE
+			`id` = #{groupId};
+	</select>
+	<select id="selectGroupByName" parameterType="map"
+	resultType="com.kuwon.stugether.group.common.domain.Group">
+		SELECT
+			`id`
+			, `userId`
+			, `groupName`
+			, `description`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`group`
+		WHERE
+			`groupName` LIKE CONCAT('%', #{groupName}, '%')
+		LIMIT 5 OFFSET #{page};
+	</select>
+	<select id="selectGroupCountByName" parameterType="string"
+	resultType="int">
+		SELECT
+			count(*)
+		FROM
+			`group`
+		WHERE
+			`groupName` LIKE CONCAT('%', #{groupName}, '%');
+	</select>
+</mapper>

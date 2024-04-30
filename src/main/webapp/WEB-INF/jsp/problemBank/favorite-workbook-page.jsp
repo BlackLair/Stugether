@@ -54,7 +54,7 @@
 							<ul class="pagination pagination-sm">
 								<c:forEach var="i" begin="1" end="${pageCount }" step="1">
 									<li class="page-item">
-										<a class="page-link" href="/problem-bank/my-workbook-page?page=${i }">${i } </a>
+										<a class="page-link" href="/problem-bank/favorite-workbook-page?page=${i }">${i } </a>
 									</li>
 								</c:forEach>
 							</ul>
