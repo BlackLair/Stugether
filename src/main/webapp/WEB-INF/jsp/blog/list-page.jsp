@@ -28,9 +28,9 @@
 					<table class="table text-center">
 						<thead>
 							<tr>
-								<th>No.</th>
-								<th>글 제목</th>
-								<th>업로드</th>
+								<th width="5%">No.</th>
+								<th width="70%">글 제목</th>
+								<th width="25%">업로드</th>
 							</tr>
 						</thead>
 						<tbody>
