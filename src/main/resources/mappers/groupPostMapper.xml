@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+
+<mapper namespace="com.kuwon.stugether.group.post.repository.GroupPostRepository">
+	<select id="selectPostCountByGroupIdAndCategoryId" parameterType="map"
+	resultType="int">
+		SELECT
+			count(*)
+		FROM
+			`group_post`
+		WHERE
+			`groupId` = #{groupId}
+		AND `groupCategoryId` = #{categoryId};
+	</select>
+	<select id="selectAllPostList" parameterType="map"
+	resultType="com.kuwon.stugether.group.post.domain.GroupPost">
+		SELECT
+			`id`
+			, `groupId`
+			, `groupCategoryId`
+			, `userId`
+			, `title`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`group_post`
+		WHERE
+			`groupId` = #{groupId}
+		LIMIT 10 OFFSET #{page};
+	</select>
+	<select id="selectPostListByCategoryId" parameterType="map"
+	resultType="com.kuwon.stugether.group.post.domain.GroupPost">
+		SELECT
+			`id`
+			, `groupId`
+			, `groupCategoryId`
+			, `userId`
+			, `title`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`group_post`
+		WHERE
+			`groupId` = #{groupId}
+		AND `groupCategoryId` = #{categoryId}
+		LIMIT 10 OFFSET #{page};
+	</select>
+</mapper>

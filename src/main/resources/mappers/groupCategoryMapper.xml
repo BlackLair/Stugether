@@ -17,4 +17,30 @@
 			, #{name}
 		);
 	</insert>
+	<select id="selectCategoryByGroupId" parameterType="int"
+	resultType="com.kuwon.stugether.group.category.domain.GroupCategory">
+		SELECT
+			`id`
+			, `groupId`
+			, `name`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`group_category`
+		WHERE
+			`groupId` = #{groupId};
+	</select>
+	<select id="selectCategoryById" parameterType="int"
+	resultType="com.kuwon.stugether.group.category.domain.GroupCategory">
+		SELECT
+			`id`
+			, `groupId`
+			, `name`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`group_category`
+		WHERE
+			`id` = #{categoryId};
+	</select>
 </mapper>

@@ -24,7 +24,7 @@
 						<c:forEach var="groupInfo" items="${groupInfoList }">
 							<div class="w-100 my-2">
 								<div class="d-flex justify-content-between align-items-center">
-									<a href="#">${groupInfo.groupName }</a>
+									<a href="/group/${groupInfo.id }/list-page">${groupInfo.groupName }</a>
 									<div class="d-flex align-items-center">
 										<span class="mx-3">${groupInfo.memberCount }명</span>
 										<button type="button" class="btn btn-danger">탈퇴</button>

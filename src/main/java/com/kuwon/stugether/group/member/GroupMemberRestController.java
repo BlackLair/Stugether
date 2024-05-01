@@ -28,4 +28,6 @@ public class GroupMemberRestController {
 		resultMap.put("result", result);
 		return resultMap;
 	}
+	
+	
 }
