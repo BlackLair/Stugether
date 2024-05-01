@@ -38,4 +38,17 @@
 		WHERE
 			`groupId` = #{groupId};
 	</select>
+	<select id="selectExistMember" parameterType="map"
+	resultType="int">
+		SELECT EXISTS(
+			SELECT
+				`id`
+			FROM
+				`group_member`
+			WHERE
+				`groupId` = #{groupId}
+			AND `userId` = #{userId}
+		)
+		
+	</select>
 </mapper>

@@ -13,4 +13,6 @@ public interface GroupMemberRepository {
 	public int selectMemberCountByGroupId(@Param("groupId") int groupId);
 	public int insertGroupMember(@Param("userId") int userId
 								, @Param("groupId") int groupId);
+	public int selectExistMember(@Param("userId") int userId
+								, @Param("groupId") int groupId);
 }

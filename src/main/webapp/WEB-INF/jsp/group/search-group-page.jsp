@@ -63,7 +63,7 @@
 										</td>
 										<td>${searchGroupInfo.memberCount }명</td>
 										<td>
-											<button type="button" class="btn btn-sm btn-primary">가입</button>
+											<button value="${searchGroupInfo.id }" type="button" class="join-btn btn btn-sm btn-primary">가입</button>
 										</td>
 									</tr>
 								</c:forEach>
@@ -94,6 +94,28 @@
 
 <script>
 	$(document).ready(function(){
+		$(".join-btn").on("click", function(){
+			if(confirm("그룹에 가입하시겠습니까?")){
+				let groupId = Number($(this).val());
+				$.ajax({
+					url: "/group/join"
+					, type: "POST"
+					, data: {"groupId":groupId}
+					, success:function(data){
+						if(data.result == "success"){
+							alert("그룹에 가입되었습니다.");
+						}else if(data.result == "joined"){
+							alert("이미 가입한 그룹입니다.");
+						}else{
+							alert("그룹 가입에 실패했습니다.");
+						}
+					}
+					, error:function(){
+						alert("그룹 가입 오류");
+					}
+				});
+			}
+		});
 		$("#searchForm").on("submit", function(e){
 			e.preventDefault();
 			let search = $("#searchInput").val();
