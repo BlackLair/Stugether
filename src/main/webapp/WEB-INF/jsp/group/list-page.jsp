@@ -64,7 +64,7 @@
 						</nav>
 					</div>
 				</main>
-				<div>
+				<div class="widget-box">
 				</div>
 				
 			</div>
