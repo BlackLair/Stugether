@@ -25,7 +25,7 @@
 							<c:if test="${userId eq ownerDTO.id }">
 								<div class="d-flex align-items-center mx-3 my-3 edit-category">
 									<div class="col-8"><input id="newCategoryInput" type="text" class="form-control"></div>
-									<button type="button" id="addCategoryBtn" class="btn-success mx-2" style="width:25px; height:25px; font-size:10px;" font-size:10px;">
+									<button type="button" id="addCategoryBtn" class="btn-success mx-2" style="width:25px; height:25px; font-size:10px;">
 										<i class="bi bi-folder-plus"></i>
 									</button>		
 								</div>
