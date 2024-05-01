@@ -59,7 +59,7 @@
 								<c:forEach var="searchGroupInfo" items="${searchGroupInfoList }">
 									<tr>
 										<td>
-											<a href="#">${searchGroupInfo.groupName }</a>
+											<a href="/group/${searchGroupInfo.id }/list-page">${searchGroupInfo.groupName }</a>
 										</td>
 										<td>${searchGroupInfo.memberCount }명</td>
 										<td>
