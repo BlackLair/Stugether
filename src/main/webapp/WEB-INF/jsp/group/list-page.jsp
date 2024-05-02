@@ -57,7 +57,7 @@
 							<ul class="pagination pagination-sm">
 								<c:forEach var="i" begin="1" end="${pageCount }" step="1">
 									<li class="page-item">
-										<a class="page-link" href="#">${i } </a>
+										<a class="page-link" href="/group/${groupInfo.id }/list-page?category=${currentCategoryId}&page=${i }">${i } </a>
 									</li>
 								</c:forEach>
 							</ul>
