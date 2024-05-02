@@ -72,7 +72,7 @@ public class GroupController {
 		model.addAttribute("groupCategoryInfoList", groupCategoryInfoList);
 		model.addAttribute("totalPostCount", totalPostCount);
 		model.addAttribute("pageCount", (Math.max(0,  currentPostCount - 1) / 10) + 1);
-		
+		model.addAttribute("currentCategoryId", category);
 		return "group/list-page";
 	}
 }
