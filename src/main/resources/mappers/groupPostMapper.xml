@@ -31,6 +31,7 @@
 			`group_post`
 		WHERE
 			`groupId` = #{groupId}
+		ORDER BY `id` DESC
 		LIMIT 10 OFFSET #{page};
 	</select>
 	<select id="selectPostListByCategoryId" parameterType="map"
@@ -50,6 +51,25 @@
 		WHERE
 			`groupId` = #{groupId}
 		AND `groupCategoryId` = #{categoryId}
+		ORDER BY `id` DESC
 		LIMIT 10 OFFSET #{page};
+	</select>
+	<select id="selectPost" parameterType="map"
+	resultType="com.kuwon.stugether.group.post.domain.GroupPost">
+		SELECT
+			`id`
+			, `groupId`
+			, `groupCategoryId`
+			, `userId`
+			, `title`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`group_post`
+		WHERE
+			`groupId` = #{groupId}
+		AND `id` = #{postId};
 	</select>
 </mapper>

@@ -6,7 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kuwon.stugether.group.category.domain.GroupCategory;
+import com.kuwon.stugether.group.category.repository.GroupCategoryRepository;
 import com.kuwon.stugether.group.post.domain.GroupPost;
+import com.kuwon.stugether.group.post.dto.GroupPostDetail;
 import com.kuwon.stugether.group.post.dto.GroupPostInfo;
 import com.kuwon.stugether.group.post.repository.GroupPostRepository;
 import com.kuwon.stugether.user.domain.User;
@@ -18,6 +21,8 @@ public class GroupPostService {
 	GroupPostRepository groupPostRepository;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	GroupCategoryRepository groupCategoryRepository;
 	
 	public List<GroupPostInfo> getGroupPostInfoList(int groupId, Integer categoryId, int page){
 		List<GroupPost> groupPostList = null;
@@ -34,7 +39,31 @@ public class GroupPostService {
 		return groupPostInfoList;
 	}
 	
-	public GroupPostInfo generateGroupPostInfo(GroupPost groupPost) {
+	public GroupPostDetail getGroupPostDetail(int groupId, int postId) {
+		GroupPost groupPost = groupPostRepository.selectPost(groupId, postId);
+		return generateGroupPostDetail(groupPost);
+	}
+	
+	private GroupPostDetail generateGroupPostDetail(GroupPost groupPost) {
+		GroupPostDetail groupPostDetail = new GroupPostDetail();
+		groupPostDetail.setId(groupPost.getId());
+		groupPostDetail.setGroupId(groupPost.getGroupId());
+		groupPostDetail.setGroupCategoryId(groupPost.getGroupCategoryId());
+		GroupCategory groupCategory = groupCategoryRepository.selectCategoryById(groupPost.getGroupCategoryId());
+		groupPostDetail.setGroupCategoryName(groupCategory.getName());
+		groupPostDetail.setUserId(groupPost.getUserId());
+		User user = userRepository.selectById(groupPost.getUserId());
+		groupPostDetail.setUserNickname(user.getNickname());
+		groupPostDetail.setTitle(groupPost.getTitle());
+		groupPostDetail.setContent(groupPost.getContent());
+		groupPostDetail.setImagePath(groupPost.getImagePath());
+		groupPostDetail.setCreatedAt(groupPost.getCreatedAt());
+		groupPostDetail.setUpdatedAt(groupPost.getUpdatedAt());
+		
+		return groupPostDetail;
+	}
+	
+	private GroupPostInfo generateGroupPostInfo(GroupPost groupPost) {
 		GroupPostInfo groupPostInfo = new GroupPostInfo();
 		
 		groupPostInfo.setId(groupPost.getId());
@@ -50,5 +79,6 @@ public class GroupPostService {
 		return groupPostInfo;
 		
 	}
+	
 	
 }

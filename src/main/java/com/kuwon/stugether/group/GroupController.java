@@ -14,6 +14,7 @@ import com.kuwon.stugether.group.category.dto.GroupCategoryInfo;
 import com.kuwon.stugether.group.category.service.GroupCategoryService;
 import com.kuwon.stugether.group.common.dto.GroupInfo;
 import com.kuwon.stugether.group.common.service.GroupService;
+import com.kuwon.stugether.group.post.dto.GroupPostDetail;
 import com.kuwon.stugether.group.post.dto.GroupPostInfo;
 import com.kuwon.stugether.group.post.service.GroupPostService;
 
@@ -74,5 +75,23 @@ public class GroupController {
 		model.addAttribute("pageCount", (Math.max(0,  currentPostCount - 1) / 10) + 1);
 		model.addAttribute("currentCategoryId", category);
 		return "group/list-page";
+	}
+	
+	@GetMapping("/{groupId}/{postId}")
+	public String postDetailView(@PathVariable("groupId") int groupId
+								, @PathVariable("postId") int postId
+								, HttpSession session, Model model) {
+		GroupInfo groupInfo = groupService.getGroupInfoByGroupId(groupId);
+		List<GroupCategoryInfo> groupCategoryInfoList = groupCategoryService.getCategoryInfoList(groupId);
+		int totalPostCount = groupCategoryService.getTotalPostCountByGroupCategoryInfoList(groupCategoryInfoList);
+		GroupPostDetail groupPostDetail = groupPostService.getGroupPostDetail(groupId, postId);
+		
+		
+		model.addAttribute("groupCategoryInfoList", groupCategoryInfoList);
+		model.addAttribute("totalPostCount", totalPostCount);
+		model.addAttribute("groupInfo", groupInfo);
+		model.addAttribute("groupPostDetail", groupPostDetail);
+		
+		return "group/post-detail-page";
 	}
 }

@@ -18,4 +18,7 @@ public interface GroupPostRepository {
 													, @Param("categoryId") int categoryId
 													, @Param("page") int page);
 	
+	public GroupPost selectPost(@Param("groupId") int groupId
+							, @Param("postId") int postId);
+	
 }

@@ -31,38 +31,63 @@
 			<div class="d-flex justify-content-between my-3">
 				<jsp:include page="/WEB-INF/jsp/group/group-category.jsp" />
 				<main class="p-3">
-					<div class="h2">${categoryName }</div>
-					<table class="table text-center">
-						<thead>
-							<tr>
-								<th width="5%">No.</th>
-								<th width="50%">글 제목</th>
-								<th width="20%">작성자</th>
-								<th width="25%">업로드</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="post" items="${groupPostInfoList }">
-								<tr>
-									<td>${post.id }</td>
-									<td><a href="/group/${groupInfo.id }/${post.id }">${post.title }</a></td>
-									<td>${post.userNickname }</td>
-									<td><fmt:formatDate value="${post.createdAt }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-					<div class="page-div d-flex w-100 justify-content-center">
-						<nav class="d-flex justify-content-center">
-							<ul class="pagination pagination-sm">
-								<c:forEach var="i" begin="1" end="${pageCount }" step="1">
-									<li class="page-item">
-										<a class="page-link" href="/group/${groupInfo.id }/list-page?category=${currentCategoryId}&page=${i }">${i } </a>
-									</li>
-								</c:forEach>
-							</ul>
-						</nav>
+					
+					<div class="d-flex justify-content-between align-items-start w-100">
+						<div>
+							<div><a href="#">${groupPostDetail.groupCategoryName }</a></div>
+							<h2>${groupPostDetail.title }</h2>
+						</div>
+						<div style="width:180px; border-left:1px solid black;">
+							<div class="mx-2">
+								<div>작성자 : ${groupPostDetail.userNickname }</div>
+								<div><fmt:formatDate value="${groupPostDetail.createdAt }" pattern="yyyy-MM-dd HH:mm:ss"/></div>
+								<div>글 번호 : ${groupPostDetail.id }</div>
+								<div class="d-flex">
+									<c:if test="${userId eq groupPostDetail.userId }">
+										<button type="button">수정</button>
+										<button id="deleteBtn" type="button">삭제</button>
+									</c:if>
+								</div>
+							</div>
+						</div>
 					</div>
+					<hr>
+					<div style="overflow-y:auto;" class="article w-100 card card-body">
+						${groupPostDetail.content }
+					</div>
+					<hr>
+					<div class="w-100 bg-dark text-light">
+						<div>댓글 ${replyDTOList.size() }</div>
+						<hr class="bg-white">
+						<div class="reply-div">
+							<c:forEach var="reply" items="${replyDTOList }">
+								<div class="d-flex justify-content-between">
+									<div class="d-flex justify-content-between align-items-center w-100">
+										<div class="d-flex">
+											<div><b>${reply.userNickname }</b> : </div>
+											<div>${reply.content } </div>
+										</div>
+										<div class="d-flex align-items-center">
+											<fmt:formatDate value="${reply.createdAt }" pattern="yyyy-MM-dd HH:mm:ss" />
+											<div style="width:60px;" class="mx-2">
+												<c:if test="${userId eq reply.userId }">
+													<button value="${reply.id }" type="button" class="btn btn-sm btn-danger delete-btn">삭제</button>
+												</c:if>
+											</div>
+										</div>
+									</div>
+								</div>
+								<hr class="bg-white m-1">
+							</c:forEach>
+							<form id="replyForm">
+								<div class="d-flex">
+									<input id="replyInput" type="text" class="form-control reply-input" placeholder="댓글을 작성하세요.">
+									<button id="replyBtn" type="submit" class="form-control reply-btn">등록</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					
 				</main>
 				<div class="widget-box">
 				</div>
