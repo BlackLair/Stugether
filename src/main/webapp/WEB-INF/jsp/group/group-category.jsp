@@ -32,7 +32,7 @@
 							</c:if>
 						</div>
 						<div class="d-flex justify-content-start">
-								<button onClick="#" type="button" class="btn btn-sm btn-primary">글쓰기</button>
+								<button onClick="location.href = '/group/${groupInfo.id}/upload-page';" type="button" class="btn btn-sm btn-primary">글쓰기</button>
 						</div>
 					</div>
 				</aside>

@@ -6,8 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kuwon.stugether.common.FileManager;
 import com.kuwon.stugether.group.category.domain.GroupCategory;
 import com.kuwon.stugether.group.category.repository.GroupCategoryRepository;
+import com.kuwon.stugether.group.common.domain.Group;
+import com.kuwon.stugether.group.common.repository.GroupRepository;
 import com.kuwon.stugether.group.post.domain.GroupPost;
 import com.kuwon.stugether.group.post.dto.GroupPostDetail;
 import com.kuwon.stugether.group.post.dto.GroupPostInfo;
@@ -23,6 +26,8 @@ public class GroupPostService {
 	UserRepository userRepository;
 	@Autowired
 	GroupCategoryRepository groupCategoryRepository;
+	@Autowired
+	GroupRepository groupRepository;
 	
 	public List<GroupPostInfo> getGroupPostInfoList(int groupId, Integer categoryId, int page){
 		List<GroupPost> groupPostList = null;
@@ -43,6 +48,32 @@ public class GroupPostService {
 		GroupPost groupPost = groupPostRepository.selectPost(groupId, postId);
 		return generateGroupPostDetail(groupPost);
 	}
+	
+	public String uploadGroupPost(int userId, int groupId, int categoryId, String title, String content, String editorToken, GroupPost post) {
+		GroupCategory groupCategory = groupCategoryRepository.selectCategoryById(categoryId);
+		Group group = groupRepository.selectGroupById(groupId);
+		if(group == null || groupCategory == null || groupCategory.getGroupId() != groupId) {
+			return "no category or group";
+		}
+		
+		// 글에 포함된 image 태그의 src 주소 변경
+		String currentTime = System.currentTimeMillis() + "";
+		content = content.replaceAll("/temp/" + userId + "_" + editorToken, "/group/" + userId + "_" + currentTime);
+		String filePath = FileManager.saveImage(userId, FileManager.TYPE_GROUP, currentTime, editorToken);
+
+		post.setGroupId(groupId);
+		post.setGroupCategoryId(categoryId);
+		post.setUserId(userId);
+		post.setTitle(title);
+		post.setContent(content);
+		post.setImagePath(filePath);
+		if(groupPostRepository.insertPost(post) == 1) {
+			return "success";
+		}
+		return "failure";
+	}
+	
+	
 	
 	private GroupPostDetail generateGroupPostDetail(GroupPost groupPost) {
 		GroupPostDetail groupPostDetail = new GroupPostDetail();
@@ -77,8 +108,5 @@ public class GroupPostService {
 		groupPostInfo.setUserNickname(user.getNickname());
 		
 		return groupPostInfo;
-		
 	}
-	
-	
 }

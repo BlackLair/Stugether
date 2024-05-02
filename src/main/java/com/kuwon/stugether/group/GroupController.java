@@ -30,6 +30,7 @@ public class GroupController {
 	@Autowired
 	GroupPostService groupPostService;
 	
+	// 그룹 검색 페이지
 	@GetMapping("/search-group-page")
 	public String searchGroupView(@RequestParam(value="search", defaultValue="") String search
 								, @RequestParam(value="page", defaultValue="1") Integer page
@@ -44,11 +45,12 @@ public class GroupController {
 		model.addAttribute("search", search);
 		return "group/search-group-page";
 	}
+	// 그룹 생성 페이지
 	@GetMapping("/create-group-page")
 	public String createGroupView() {
 		return "group/create-group-page";
 	}
-	
+	// 그룹 게시물 목록
 	@GetMapping("/{groupId}/list-page")
 	public String listView(@PathVariable("groupId") int groupId
 						, @RequestParam(value="category", required=false) Integer category
@@ -76,7 +78,7 @@ public class GroupController {
 		model.addAttribute("currentCategoryId", category);
 		return "group/list-page";
 	}
-	
+	// 그룹 게시물 상세보기
 	@GetMapping("/{groupId}/{postId}")
 	public String postDetailView(@PathVariable("groupId") int groupId
 								, @PathVariable("postId") int postId
@@ -93,5 +95,16 @@ public class GroupController {
 		model.addAttribute("groupPostDetail", groupPostDetail);
 		
 		return "group/post-detail-page";
+	}
+	// 그룹 게시물 작성 페이지
+	@GetMapping("/{groupId}/upload-page")
+	public String uploadView(@PathVariable("groupId") int groupId
+							, HttpSession session, Model model) {
+		GroupInfo groupInfo = groupService.getGroupInfoByGroupId(groupId);
+		List<GroupCategoryInfo> groupCategoryInfoList = groupCategoryService.getCategoryInfoList(groupId);
+		
+		model.addAttribute("groupCategoryInfoList", groupCategoryInfoList);
+		model.addAttribute("groupInfo", groupInfo);
+		return "group/upload-post-page";
 	}
 }

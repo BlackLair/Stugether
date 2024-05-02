@@ -72,4 +72,26 @@
 			`groupId` = #{groupId}
 		AND `id` = #{postId};
 	</select>
+	<insert id="insertPost" parameterType="com.kuwon.stugether.group.post.domain.GroupPost"
+	useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+			`group_post`
+		(
+			`groupId`
+			, `groupCategoryId`
+			, `userId`
+			, `title`
+			, `content`
+			, `imagePath`
+		)
+		VALUE
+		(
+			#{groupPost.groupId}
+			, #{groupPost.groupCategoryId}
+			, #{groupPost.userId}
+			, #{groupPost.title}
+			, #{groupPost.content}
+			, #{groupPost.imagePath}
+		);
+	</insert>
 </mapper>
