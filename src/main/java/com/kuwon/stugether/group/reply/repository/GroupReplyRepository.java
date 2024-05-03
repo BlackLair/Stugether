@@ -11,7 +11,8 @@ import com.kuwon.stugether.group.reply.domain.GroupReply;
 public interface GroupReplyRepository {
 	public int insertReply(@Param("postId") int postId
 						, @Param("userId") int userId
-						, @Param("content") String content);
+						, @Param("content") String content
+						, @Param("groupCategoryId") int groupCategoryId);
 	
 	public List<GroupReply> selectReplyList(@Param("postId") int postId);
 	
@@ -19,4 +20,6 @@ public interface GroupReplyRepository {
 						, @Param("userId") int userId);
 	
 	public int deleteReplyByGroupPostId(@Param("postId") int postId);
+	
+	public int deleteReplyByGroupCategoryId(@Param("groupCategoryId") int groupCategoryId);
 }

@@ -43,4 +43,22 @@
 		WHERE
 			`id` = #{categoryId};
 	</select>
+	<select id="selectExistCategory" parameterType="map"
+	resultType="int">
+		SELECT EXISTS(
+			SELECT
+				`id`
+			FROM
+				`group_category`
+			WHERE
+				`groupId` = #{groupId}
+			AND `name` = #{name}
+		);
+	</select>
+	<delete id="deleteCategory" parameterType="int">
+		DELETE FROM
+			`group_category`
+		WHERE
+			`id` = #{categoryId};
+	</delete>
 </mapper>

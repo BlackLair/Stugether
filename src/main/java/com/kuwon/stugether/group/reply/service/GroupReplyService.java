@@ -30,7 +30,8 @@ public class GroupReplyService {
 		if(post == null) {
 			return "not exist";
 		}
-		if(groupReplyRepository.insertReply(postId, userId, HtmlUtils.htmlEscape(content)) == 1) {
+		
+		if(groupReplyRepository.insertReply(postId, userId, HtmlUtils.htmlEscape(content), post.getGroupCategoryId()) == 1) {
 			return "success";
 		}
 		return "failure";

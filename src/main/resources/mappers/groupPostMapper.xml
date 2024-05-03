@@ -100,4 +100,14 @@
 		WHERE
 			`id` = #{postId};
 	</delete>
+	<select id="selectAllListByCategoryId" parameterType="map"
+	resultType="Integer">
+		SELECT
+			`id`
+		FROM
+			`group_post`
+		WHERE
+			`groupId` = #{groupId}
+		AND `groupCategoryId` = #{groupCategoryId};
+	</select>
 </mapper>

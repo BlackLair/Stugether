@@ -23,4 +23,9 @@ public interface GroupPostRepository {
 	public int insertPost(@Param("groupPost") GroupPost groupPost);
 	
 	public int deletePost(@Param("postId") int postId);
+	
+	public List<Integer> selectAllListByCategoryId(@Param("groupId") int groupId
+												, @Param("groupCategoryId") int groupCategoryId);
+	
+	
 }

@@ -43,8 +43,7 @@ public class GroupPostRestController {
 	public Map<String, String> removePost(@RequestParam("groupId") int groupId
 										, @RequestParam("postId") int postId
 										, HttpSession session){
-		int userId = (int) session.getAttribute("userId");
-		String result = groupPostService.removeGroupPost(userId, groupId, postId);
+		String result = groupPostService.removeGroupPost(groupId, postId);
 		Map<String, String> resultMap = new HashMap<>();
 		resultMap.put("result", result);
 		return resultMap;

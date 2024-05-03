@@ -9,7 +9,11 @@ import org.springframework.stereotype.Service;
 import com.kuwon.stugether.group.category.domain.GroupCategory;
 import com.kuwon.stugether.group.category.dto.GroupCategoryInfo;
 import com.kuwon.stugether.group.category.repository.GroupCategoryRepository;
+import com.kuwon.stugether.group.common.domain.Group;
+import com.kuwon.stugether.group.common.repository.GroupRepository;
 import com.kuwon.stugether.group.post.repository.GroupPostRepository;
+import com.kuwon.stugether.group.post.service.GroupPostService;
+import com.kuwon.stugether.group.reply.repository.GroupReplyRepository;
 import com.kuwon.stugether.user.repository.UserRepository;
 
 @Service
@@ -20,6 +24,12 @@ public class GroupCategoryService {
 	GroupPostRepository groupPostRepository;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	GroupRepository groupRepository;
+	@Autowired
+	GroupReplyRepository groupReplyRepository;
+	@Autowired
+	GroupPostService groupPostService;
 	
 	// 카테고리 목록 가져오기
 	public List<GroupCategoryInfo> getCategoryInfoList(int groupId){
@@ -31,6 +41,33 @@ public class GroupCategoryService {
 		}
 		return groupCategoryInfoList;
 	}
+	
+	// 카테고리 생성
+	public String addCategory(int groupId, String name) {
+		Group group = groupRepository.selectGroupById(groupId);
+		if(groupCategoryRepository.selectExistCategory(groupId, name) == 1) {
+			return "duplicated";
+		}
+		if(groupCategoryRepository.insertCategory(groupId, name) == 1) {
+			return "success";
+		}
+		return "failure";
+	}
+	
+	// 카테고리 제거
+	public String removeCategory(int groupId, int categoryId) {
+		GroupCategory groupCategory = groupCategoryRepository.selectCategoryById(categoryId);
+		if(groupCategory == null || groupCategory.getName().equals("자유게시판")) {
+			return "failure";
+		}
+		List<Integer> postIdList = groupPostRepository.selectAllListByCategoryId(groupId, categoryId);
+		for(int postId : postIdList) {
+			groupPostService.removeGroupPost(groupId, postId);
+		}
+		groupCategoryRepository.deleteCategory(categoryId);
+		return "success";
+	}
+	
 	
 	/**
 	 * Create a DTO of GroupCategoryInfo using the GroupCategory object.

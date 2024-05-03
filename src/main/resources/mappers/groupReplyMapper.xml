@@ -9,12 +9,14 @@
 			`group_reply`
 		(
 			`groupPostId`
+			, `groupCategoryId`
 			, `userId`
 			, `content`
 		)
 		VALUE
 		(
 			#{postId}
+			, #{groupCategoryId}
 			, #{userId}
 			, #{content}
 		);
@@ -45,5 +47,11 @@
 			`group_reply`
 		WHERE
 			`groupPostId` = #{postId};
+	</delete>
+	<delete id="deleteReplyByGroupCategoryId" parameterType="int">
+		DELETE FROM
+			`group_reply`
+		WHERE
+			`groupCategoryId` = #{groupCategoryId};
 	</delete>
 </mapper>

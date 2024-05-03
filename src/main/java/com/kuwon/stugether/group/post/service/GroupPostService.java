@@ -79,13 +79,10 @@ public class GroupPostService {
 	
 	// 게시물 삭제
 	@Transactional
-	public String removeGroupPost(int userId, int groupId, int postId) {
+	public String removeGroupPost(int groupId, int postId) {
 		GroupPost groupPost = groupPostRepository.selectPost(groupId, postId);
 		if(groupPost == null) {
 			return "failure";
-		}
-		if(groupPost.getUserId() != userId) {
-			return "permission denied";
 		}
 		// 댓글 삭제
 		groupReplyRepository.deleteReplyByGroupPostId(postId);

@@ -10,6 +10,7 @@ import lombok.Setter;
 public class GroupReply {
 	private int id;
 	private int groupPostId;
+	private int groupCategoryId;
 	private int userId;
 	private String Content;
 	private Date createdAt;
