@@ -54,6 +54,12 @@ public class GroupController {
 	public String createGroupView() {
 		return "group/create-group-page";
 	}
+	
+	@GetMapping("/{groupId}")
+	public String groupView(@PathVariable("groupId") int groupId) {
+		return "redirect:/group/" + groupId + "/list-page";
+	}
+	
 	// 그룹 게시물 목록
 	@GetMapping("/{groupId}/list-page")
 	public String listView(@PathVariable("groupId") int groupId
