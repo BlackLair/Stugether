@@ -57,8 +57,11 @@ public class GroupCategoryService {
 	// 카테고리 제거
 	public String removeCategory(int groupId, int categoryId) {
 		GroupCategory groupCategory = groupCategoryRepository.selectCategoryById(categoryId);
-		if(groupCategory == null || groupCategory.getName().equals("자유게시판")) {
+		if(groupCategory == null) {
 			return "failure";
+		}
+		if(groupCategory.getName().equals("자유게시판")) {
+			return "default category";
 		}
 		List<Integer> postIdList = groupPostRepository.selectAllListByCategoryId(groupId, categoryId);
 		for(int postId : postIdList) {

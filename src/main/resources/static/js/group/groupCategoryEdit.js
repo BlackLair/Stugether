@@ -39,7 +39,7 @@ function addCategoryUIEvent(){
 		let groupId = Number($("#wrap").data("group-id"));
 		let categoryName = $(this).data("category-name");
 		if(prompt("카테고리를 삭제하면 포함된 모든 글이 삭제됩니다. 삭제하려면 아래 문구를 입력하세요."
-				+ "\n " + categoryName + "를 삭제하겠습니다.") == categoryName + "를 삭제하겠습니다."){
+				+ "\n " + categoryName + " 삭제하겠습니다.") == categoryName + " 삭제하겠습니다."){
 			$.ajax({
 				url: "/group/category/remove"
 				, type: "DELETE"
