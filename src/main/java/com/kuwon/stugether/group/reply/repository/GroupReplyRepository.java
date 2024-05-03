@@ -17,4 +17,6 @@ public interface GroupReplyRepository {
 	
 	public int deleteReply(@Param("replyId") int replyId
 						, @Param("userId") int userId);
+	
+	public int deleteReplyByGroupPostId(@Param("postId") int postId);
 }

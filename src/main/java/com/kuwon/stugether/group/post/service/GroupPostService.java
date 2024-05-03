@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kuwon.stugether.common.FileManager;
 import com.kuwon.stugether.group.category.domain.GroupCategory;
@@ -15,6 +16,7 @@ import com.kuwon.stugether.group.post.domain.GroupPost;
 import com.kuwon.stugether.group.post.dto.GroupPostDetail;
 import com.kuwon.stugether.group.post.dto.GroupPostInfo;
 import com.kuwon.stugether.group.post.repository.GroupPostRepository;
+import com.kuwon.stugether.group.reply.repository.GroupReplyRepository;
 import com.kuwon.stugether.user.domain.User;
 import com.kuwon.stugether.user.repository.UserRepository;
 
@@ -28,6 +30,8 @@ public class GroupPostService {
 	GroupCategoryRepository groupCategoryRepository;
 	@Autowired
 	GroupRepository groupRepository;
+	@Autowired
+	GroupReplyRepository groupReplyRepository;
 	
 	public List<GroupPostInfo> getGroupPostInfoList(int groupId, Integer categoryId, int page){
 		List<GroupPost> groupPostList = null;
@@ -73,6 +77,30 @@ public class GroupPostService {
 		return "failure";
 	}
 	
+	// 게시물 삭제
+	@Transactional
+	public String removeGroupPost(int userId, int groupId, int postId) {
+		GroupPost groupPost = groupPostRepository.selectPost(groupId, postId);
+		if(groupPost == null) {
+			return "failure";
+		}
+		if(groupPost.getUserId() != userId) {
+			return "permission denied";
+		}
+		// 댓글 삭제
+		groupReplyRepository.deleteReplyByGroupPostId(postId);
+		
+		// 게시물 삭제
+		if(groupPostRepository.deletePost(postId) == 0) {
+			return "failure";
+		}
+		
+		// 이미지파일 삭제
+		String imagePath = groupPost.getImagePath();
+		FileManager.deleteImage(imagePath);
+		
+		return "success";
+	}
 	
 	
 	private GroupPostDetail generateGroupPostDetail(GroupPost groupPost) {

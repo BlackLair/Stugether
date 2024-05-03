@@ -40,4 +40,10 @@
 			`id` = #{replyId}
 			AND `userId` = #{userId};
 	</delete>
+	<delete id="deleteReplyByGroupPostId" parameterType="int">
+		DELETE FROM
+			`group_reply`
+		WHERE
+			`groupPostId` = #{postId};
+	</delete>
 </mapper>

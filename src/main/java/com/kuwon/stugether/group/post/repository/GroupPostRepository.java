@@ -21,4 +21,6 @@ public interface GroupPostRepository {
 	public GroupPost selectPost(@Param("groupId") int groupId
 							, @Param("postId") int postId);
 	public int insertPost(@Param("groupPost") GroupPost groupPost);
+	
+	public int deletePost(@Param("postId") int postId);
 }

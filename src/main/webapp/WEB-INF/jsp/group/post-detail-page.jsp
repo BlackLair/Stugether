@@ -104,6 +104,28 @@
 <script>
 	$(document).ready(function(){
 		
+		// 게시물 삭제
+		$("#deleteBtn").on("click", function(){
+			let groupId = Number($("#wrap").data("group-id"));
+			let postId = Number($("#groupPostDiv").data("post-id"));
+			if(confirm("글을 삭제하시겠습니까?")){
+				$.ajax({
+					url: "/group/remove-post"
+					, type: "DELETE"
+					, data: {
+						"postId":postId
+						, "groupId":groupId
+					}
+					, success:function(data){
+						if(data.result == "success"){
+							alert("삭제되었습니다.");
+							location.href = "/group/" + groupId;
+						}
+					}
+				});
+			}
+		});
+		
 		// 댓글 삭제
 		$(".delete-reply-btn").on("click", function(){
 			let replyId = Number($(this).val());

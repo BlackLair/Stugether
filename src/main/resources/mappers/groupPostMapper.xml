@@ -94,4 +94,10 @@
 			, #{groupPost.imagePath}
 		);
 	</insert>
+	<delete id="deletePost" parameterType="int">
+		DELETE FROM
+			`group_post`
+		WHERE
+			`id` = #{postId};
+	</delete>
 </mapper>
