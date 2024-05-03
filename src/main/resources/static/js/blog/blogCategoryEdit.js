@@ -28,7 +28,9 @@ function addCategoryUIEvent(){
 	});
 	$(".removeCategoryBtn").on("click", function(){
 		let categoryId = $(this).data("category-id");
-		if(confirm("카테고리를 삭제하면 포함된 모든 글이 삭제됩니다. 진행하겠습니까?")){
+		let categoryName = $(this).data("category-name");
+		if(prompt("카테고리를 삭제하면 포함된 모든 글이 삭제됩니다. 삭제하려면 아래 문구를 입력하세요."
+				+ "\n " + categoryName + "를 삭제하겠습니다.") == categoryName + "를 삭제하겠습니다."){
 			$.ajax({
 				url: "/blog/category/remove"
 				, type: "DELETE"
@@ -47,6 +49,9 @@ function addCategoryUIEvent(){
 					alert("카테고리 삭제 오류");
 				}
 			});
+		}
+		else{
+			alert("삭제를 취소했습니다.");
 		}
 	});
 }
