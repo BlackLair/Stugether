@@ -34,7 +34,7 @@
 					
 					<div id="groupPostDiv" data-post-id="${groupPostDetail.id }" class="d-flex justify-content-between align-items-start w-100">
 						<div style="width:520px;">
-							<div><a href="#">${groupPostDetail.groupCategoryName }</a></div>
+							<div><a href="/group/${groupInfo.id }/list-page?category=${groupPostDetail.groupCategoryId}">${groupPostDetail.groupCategoryName }</a></div>
 							<h2>${groupPostDetail.title }</h2>
 						</div>
 						<div style="width:180px; border-left:1px solid black;">
