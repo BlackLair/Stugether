@@ -53,7 +53,7 @@ public class GroupPostService {
 		GroupCategory groupCategory = groupCategoryRepository.selectCategoryById(categoryId);
 		Group group = groupRepository.selectGroupById(groupId);
 		if(group == null || groupCategory == null || groupCategory.getGroupId() != groupId) {
-			return "no category or group";
+			return "not exist";
 		}
 		
 		// 글에 포함된 image 태그의 src 주소 변경
