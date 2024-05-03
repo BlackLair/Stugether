@@ -17,6 +17,8 @@ import com.kuwon.stugether.group.common.service.GroupService;
 import com.kuwon.stugether.group.post.dto.GroupPostDetail;
 import com.kuwon.stugether.group.post.dto.GroupPostInfo;
 import com.kuwon.stugether.group.post.service.GroupPostService;
+import com.kuwon.stugether.group.reply.dto.GroupReplyDTO;
+import com.kuwon.stugether.group.reply.service.GroupReplyService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -29,6 +31,8 @@ public class GroupController {
 	GroupCategoryService groupCategoryService;
 	@Autowired
 	GroupPostService groupPostService;
+	@Autowired
+	GroupReplyService groupReplyService;
 	
 	// 그룹 검색 페이지
 	@GetMapping("/search-group-page")
@@ -87,8 +91,9 @@ public class GroupController {
 		List<GroupCategoryInfo> groupCategoryInfoList = groupCategoryService.getCategoryInfoList(groupId);
 		int totalPostCount = groupCategoryService.getTotalPostCountByGroupCategoryInfoList(groupCategoryInfoList);
 		GroupPostDetail groupPostDetail = groupPostService.getGroupPostDetail(groupId, postId);
+		List<GroupReplyDTO> groupReplyDTOList = groupReplyService.getReplyList(postId);
 		
-		
+		model.addAttribute("replyDTOList", groupReplyDTOList);
 		model.addAttribute("groupCategoryInfoList", groupCategoryInfoList);
 		model.addAttribute("totalPostCount", totalPostCount);
 		model.addAttribute("groupInfo", groupInfo);

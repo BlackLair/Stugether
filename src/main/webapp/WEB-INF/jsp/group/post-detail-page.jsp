@@ -14,7 +14,7 @@
 
 </head>
 <body>
-	<div id="wrap">
+	<div data-group-id="${groupInfo.id }" id="wrap">
 		<jsp:include page="/WEB-INF/jsp/common/header.jsp" />
 		<jsp:include page="/WEB-INF/jsp/common/menu.jsp" />
 		<section class="p-3 bg-dark">
@@ -32,8 +32,8 @@
 				<jsp:include page="/WEB-INF/jsp/group/group-category.jsp" />
 				<main class="p-3">
 					
-					<div class="d-flex justify-content-between align-items-start w-100">
-						<div>
+					<div id="groupPostDiv" data-post-id="${groupPostDetail.id }" class="d-flex justify-content-between align-items-start w-100">
+						<div style="width:520px;">
 							<div><a href="#">${groupPostDetail.groupCategoryName }</a></div>
 							<h2>${groupPostDetail.title }</h2>
 						</div>
@@ -64,14 +64,13 @@
 								<div class="d-flex justify-content-between">
 									<div class="d-flex justify-content-between align-items-center w-100">
 										<div class="d-flex">
-											<div><b>${reply.userNickname }</b> : </div>
-											<div>${reply.content } </div>
+											<div><b>${reply.userNickname }</b> : ${reply.content }</div>
 										</div>
 										<div class="d-flex align-items-center">
 											<fmt:formatDate value="${reply.createdAt }" pattern="yyyy-MM-dd HH:mm:ss" />
 											<div style="width:60px;" class="mx-2">
 												<c:if test="${userId eq reply.userId }">
-													<button value="${reply.id }" type="button" class="btn btn-sm btn-danger delete-btn">삭제</button>
+													<button value="${reply.id }" type="button" class="btn btn-sm btn-danger delete-reply-btn">삭제</button>
 												</c:if>
 											</div>
 										</div>
@@ -103,7 +102,64 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
 <script>
-
+	$(document).ready(function(){
+		
+		// 댓글 삭제
+		$(".delete-reply-btn").on("click", function(){
+			let replyId = Number($(this).val());
+			if(confirm("댓글을 삭제하시겠습니까?")){
+				$.ajax({
+					url: "/group/reply/remove"
+					, type: "DELETE"
+					, data:{"replyId":replyId}
+					, success:function(data){
+						if(data.result != "success"){
+							alert("삭제 실패");
+						}
+						location.reload();
+					}
+					, error:function(){
+						alert("삭제 에러");
+					}
+				});
+			}
+				
+		});
+		
+		// 댓글 등록
+		$("#replyForm").on("submit", function(e){
+			e.preventDefault();
+			let content = $("#replyInput").val();
+			let postId = Number($("#groupPostDiv").data("post-id"));
+			let groupId = Number($("#wrap").data("group-id"));
+			if(content == ""){
+				alert("댓글 내용을 입력하세요.");
+				return;
+			}
+			$.ajax({
+				url: "/group/reply/upload"
+				, type: "POST"
+				, data: {"postId":postId
+						, "content":content
+						, "groupId":groupId}
+				, success:function(data){
+					if(data.result == "success"){
+						location.reload();
+					}else if(data.result == "not exist"){
+						alert("존재하지 않는 게시물입니다.");
+						let userId = $("#postData").data("user-id");
+						location.href = "/group/" + groupId;
+					}else{
+						alert("댓글 작성 실패");
+					}
+				}
+				, error:function(data){
+					alert("댓글 작성 오류");
+				}
+			});
+		});
+	});
+	
 </script>
 
 </body>

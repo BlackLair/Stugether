@@ -54,8 +54,7 @@
 								<div class="d-flex justify-content-between">
 									<div class="d-flex justify-content-between align-items-center w-100">
 										<div class="d-flex">
-											<div><b>${reply.userNickname }</b> : </div>
-											<div>${reply.content } </div>
+											<div><b>${reply.userNickname }</b> :${reply.content } </div>
 										</div>
 										<div class="d-flex align-items-center">
 											<fmt:formatDate value="${reply.createdAt }" pattern="yyyy-MM-dd HH:mm:ss" />

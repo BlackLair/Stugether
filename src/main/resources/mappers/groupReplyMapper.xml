@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.kuwon.stugether.group.reply.repository.GroupReplyRepository">
+	<insert id="insertReply" parameterType="map">
+		INSERT INTO
+			`group_reply`
+		(
+			`groupPostId`
+			, `userId`
+			, `content`
+		)
+		VALUE
+		(
+			#{postId}
+			, #{userId}
+			, #{content}
+		);
+	</insert>
+	<select id="selectReplyList" parameterType="int"
+	resultType="com.kuwon.stugether.group.reply.domain.GroupReply">
+		SELECT
+			`id`
+			, `groupPostId`
+			, `userId`
+			, `content`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`group_reply`
+		WHERE
+			`groupPostId` = #{postId};
+	</select>
+	<delete id="deleteReply" parameterType="map">
+		DELETE FROM
+			`group_reply`
+		WHERE
+			`id` = #{replyId}
+			AND `userId` = #{userId};
+	</delete>
+</mapper>
