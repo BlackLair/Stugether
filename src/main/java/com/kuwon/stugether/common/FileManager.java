@@ -128,7 +128,9 @@ public class FileManager {
 		String fullFilePath = FILE_UPLOAD_PATH + imagePath.replace("/images", "");
 		File targetFolder = new File(fullFilePath);
 		File[] files = targetFolder.listFiles();
-		
+		if(files == null) {
+			return;
+		}
 		for(File file : files) {
 			file.delete();
 		}
