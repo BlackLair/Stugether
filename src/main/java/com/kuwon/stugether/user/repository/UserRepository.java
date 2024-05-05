@@ -17,5 +17,7 @@ public interface UserRepository {
 	
 	public User selectById(@Param("userId") int userId);
 	
-	public List<User> selectUserByNickname(@Param("search") String search);
+	public List<User> selectUserListByNickname(@Param("search") String search);
+	
+	public User selectUserByNickName(@Param("nickname") String nickname);
 }

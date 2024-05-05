@@ -69,4 +69,12 @@
 		WHERE
 			`groupName` LIKE CONCAT('%', #{groupName}, '%');
 	</select>
+	<update id="updateGroupMaster" parameterType="map">
+		UPDATE
+			`group`
+		SET
+			`userId` = #{userId}
+		WHERE
+			`id` = #{groupId};
+	</update>
 </mapper>

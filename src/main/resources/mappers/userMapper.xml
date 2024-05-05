@@ -75,7 +75,7 @@
 		WHERE
 			`id` = #{userId};
 	</select>
-	<select id="selectUserByNickname" parameterType="string"
+	<select id="selectUserListByNickname" parameterType="string"
 	resultType="com.kuwon.stugether.user.domain.User">
 		SELECT
 			`id`
@@ -89,5 +89,20 @@
 			`user`
 		WHERE
 			`nickname` LIKE CONCAT('%', #{search}, '%');
+	</select>
+	<select id="selectUserByNickName" parameterType="string"
+	resultType="com.kuwon.stugether.user.domain.User">
+		SELECT
+			`id`
+			, `loginId`
+			, `password`
+			, `nickname`
+			, `email`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`user`
+		WHERE
+			`nickname` = #{nickname};
 	</select>
 </mapper>

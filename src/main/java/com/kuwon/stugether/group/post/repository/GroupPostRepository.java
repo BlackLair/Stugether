@@ -26,6 +26,7 @@ public interface GroupPostRepository {
 	
 	public List<Integer> selectAllListByCategoryId(@Param("groupId") int groupId
 												, @Param("groupCategoryId") int groupCategoryId);
-	
+	public List<GroupPost> selectPostListByGroupIdAndUserId(@Param("groupId") int groupId
+														, @Param("userId") int userId);
 	
 }

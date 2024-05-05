@@ -12,7 +12,8 @@ public interface GroupReplyRepository {
 	public int insertReply(@Param("postId") int postId
 						, @Param("userId") int userId
 						, @Param("content") String content
-						, @Param("groupCategoryId") int groupCategoryId);
+						, @Param("groupCategoryId") int groupCategoryId
+						, @Param("groupId") int groupId);
 	
 	public List<GroupReply> selectReplyList(@Param("postId") int postId);
 	
@@ -22,4 +23,7 @@ public interface GroupReplyRepository {
 	public int deleteReplyByGroupPostId(@Param("postId") int postId);
 	
 	public int deleteReplyByGroupCategoryId(@Param("groupCategoryId") int groupCategoryId);
+	
+	public int deleteReplyByUserIdAndGroupId(@Param("userId") int userId
+											, @Param("groupId") int groupId);
 }

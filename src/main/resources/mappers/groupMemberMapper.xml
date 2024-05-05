@@ -48,7 +48,26 @@
 			WHERE
 				`groupId` = #{groupId}
 			AND `userId` = #{userId}
-		)
-		
+		)	
 	</select>
+	<select id="selectGroupMember" parameterType="int"
+	resultType="com.kuwon.stugether.group.member.domain.GroupMember">
+		SELECT
+			`id`
+			, `userId`
+			, `groupId`
+			, `createdAt`
+		FROM
+			`group_member`
+		WHERE
+			`groupId` = #{groupId}
+		AND `userId` = #{userId};
+	</select>
+	<delete id="deleteGroupMember" parameterType="map">
+		DELETE FROM
+			`group_member`
+		WHERE
+			`groupId` = #{groupId}
+		AND `userId` = #{userId};
+	</delete>
 </mapper>

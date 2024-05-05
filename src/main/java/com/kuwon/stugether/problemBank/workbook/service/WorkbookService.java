@@ -79,7 +79,7 @@ public class WorkbookService {
 			workbookList = workbookListSearched;
 			workbookInfoListDTO.setTotalCount(workbookRepository.selectWorkbookCountByTitle(search));
 		}else{// 닉네임으로 검색
-			List<User> userList = userRepository.selectUserByNickname(search);
+			List<User> userList = userRepository.selectUserListByNickname(search);
 			List<Integer> userIdList = new ArrayList<>();
 			for(User user : userList) {
 				userIdList.add(user.getId());

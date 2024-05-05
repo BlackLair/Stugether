@@ -8,14 +8,16 @@
 		INSERT INTO
 			`group_reply`
 		(
-			`groupPostId`
+			`groupId`
+			, `groupPostId`
 			, `groupCategoryId`
 			, `userId`
 			, `content`
 		)
 		VALUE
 		(
-			#{postId}
+			#{groupId}
+			, #{postId}
 			, #{groupCategoryId}
 			, #{userId}
 			, #{content}
@@ -25,6 +27,7 @@
 	resultType="com.kuwon.stugether.group.reply.domain.GroupReply">
 		SELECT
 			`id`
+			, `groupId`
 			, `groupPostId`
 			, `userId`
 			, `content`
@@ -53,5 +56,12 @@
 			`group_reply`
 		WHERE
 			`groupCategoryId` = #{groupCategoryId};
+	</delete>
+	<delete id="deleteReplyByUserIdAndGroupId" parameterType="map">
+		DELETE FROM
+			`group_reply`
+		WHERE
+			`groupId` = #{groupId}
+			AND `userId` = #{userId};
 	</delete>
 </mapper>

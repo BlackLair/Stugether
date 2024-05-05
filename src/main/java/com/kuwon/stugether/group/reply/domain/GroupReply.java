@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class GroupReply {
 	private int id;
+	private int groupId;
 	private int groupPostId;
 	private int groupCategoryId;
 	private int userId;

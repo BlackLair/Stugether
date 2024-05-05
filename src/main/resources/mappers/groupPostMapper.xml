@@ -110,4 +110,22 @@
 			`groupId` = #{groupId}
 		AND `groupCategoryId` = #{groupCategoryId};
 	</select>
+	<select id="selectPostListByGroupIdAndUserId" parameterType="map"
+	resultType="com.kuwon.stugether.group.post.domain.GroupPost">
+		SELECT
+			`id`
+			, `groupId`
+			, `groupCategoryId`
+			, `userId`
+			, `title`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`group_post`
+		WHERE
+			`groupId` = #{groupId}
+		AND `userId` = #{userId};
+	</select>
 </mapper>

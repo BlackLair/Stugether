@@ -31,7 +31,7 @@ public class GroupReplyService {
 			return "not exist";
 		}
 		
-		if(groupReplyRepository.insertReply(postId, userId, HtmlUtils.htmlEscape(content), post.getGroupCategoryId()) == 1) {
+		if(groupReplyRepository.insertReply(postId, userId, HtmlUtils.htmlEscape(content), post.getGroupCategoryId(), groupId) == 1) {
 			return "success";
 		}
 		return "failure";

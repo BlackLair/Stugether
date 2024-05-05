@@ -15,4 +15,12 @@ public interface GroupMemberRepository {
 								, @Param("groupId") int groupId);
 	public int selectExistMember(@Param("userId") int userId
 								, @Param("groupId") int groupId);
+	
+	public GroupMember selectGroupMember(@Param("groupId") int groupId
+										, @Param("userId") int userId);
+	public int updateGroupMaster(@Param("userId") int userId
+								, @Param("groupId") int groupId);
+	
+	public int deleteGroupMember(@Param("userId") int userId
+								, @Param("groupId") int gruopId);
 }
