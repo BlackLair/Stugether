@@ -143,6 +143,7 @@
 			}
 			if(result == "success"){
 				alert("그룹에서 탈퇴하였습니다.");
+				location.reload();
 			}else{
 				alert("그룹 탈퇴에 실패했습니다. : " + result);
 			}

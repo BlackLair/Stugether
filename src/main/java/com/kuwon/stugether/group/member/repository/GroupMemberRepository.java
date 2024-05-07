@@ -18,8 +18,7 @@ public interface GroupMemberRepository {
 	
 	public GroupMember selectGroupMember(@Param("groupId") int groupId
 										, @Param("userId") int userId);
-	public int updateGroupMaster(@Param("userId") int userId
-								, @Param("groupId") int groupId);
+
 	
 	public int deleteGroupMember(@Param("userId") int userId
 								, @Param("groupId") int gruopId);

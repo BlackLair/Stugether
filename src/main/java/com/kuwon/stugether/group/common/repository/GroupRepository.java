@@ -16,4 +16,6 @@ public interface GroupRepository {
 	public List<Group> selectGroupByName(@Param("groupName") String groupName
 										, @Param("page") int page);
 	public int selectGroupCountByName(@Param("groupName") String groupName);
+	public int updateGroupMaster(@Param("userId") int userId
+			, @Param("groupId") int groupId);
 }

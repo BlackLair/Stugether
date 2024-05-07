@@ -69,7 +69,7 @@ public class GroupMemberService {
 			if(count == 0) {
 				return "assignee not exist";
 			}
-			groupMemberRepository.updateGroupMaster(assigneeId, groupId);
+			groupRepository.updateGroupMaster(assigneeId, groupId);
 		}
 		// 탈퇴할 사용자의 모든 댓글, 게시물 삭제
 		groupReplyRepository.deleteReplyByUserIdAndGroupId(userId, groupId);
