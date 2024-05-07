@@ -1,5 +1,8 @@
 package com.kuwon.stugether.userMgmt;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +25,11 @@ public class UserMgmtController {
 		int userId = (int) session.getAttribute("userId");
 		UserDTO user = userService.getUser(userId);
 		
+		long editExpireTime = (long)session.getAttribute("editExpireTime");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String expireTimeStr = dateFormat.format(editExpireTime);
+		
+		model.addAttribute("expireTimeStr", expireTimeStr);
 		model.addAttribute("email", user.getEmail());
 		model.addAttribute("loginId", user.getLoginId());
 		return "/userMgmt/config-page";
@@ -31,5 +39,10 @@ public class UserMgmtController {
 	public String authenticationView(HttpSession session) {
 		
 		return "/userMgmt/authentication-page";
+	}
+	
+	@GetMapping("/auth-alert-page")
+	public String authAlertView() {
+		return "/userMgmt/auth-alert-page";
 	}
 }

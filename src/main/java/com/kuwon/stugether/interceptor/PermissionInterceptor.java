@@ -19,6 +19,13 @@ public class PermissionInterceptor implements HandlerInterceptor {
 				response.sendRedirect("/blog/home-page");
 				return false;
 			}
+			if(uri.startsWith("/account") && !uri.startsWith("/account/auth")) {
+				Long editExpireTime = (Long) session.getAttribute("editExpireTime");
+				if(editExpireTime == null || editExpireTime < System.currentTimeMillis()) {
+					response.sendRedirect("/account/auth-alert-page");
+					return false;
+				}
+			}
 		}else {  // 비 로그인 시
 			if(uri.startsWith("/blog") || uri.startsWith("/group") || uri.startsWith("/problem-bank")
 					|| uri.startsWith("/question") || uri.startsWith("/account")) {

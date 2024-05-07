@@ -19,6 +19,9 @@
 				<div class="w-100 text-center">
 					<h2>계정 관리</h2>
 				</div>
+				<div class="w-100 text-end">
+					<div>본인인증 만료 시간 : ${expireTimeStr }</div>
+				</div>
 				<hr>
 				<div class="d-flex w-100 justify-content-around">
 					<div class="w-50 d-flex flex-column align-items-center">
@@ -93,8 +96,8 @@
 							${loginId } 회원탈퇴하겠습니다.
 						</div>
 						<div class="w-100 d-flex align-items-center justify-content-center">
-							<input type="text" class="form-control w-75 mx-3">
-							<button type="button" class="btn btn-danger" disabled="true">탈퇴</button>
+							<input data-login-id="${loginId }" id="resignInput" type="text" class="form-control w-75 mx-3">
+							<button id="resignBtn" type="button" class="btn btn-danger" disabled="true">탈퇴</button>
 						</div>
 					</div>
 				</div>
@@ -120,7 +123,10 @@
 				url: "/account/edit-account"
 				, type: "PATCH"
 				, data: data
-				, success:function(data){
+				, success:function(data, textStatus, xhr){
+					if(request.getResponseHeader('auth') == "false"){
+						location.href == "/account/auth-alert-page";
+					}
 					if(data.result == "success"){
 						if(type == "password"){
 							alert("패스워드가 변경되었습니다. 다시 로그인해주세요.");
@@ -132,11 +138,27 @@
 						alert("정보 수정에 실패했습니다.");
 					}
 				}
-				, error:function(){
+				, error:function(request, status, error){
 					alert("정보 수정 에러");
+					location.reload();
 				}
 			});
 		}
+		
+		// 회원 탈퇴 메시지
+		$("#resignInput").on("input", function(){
+			let msg = $(this).val();
+			if(msg == ""){
+				setValid($("#resignBtn"), "none");
+			}else if(msg == $(this).data("login-id") + " 회원탈퇴하겠습니다."){
+				setValid($("#resignBtn"), "valid");
+				$("#resignBtn").attr("disabled", false);
+			}else{
+				setValid($("#resignBtn"), "invalid");
+				$("#resignBtn").attr("disabled", true);
+			}
+			
+		});
 		
 		// 닉네임 변경 버튼
 		$("#nicknameBtn").on("click", function(){

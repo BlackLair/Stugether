@@ -36,4 +36,13 @@ public class UserMgmtService {
 		
 	}
 	
+	public String authPassword(int userId, String password) {
+		User user = userRepository.selectById(userId);
+		String encryptPassword = EncryptUtils.sha256(password);
+		if(user.getPassword().equals(encryptPassword)) {
+			return "success";
+		}
+		return "failure";
+	}
+	
 }
