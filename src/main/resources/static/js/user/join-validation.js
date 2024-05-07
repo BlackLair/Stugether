@@ -10,6 +10,21 @@ function checkAllValid(){
 	}else{
 		$("#joinBtn").attr("disabled", true);
 	}
+	if(isValidPassword && isValidConfirmPassword){
+		$("#passwordBtn").attr("disabled", false);
+	}else{
+		$("#passwordBtn").attr("disabled", true);
+	}
+	if(isValidEmail){
+		$("#emailBtn").attr("disabled", false);
+	}else{
+		$("#emailBtn").attr("disabled", true);
+	}
+	if(isValidNickname){
+		$("#nicknameBtn").attr("disabled", false);
+	}else{
+		$("#nicknameBtn").attr("disabled", true);
+	}
 }
 
 function setValid(tag, status){

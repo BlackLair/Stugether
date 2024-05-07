@@ -105,4 +105,23 @@
 		WHERE
 			`nickname` = #{nickname};
 	</select>
+	
+	<update id="updateUser">
+		UPDATE
+			`user`
+		SET
+		<choose>
+			<when test="password != null">
+				`password` = #{password}
+			</when>
+			<when test="email != null">
+				`email` = #{email}
+			</when>
+			<when test="nickname != null">
+				`nickname` = #{nickname}
+			</when>
+		</choose>
+		WHERE
+			`id` = #{userId};
+	</update>
 </mapper>

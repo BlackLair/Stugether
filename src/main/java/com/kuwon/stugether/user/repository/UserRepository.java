@@ -20,4 +20,9 @@ public interface UserRepository {
 	public List<User> selectUserListByNickname(@Param("search") String search);
 	
 	public User selectUserByNickName(@Param("nickname") String nickname);
+	
+	public int updateUser(@Param("userId") int userId
+						, @Param("password") String password
+						, @Param("email") String email
+						, @Param("nickname") String nickname);
 }

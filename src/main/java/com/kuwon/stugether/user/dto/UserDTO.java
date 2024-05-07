@@ -11,10 +11,12 @@ public class UserDTO {
 	private int id;
 	private String nickname;
 	private String email;
+	private String loginId;
 	
 	public UserDTO(User user) {
 		this.id = user.getId();
 		this.nickname = user.getNickname();
 		this.email = user.getEmail();
+		this.loginId = user.getLoginId();
 	}
 }

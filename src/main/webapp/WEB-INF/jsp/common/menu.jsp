@@ -6,6 +6,6 @@
 				<li class="nav-item"><a class="nav-link nav-link-style" href="/group/search-group-page">그룹</a></li>
 				<li class="nav-item"><a class="nav-link nav-link-style" href="/problem-bank/my-problem-page">문제 은행</a></li>
 				<li class="nav-item"><a class="nav-link nav-link-style" href="#">질문과 답변</a></li>
-				<li class="nav-item"><a class="nav-link nav-link-style" href="#">계정 관리</a></li>
+				<li class="nav-item"><a class="nav-link nav-link-style" href="/account/config-page">계정 관리</a></li>
 			</ul>
 		</nav>
