@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class EncryptUtils {
 	public static String sha256(String message) {
+		if(message == null) return null;
 		MessageDigest sha;
 		String result = "";
 		try {
