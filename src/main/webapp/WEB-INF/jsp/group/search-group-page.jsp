@@ -165,6 +165,7 @@
 						}else{
 							alert("그룹 가입에 실패했습니다.");
 						}
+						location.reload();
 					}
 					, error:function(){
 						alert("그룹 가입 오류");

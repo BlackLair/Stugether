@@ -77,4 +77,10 @@
 		WHERE
 			`id` = #{groupId};
 	</update>
+	<delete id="deleteGroupById" parameterType="int">
+		DELETE FROM
+			`group`
+		WHERE
+			`id` = #{groupId};
+	</delete>
 </mapper>

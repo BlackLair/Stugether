@@ -18,4 +18,6 @@ public interface GroupCategoryRepository {
 	public int selectExistCategory(@Param("groupId") int groupId
 								, @Param("name") String name);
 	public int deleteCategory(@Param("categoryId") int categoryId);
+	
+	public int deleteAllCategoryByGroupId(@Param("groupId") int groupId);
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kuwon.stugether.group.category.repository.GroupCategoryRepository;
 import com.kuwon.stugether.group.common.domain.Group;
 import com.kuwon.stugether.group.common.repository.GroupRepository;
 import com.kuwon.stugether.group.member.domain.GroupMember;
@@ -31,6 +32,8 @@ public class GroupMemberService {
 	GroupPostRepository groupPostRepository;
 	@Autowired
 	GroupPostService groupPostService;
+	@Autowired
+	GroupCategoryRepository groupCategoryRepository;
 	
 	// 그룹 가입
 	public String joinGroup(int groupId, int userId) {
@@ -56,7 +59,8 @@ public class GroupMemberService {
 		User groupMaster = userRepository.selectById(group.getUserId());
 		int assigneeId;
 		// 그룹장이 탈퇴하려는 경우
-		if(groupMaster.getId() == userId) {
+		int groupMemberCount = groupMemberRepository.selectMemberCountByGroupId(groupId);
+		if(groupMaster.getId() == userId && groupMemberCount > 1) {
 			if(assignee == null) {
 				return "assignee not exist";
 			}
@@ -80,6 +84,12 @@ public class GroupMemberService {
 		
 		// 그룹 가입 정보 삭제
 		groupMemberRepository.deleteGroupMember(userId, groupId);
+		
+		// 마지막 인원이 탈퇴하는 경우 그룹 폐쇄
+		if(groupMemberCount == 1) {
+			groupCategoryRepository.deleteAllCategoryByGroupId(groupId);
+			groupRepository.deleteGroupById(groupId);
+		}
 		
 		return "success";
 	}

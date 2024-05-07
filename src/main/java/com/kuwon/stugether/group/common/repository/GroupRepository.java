@@ -18,4 +18,5 @@ public interface GroupRepository {
 	public int selectGroupCountByName(@Param("groupName") String groupName);
 	public int updateGroupMaster(@Param("userId") int userId
 			, @Param("groupId") int groupId);
+	public int deleteGroupById(@Param("groupId") int groupId);
 }

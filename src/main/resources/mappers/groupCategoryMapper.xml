@@ -61,4 +61,10 @@
 		WHERE
 			`id` = #{categoryId};
 	</delete>
+	<delete id="deleteAllCategoryByGroupId" parameterType="int">
+		DELETE FROM
+			`group_category`
+		WHERE
+			`groupId` = #{groupId};
+	</delete>
 </mapper>
