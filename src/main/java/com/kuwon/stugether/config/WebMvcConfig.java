@@ -27,7 +27,8 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		PermissionInterceptor interceptor = new PermissionInterceptor();
 		registry.addInterceptor(interceptor)
 		.addPathPatterns("/**")
-		.excludePathPatterns("/user/logout", "/image/**", "/static/**");
+		.excludePathPatterns("/user/logout", "/image/**", "/static/**")
+		.excludePathPatterns("/user/duplicated-nickname"); // 계정 정보 수정 시 사용됨
 		
 	}
 }
