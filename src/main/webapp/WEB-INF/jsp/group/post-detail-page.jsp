@@ -39,7 +39,7 @@
 						</div>
 						<div style="width:180px; border-left:1px solid black;">
 							<div class="mx-2">
-								<div>작성자 : ${groupPostDetail.userNickname }</div>
+								<div>작성자 : <span data-user-id="${groupPostDetail.userId }" class="user-nickname">${groupPostDetail.userNickname }</span></div>
 								<div><fmt:formatDate value="${groupPostDetail.createdAt }" pattern="yyyy-MM-dd HH:mm:ss"/></div>
 								<div>글 번호 : ${groupPostDetail.id }</div>
 								<div class="d-flex">
@@ -64,7 +64,7 @@
 								<div class="d-flex justify-content-between">
 									<div class="d-flex justify-content-between align-items-center w-100">
 										<div class="d-flex">
-											<div><b>${reply.userNickname }</b> : ${reply.content }</div>
+											<div><span data-user-id="${reply.userId }" class="user-nickname">${reply.userNickname }</span> : ${reply.content }</div>
 										</div>
 										<div class="d-flex align-items-center">
 											<fmt:formatDate value="${reply.createdAt }" pattern="yyyy-MM-dd HH:mm:ss" />
@@ -98,6 +98,7 @@
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<script src="/static/js/common/common.js"></script>
 <script src="/static/js/group/groupCategoryEdit.js" ></script>
 <script src="/static/js/group/postDetail.js"></script>
 </body>

@@ -57,7 +57,7 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <!-- language pack -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-ko-KR.min.js"></script>
-
+<script src="/static/js/common/common.js"></script>
 <script src="/static/js/common/editor.js"></script>
 <script src="/static/js/group/uploadPost.js"></script>
 </body>

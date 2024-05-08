@@ -46,7 +46,7 @@
 								<tr>
 									<td>${post.id }</td>
 									<td><a href="/group/${groupInfo.id }/${post.id }">${post.title }</a></td>
-									<td>${post.userNickname }</td>
+									<td><span data-user-id="${post.userId }" class="user-nickname">${post.userNickname }</span></td>
 									<td><fmt:formatDate value="${post.createdAt }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 								</tr>
 							</c:forEach>
@@ -77,6 +77,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 <script src="/static/js/group/groupCategoryEdit.js" ></script>
+<script src="/static/js/common/common.js"></script>s
 <script>
 	$(document).ready(function(){
 		addCategoryUIEvent();

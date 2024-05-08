@@ -123,7 +123,7 @@ public class GroupPostService {
 		GroupPostInfo groupPostInfo = new GroupPostInfo();
 		
 		groupPostInfo.setId(groupPost.getId());
-		groupPostInfo.setUserId(groupPost.getId());
+		groupPostInfo.setUserId(groupPost.getUserId());
 		groupPostInfo.setTitle(groupPost.getTitle());
 		groupPostInfo.setGroupId(groupPost.getGroupId());
 		groupPostInfo.setGroupCategoryId(groupPost.getGroupCategoryId());
