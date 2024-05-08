@@ -86,11 +86,9 @@
 							</form>
 						</div>
 					</div>
-					
 				</main>
 				<div class="widget-box">
 				</div>
-				
 			</div>
 		</section>
 		<jsp:include page="/WEB-INF/jsp/common/footer.jsp" />
@@ -101,88 +99,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 <script src="/static/js/group/groupCategoryEdit.js" ></script>
-<script>
-	$(document).ready(function(){
-		addCategoryUIEvent();
-		// 게시물 삭제
-		$("#deleteBtn").on("click", function(){
-			let groupId = Number($("#wrap").data("group-id"));
-			let postId = Number($("#groupPostDiv").data("post-id"));
-			if(confirm("글을 삭제하시겠습니까?")){
-				$.ajax({
-					url: "/group/remove-post"
-					, type: "DELETE"
-					, data: {
-						"postId":postId
-						, "groupId":groupId
-					}
-					, success:function(data){
-						if(data.result == "success"){
-							alert("삭제되었습니다.");
-							location.href = "/group/" + groupId;
-						}
-					}
-				});
-			}
-		});
-		
-		// 댓글 삭제
-		$(".delete-reply-btn").on("click", function(){
-			let replyId = Number($(this).val());
-			if(confirm("댓글을 삭제하시겠습니까?")){
-				$.ajax({
-					url: "/group/reply/remove"
-					, type: "DELETE"
-					, data:{"replyId":replyId}
-					, success:function(data){
-						if(data.result != "success"){
-							alert("삭제 실패");
-						}
-						location.reload();
-					}
-					, error:function(){
-						alert("삭제 에러");
-					}
-				});
-			}
-				
-		});
-		
-		// 댓글 등록
-		$("#replyForm").on("submit", function(e){
-			e.preventDefault();
-			let content = $("#replyInput").val();
-			let postId = Number($("#groupPostDiv").data("post-id"));
-			let groupId = Number($("#wrap").data("group-id"));
-			if(content == ""){
-				alert("댓글 내용을 입력하세요.");
-				return;
-			}
-			$.ajax({
-				url: "/group/reply/upload"
-				, type: "POST"
-				, data: {"postId":postId
-						, "content":content
-						, "groupId":groupId}
-				, success:function(data){
-					if(data.result == "success"){
-						location.reload();
-					}else if(data.result == "not exist"){
-						alert("존재하지 않는 게시물입니다.");
-						let userId = $("#postData").data("user-id");
-						location.href = "/group/" + groupId;
-					}else{
-						alert("댓글 작성 실패");
-					}
-				}
-				, error:function(data){
-					alert("댓글 작성 오류");
-				}
-			});
-		});
-	});
-	
-</script>
-
+<script src="/static/js/group/postDetail.js"></script>
 </body>
 </html>

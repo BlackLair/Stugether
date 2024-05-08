@@ -88,69 +88,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-
-
-<script>
-	$(document).ready(function(){
-		let prevType = $("#prevType").data("type");
-		if(prevType != "")
-			$("#searchTypeSelect").val(prevType).attr("selected", "selected");
-		$("#searchForm").on("submit", function(e){
-			e.preventDefault();
-			let type = $("#searchTypeSelect").val();
-			let search = $("#searchInput").val();
-			if(search == ""){
-				alert("검색어를 입력하세요.");
-				return;
-			}
-			location.href = "/problem-bank/search-workbook-page?type=" + type + "&search=" + search; 
-		});
-		
-		$(".btn-favorite").on("click", function(){
-			let icon = $(this).children("i");
-			let isLiked = icon.hasClass("bi-star-fill");
-			let workbookId = $(this).val();
-			if(isLiked){
-				$.ajax({
-					url: "/problem-bank/remove-favorite-workbook"
-					, type: "DELETE"
-					, data:{"workbookId":workbookId}
-					, success:function(data){
-						if(data.result == "success"){
-							icon.removeClass("bi-star-fill");
-							icon.addClass("bi-star");
-						}
-						else{
-							alert("즐겨찾기 삭제 실패");
-						}
-					}
-					, error:function(){
-						alert("즐겨찾기 삭제 에러");
-					}
-				});
-			} else{
-				$.ajax({
-					url: "/problem-bank/add-favorite-workbook"
-					, type: "POST"
-					, data:{"workbookId":workbookId}
-					, success:function(data){
-						if(data.result == "success"){
-							icon.removeClass("bi-star");
-							icon.addClass("bi-star-fill");
-						}
-						else{
-							alert("즐겨찾기 추가 실패");
-						}
-					}
-					, error:function(){
-						alert("즐겨찾기 추가 에러");
-					}
-				});
-			}
-			
-		});
-	});
-</script>
+<script src="/static/js/problemBank/searchWorkbook.js"></script>
 
 </body>
 </html>

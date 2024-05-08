@@ -52,6 +52,6 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-ko-KR.min.js"></script>
 
 <script src="/static/js/common/editor.js"></script>
-<script src="/static/js/blog/upload-post.js"></script>
+<script src="/static/js/blog/uploadPost.js"></script>
 </body>
 </html>
