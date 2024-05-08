@@ -118,4 +118,10 @@ public class GroupController {
 		model.addAttribute("groupInfo", groupInfo);
 		return "group/upload-post-page";
 	}
+	
+	// 접근 권한 없음 페이지
+	@GetMapping("/no-permission-page")
+	public String noPermissionView() {
+		return "group/no-permission-page";
+	}
 }

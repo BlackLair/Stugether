@@ -1,5 +1,6 @@
 package com.kuwon.stugether.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -24,11 +25,15 @@ public class WebMvcConfig implements WebMvcConfigurer{
 	// 각 페이지 접근 권할 설정
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		PermissionInterceptor interceptor = new PermissionInterceptor();
-		registry.addInterceptor(interceptor)
+		registry.addInterceptor(permissionInterceptor())
 		.addPathPatterns("/**")
 		.excludePathPatterns("/user/logout", "/image/**", "/static/**")
 		.excludePathPatterns("/user/duplicated-nickname"); // 계정 정보 수정 시 사용됨
 		
+	}
+	
+	@Bean
+	public PermissionInterceptor permissionInterceptor() {
+		return new PermissionInterceptor();
 	}
 }
