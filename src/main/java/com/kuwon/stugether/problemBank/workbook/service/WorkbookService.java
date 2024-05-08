@@ -131,7 +131,7 @@ public class WorkbookService {
 		}
 		workbookProblemRepository.deleteAllProblemFromWorkbook(workbookId);
 		workbookRepository.deleteWorkbook(workbookId);
-		workbookScoreRepository.deleteScoreByWorkbookId(workbookId);
+		// workbookScoreRepository.deleteScoreByWorkbookId(workbookId);
 		workbookFavoriteRepository.deleteWorkbookFavoriteByWorkbookId(workbookId);
 		return "success";
 	}
@@ -232,7 +232,11 @@ public class WorkbookService {
 			workbookScoreListInfo.setProblemCount(problemCount);
 			workbookScoreListInfo.setScore(workbookScore.getScore());
 			Workbook workbook = workbookRepository.selectWorkbook(workbookScore.getWorkbookId());
-			workbookScoreListInfo.setTitle(workbook.getTitle());
+			if(workbook == null) {
+				workbookScoreListInfo.setTitle("삭제된 문제집입니다.");
+			}else {
+				workbookScoreListInfo.setTitle(workbook.getTitle());
+			}
 			workbookScoreListInfo.setCreatedAt(workbookScore.getCreatedAt());
 			workbookScoreListInfoList.add(workbookScoreListInfo);
 		}

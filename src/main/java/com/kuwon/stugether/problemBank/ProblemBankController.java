@@ -74,7 +74,9 @@ public class ProblemBankController {
 	public String workbookTestView(@RequestParam("workbookId") int workbookId
 								, Model model) {
 		WorkbookTestInfo workbookTestInfo = workbookService.getProblemListforTest(workbookId);
-		
+		if(workbookTestInfo == null) {
+			return "problemBank/workbook-not-exist-page";
+		}
 		model.addAttribute("workbookTestInfo", workbookTestInfo);
 		return "problemBank/workbook-test-page";
 	}
@@ -85,7 +87,7 @@ public class ProblemBankController {
 		int userId = (int) session.getAttribute("userId");
 		WorkbookScoreInfo workbookScoreInfo = workbookService.getResult(userId, scoreId);
 		if(workbookScoreInfo == null) {
-			throw new Exception("존재하지 않는 채점 이력입니다.");
+			return "problemBank/workbook-not-exist-page";
 		}
 		model.addAttribute(workbookScoreInfo);
 		return "problemBank/workbook-result-page";
