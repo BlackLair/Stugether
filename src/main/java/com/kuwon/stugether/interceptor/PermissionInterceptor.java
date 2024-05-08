@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.HandlerMapping;
 
+import com.kuwon.stugether.group.common.dto.GroupInfo;
+import com.kuwon.stugether.group.common.service.GroupService;
 import com.kuwon.stugether.group.member.repository.GroupMemberRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +18,8 @@ import jakarta.servlet.http.HttpSession;
 public class PermissionInterceptor implements HandlerInterceptor {
 	@Autowired
 	GroupMemberRepository groupMemberRepository;
+	@Autowired
+	GroupService groupService;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException{
@@ -41,6 +45,12 @@ public class PermissionInterceptor implements HandlerInterceptor {
 					final Integer groupId = Integer.valueOf(pathVariables.get("groupId"));
 					if(groupId != null && groupMemberRepository.selectExistMember(userId, groupId) == 0) {
 						response.sendRedirect("/group/no-permission-page");
+						return false;
+					}
+				}
+				if(uri.startsWith("/group/category")) {
+					GroupInfo groupInfo = groupService.getGroupInfoByGroupId((int)request.getAttribute("groupId"));
+					if(userId != groupInfo.getUserId()) {
 						return false;
 					}
 				}
