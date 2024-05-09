@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,6 +53,22 @@ public class UserMgmtRestController {
 		if(result.equals("success")) {
 			long editExpireTime = System.currentTimeMillis() + 300000; // 본인 인증 만료 시간 5분
 			session.setAttribute("editExpireTime", editExpireTime);
+		}
+		return resultMap;
+	}
+	
+	@DeleteMapping("/resign")
+	public Map<String, String> resignAccount(HttpSession session) {
+		int userId = (int)session.getAttribute("userId");
+		Map<String, String> resultMap = new HashMap<>();
+		try {
+			String result = userMgmtService.resignAccount(userId);
+			resultMap.put("result", result);
+			if(result.equals("success")) {
+				session.invalidate();
+			}
+		}catch( Exception e) {
+			resultMap.put("result", "failure");
 		}
 		return resultMap;
 	}

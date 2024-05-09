@@ -34,7 +34,7 @@ public class BlogCategoryRestController {
 											, HttpSession session){
 		int userId = (int)session.getAttribute("userId");
 		Map<String, String> resultMap = new HashMap<>();
-		String result = blogCategoryService.removeCategory(userId, categoryId);
+		String result = blogCategoryService.removeCategory(userId, categoryId, false);
 		resultMap.put("result", result);
 		return resultMap;
 	}

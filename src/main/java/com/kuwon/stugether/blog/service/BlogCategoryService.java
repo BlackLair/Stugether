@@ -62,10 +62,10 @@ public class BlogCategoryService {
 			
 		}
 		
-		public String removeCategory(int userId, int categoryId) {
+		public String removeCategory(int userId, int categoryId, boolean removeDefault) {
 			BlogCategory blogCategory = blogCategoryRepository.selectBlogCategory(userId, categoryId);
 			if(blogCategory != null) {
-				if(blogCategory.getName().equals("기본 카테고리")) {
+				if(blogCategory.getName().equals("기본 카테고리") && !removeDefault) {
 					return "default category";
 				}
 				List<BlogPost> postList = blogRepository.selectAllBlogPostByUserIdAndCategoryId(userId, categoryId);

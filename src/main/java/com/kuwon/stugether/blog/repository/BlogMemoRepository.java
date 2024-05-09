@@ -18,4 +18,6 @@ public interface BlogMemoRepository {
 	
 	public int deleteBlogMemo(@Param("memoId") int memoId
 							, @Param("userId") int userId);
+	
+	public int deleteBlogMemoByUserId(@Param("userId") int userId);
 }

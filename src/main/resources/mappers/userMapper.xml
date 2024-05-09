@@ -124,4 +124,10 @@
 		WHERE
 			`id` = #{userId};
 	</update>
+	<delete id="deleteUser" parameterType="int">
+		DELETE FROM
+			`user`
+		WHERE
+			`id` = #{userId};
+	</delete>
 </mapper>

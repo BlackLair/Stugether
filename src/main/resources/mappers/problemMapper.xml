@@ -93,6 +93,25 @@
 			, #{solution}
 		);
 	</insert>
+	<select id="selectProblemByUserId" parameterType="int"
+	resultType="com.kuwon.stugether.problemBank.problem.domain.Problem">
+		SELECT
+			`id`
+			, `userId`
+			, `title`
+			, `content`
+			, `imagePath`
+			, `answer`
+			, `choice`
+			, `solution`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`problem`
+		WHERE
+			`userId` = #{userId};
+	
+	</select>
 	<delete id="deleteProblem" parameterType="int">
 		DELETE FROM
 			`problem`

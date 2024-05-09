@@ -49,4 +49,10 @@
   		WHERE
   			`blogPostId` = #{postId};
   	</delete>
+  	<delete id="deleteReplyByUserId" parameterType="int">
+  		DELETE FROM
+  			`blog_reply`
+  		WHERE
+  			`userId` = #{userId};
+  	</delete>
   </mapper>

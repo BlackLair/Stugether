@@ -263,7 +263,10 @@ public class WorkbookService {
 		List<WorkbookInfo> workbookInfoList = new ArrayList<>();
 		for(int workbookId : workbookIdList) {
 			Workbook workbook = workbookRepository.selectWorkbook(workbookId);
-					
+			if(workbook == null) {
+				workbookFavoriteRepository.deleteWorkbookFavorite(userId, workbookId);
+				continue;
+			}
 			int creatorId = workbook.getUserId();
 			User user = userRepository.selectById(creatorId);
 			String creatorNickname = user.getNickname();

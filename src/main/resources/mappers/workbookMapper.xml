@@ -124,4 +124,10 @@
 					#{userId}
 				</foreach>;
 	</select>
+	<delete id="deleteWorkbookByUserId" parameterType="int">
+		DELETE FROM
+			`workbook`
+		WHERE
+			`userId` = #{userId};
+	</delete>
 </mapper>

@@ -51,4 +51,10 @@
 			`id` = #{memoId}
 		AND `userId` = #{userId};
 	</delete>
+	<delete id="deleteBlogMemoByUserId" parameterType="int">
+		DELETE FROM
+			`blog_memo`
+		WHERE
+			`userId` = #{userId};
+	</delete>
 </mapper>

@@ -18,4 +18,6 @@ public interface BlogReplyRepository {
 	public int deleteReply(@Param("replyId") int replyId
 						, @Param("userId") int userId);
 	public int deleteReplyByPostId(@Param("postId") int postId);
+	
+	public int deleteReplyByUserId(@Param("userId") int userId);
 }

@@ -67,6 +67,8 @@ public class UserService {
 	// 유저 정보 반환
 	public UserDTO getUser(int userId) {
 		User user = userRepository.selectById(userId);
+		if(user == null)
+			return null;
 		UserDTO userDTO = new UserDTO(user);
 		return userDTO;
 	}

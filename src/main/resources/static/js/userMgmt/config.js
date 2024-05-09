@@ -29,6 +29,27 @@
 			});
 		}
 		
+		// 회원 탈퇴 버튼
+		$("#resignBtn").on("click", function(){
+			$.ajax({
+				url: "/account/resign"
+				, type: "DELETE"
+				, success:function(data){
+					if(data.result == "success"){
+						alert("회원탈퇴되었습니다.");
+					}else if(data.result == "group master"){
+						alert("그룹장인 경우 탈퇴할 수 없습니다.\n 그룹장을 위임해주세요.");
+					}else{
+						alert("회원탈퇴 실패 : " + data.result);
+					}
+					location.reload();
+				}
+				, error:function(){
+					alert("회원탈퇴 에러");
+				}
+			});
+		});
+		
 		// 회원 탈퇴 메시지
 		$("#resignInput").on("input", function(){
 			let msg = $(this).val();

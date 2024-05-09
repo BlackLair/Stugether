@@ -31,4 +31,6 @@ public interface WorkbookRepository {
 	
 	public int selectWorkbookCountByTitle(@Param("search") String search);
 	public int selectWorkbookCountByIdList(@Param("userIdList") List<Integer> userIdList);
+	
+	public int deleteWorkbookByUserId(@Param("userId") int userId);
 }

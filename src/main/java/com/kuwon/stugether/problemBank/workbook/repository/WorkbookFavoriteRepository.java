@@ -18,4 +18,6 @@ public interface WorkbookFavoriteRepository {
 	public List<Integer> selectWorkbookFavoriteByUserId(@Param("userId") int userId
 													, @Param("page") int page);
 	public int selectWorkbookFavoriteCountByUserId(@Param("userId") int userId);
+	
+	public int deleteWorkbookFavoriteByUserId(@Param("userId") int userId);
 }

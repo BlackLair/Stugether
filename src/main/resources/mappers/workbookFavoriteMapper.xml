@@ -59,4 +59,10 @@
   		WHERE
   			`userId` = #{userId};
   	</select>
+  	<delete id="deleteWorkbookFavoriteByUserId" parameterType="int">
+  		DELETE FROM
+  			`workbook_favorite`
+  		WHERE
+  			`userId` = #{userId};
+  	</delete>
   </mapper>

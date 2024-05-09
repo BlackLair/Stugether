@@ -19,5 +19,5 @@ public interface ProblemRepository {
 	public int insertProblem(Problem problem);
 	
 	public int deleteProblem(@Param("problemId") int problemId);
-	
+	public List<Problem> selectProblemByUserId(@Param("userId") int userId);
 }

@@ -141,4 +141,14 @@ public class ProblemService {
 		}
 		return "failure";
 	}
+	
+	@Transactional
+	public void removeProblem(int userId) throws Exception {
+		List<Problem> problemList = problemRepository.selectProblemByUserId(userId);
+		for(Problem problem : problemList) {
+			if(removeProblem(userId, problem.getId()).equals("failure")) {
+				throw new Exception();
+			}
+		}
+	}
 }

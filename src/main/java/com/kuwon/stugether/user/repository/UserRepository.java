@@ -25,4 +25,6 @@ public interface UserRepository {
 						, @Param("password") String password
 						, @Param("email") String email
 						, @Param("nickname") String nickname);
+	
+	public int deleteUser(@Param("userId") int userId);
 }
