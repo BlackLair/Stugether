@@ -51,6 +51,8 @@ public class BlogController {
 							, HttpSession session) {
 		// 추후 회원 존재 여부 확인 기능 추가
 		UserDTO ownerDTO = userService.getUser(ownerId); // 방문한 블로그 주인의 정보
+		if(ownerDTO == null)
+			return "common/not-exist-page";
 		int userId = (int)session.getAttribute("userId");
 		
 		// 방문한 블로그의 카테고리 정보 가져오기
@@ -104,6 +106,7 @@ public class BlogController {
 								, HttpSession session) {
 		//  게시글 정보 가져오기
 		BlogPostInfo blogPost = blogService.getBlogPost(postId);
+		if(blogPost == null) return "common/not-exist-page";
 		int ownerId = blogPost.getUserId(); // 방문한 게시글 작성자 id
 		UserDTO ownerDTO = userService.getUser(ownerId); // 게시글 작성자 주인의 정보
 		
