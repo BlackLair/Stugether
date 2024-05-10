@@ -43,8 +43,11 @@ public class GroupCategoryService {
 	}
 	
 	// 카테고리 생성
-	public String addCategory(int groupId, String name) {
+	public String addCategory(int groupId, String name, int userId) {
 		Group group = groupRepository.selectGroupById(groupId);
+		if(group.getUserId() != userId) {
+			return "permission denied";
+		}
 		if(groupCategoryRepository.selectExistCategory(groupId, name) == 1) {
 			return "duplicated";
 		}
@@ -55,11 +58,19 @@ public class GroupCategoryService {
 	}
 	
 	// 카테고리 제거
-	public String removeCategory(int groupId, int categoryId) {
+	public String removeCategory(int groupId, int categoryId, int userId) {
 		GroupCategory groupCategory = groupCategoryRepository.selectCategoryById(categoryId);
 		if(groupCategory == null) {
 			return "failure";
 		}
+		Group group = groupRepository.selectGroupById(groupCategory.getGroupId());
+		if(group == null) {
+			return "failure";
+		}
+		if(group.getUserId() != userId) {
+			return "permission denied";
+		}
+
 		if(groupCategory.getName().equals("자유게시판")) {
 			return "default category";
 		}
