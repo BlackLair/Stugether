@@ -20,7 +20,8 @@
 				}
 				, success:function(data){
 					if(data.result == "success"){
-						alert("그룹 생성 성공 : " + data.groupId);
+						alert("그룹 생성에 성공했습니다.");
+						location.href = "/group/search-group-page";
 					}else{
 						alert("그룹 생성 실패");
 					}

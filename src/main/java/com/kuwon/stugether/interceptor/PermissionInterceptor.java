@@ -48,12 +48,6 @@ public class PermissionInterceptor implements HandlerInterceptor {
 						return false;
 					}
 				}
-				if(uri.startsWith("/group/category")) {
-					GroupInfo groupInfo = groupService.getGroupInfoByGroupId((int)request.getAttribute("groupId"));
-					if(userId != groupInfo.getUserId()) {
-						return false;
-					}
-				}
 			}
 		}else {  // 비 로그인 시
 			if(uri.startsWith("/blog") || uri.startsWith("/group") || uri.startsWith("/problem-bank")
