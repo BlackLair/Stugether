@@ -12,7 +12,7 @@ import java.util.UUID;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileManager {
-	public final static String FILE_UPLOAD_PATH = "C:\\Users\\JW K\\Desktop\\megaIT\\springProject\\upload\\stugether";
+	public final static String FILE_UPLOAD_PATH = "/home/ec2-user/upload/stugether";
 	public final static String TYPE_BLOG = "blog";
 	public final static String TYPE_GROUP = "group";
 	public final static String TYPE_PROBLEM = "problem";
