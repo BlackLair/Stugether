@@ -50,6 +50,7 @@ public class GroupPostService {
 	
 	public GroupPostDetail getGroupPostDetail(int groupId, int postId) {
 		GroupPost groupPost = groupPostRepository.selectPost(groupId, postId);
+		if(groupPost == null) return null;
 		return generateGroupPostDetail(groupPost);
 	}
 	

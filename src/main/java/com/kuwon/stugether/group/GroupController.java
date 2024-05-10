@@ -97,6 +97,7 @@ public class GroupController {
 		List<GroupCategoryInfo> groupCategoryInfoList = groupCategoryService.getCategoryInfoList(groupId);
 		int totalPostCount = groupCategoryService.getTotalPostCountByGroupCategoryInfoList(groupCategoryInfoList);
 		GroupPostDetail groupPostDetail = groupPostService.getGroupPostDetail(groupId, postId);
+		if(groupPostDetail == null) return "common/not-exist-page";
 		List<GroupReplyDTO> groupReplyDTOList = groupReplyService.getReplyList(postId);
 		
 		model.addAttribute("replyDTOList", groupReplyDTOList);
