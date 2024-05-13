@@ -84,9 +84,12 @@ public class WorkbookService {
 			for(User user : userList) {
 				userIdList.add(user.getId());
 			}
-			if(userIdList.size() > 0)
+			if(userIdList.size() > 0) {
 				workbookList = workbookRepository.selectWorkbookByIdList(userIdList, (page - 1) * 10);
-			workbookInfoListDTO.setTotalCount(workbookRepository.selectWorkbookCountByIdList(userIdList));
+				workbookInfoListDTO.setTotalCount(workbookRepository.selectWorkbookCountByIdList(userIdList));
+			}else {
+				workbookInfoListDTO.setTotalCount(0);
+			}
 		}
 
 		for(Workbook workbook : workbookList) {
