@@ -98,7 +98,7 @@ public class ProblemService {
 		problem.setUserId(userId);
 		problem.setTitle(HtmlUtils.htmlEscape(title));
 		problem.setImagePath(filePath);
-		problem.setSolution(HtmlUtils.htmlEscape(solution));
+		problem.setSolution(HtmlUtils.htmlEscape(solution.replace("<br>", "/n")));
 		problem.setContent(content);
 		problem.setAnswer(HtmlUtils.htmlEscape(answer));
 		String choiceStr = null;
