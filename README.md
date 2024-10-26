@@ -7,3 +7,4 @@ https://docs.google.com/spreadsheets/d/19hdfWZrPKKwecP1bdD5Ue3CPwwEpMomz6FcXAu1X
  - 일정
 
 
+접속 URL : stugether.kuwon.xyz
