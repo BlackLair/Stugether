@@ -36,7 +36,7 @@ public class ProblemDTO {
 		}else {
 			type = "주관식";
 		}
-		solution = problem.getSolution();
+		solution = problem.getSolution().replaceAll("\n", "<br>");
 		createdAt = problem.getCreatedAt();
 		updatedAt = problem.getUpdatedAt();
 	}

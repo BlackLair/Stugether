@@ -136,6 +136,9 @@ public class GroupCategoryService {
 	 */
 	public String getCategoryName(int categoryId) {
 		GroupCategory category = groupCategoryRepository.selectCategoryById(categoryId);
+		if(category == null) {
+			return null;
+		}
 		return category.getName();
 	}
 	
