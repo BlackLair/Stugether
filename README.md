@@ -19,8 +19,6 @@ Stugether는 블로그, 그룹 커뮤니티에서 다양한 정보를 공유하�
 - Deploy - AWS EC2, Apache Tomcat
 - DB - MySQL, MyBatis
 
-접속 URL : [stugether.kuwon.xyz](http://stugether.kuwon.xyz/user/login-page) (EC2 제거로 현재 접속이 불가능합니다.)
-
 ### ERD
 ![image](https://github.com/user-attachments/assets/bb45cd95-491f-4d26-8e26-de831c74c5b8)
 
